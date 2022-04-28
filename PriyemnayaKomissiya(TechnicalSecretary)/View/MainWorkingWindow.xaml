@@ -83,7 +83,7 @@
                     <!--#endregion-->
                     <!--#region Планы приема-->
                     <Grid x:Name="MainGrid" Visibility="Visible" Grid.Column="2" Grid.Row="2">
-                        <Label Content="ПЛАН ПРИЁМА" HorizontalAlignment="Left" Margin="39,13,0,0" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" Foreground="#FF76829B" Height="26" Width="382"/>
+                        <Label Name="lbPlanPriemaYear" Content="" HorizontalAlignment="Left" Margin="39,13,0,0" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" Foreground="#FF76829B" Height="26" Width="382"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,39,0,0">
                             <Grid Grid.Column="2" RenderTransformOrigin="0.5,0.5">
                                 <Grid.RowDefinitions>
@@ -214,7 +214,7 @@
                     </Grid>
                     <!--#endregion-->
                     <!--#region Таблица-->
-                    <Grid Visibility="Hidden" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="#FFF6F7FA">
+                    <Grid Visibility="Visible" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="#FFF6F7FA">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
                             <RowDefinition Height="76"/>

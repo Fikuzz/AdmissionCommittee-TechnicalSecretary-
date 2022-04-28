@@ -57,6 +57,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             var date = new StringBuilder(DateTime.Now.ToString("dddd, d MMMM"));
             date[0] = char.ToUpper(date[0]);
             lDate.Content = date.ToString();
+            lbPlanPriemaYear.Content = "ПЛАН ПРИЁМА " + DateTime.Now.Year;
 
             //Заполнение специальностей
             try
@@ -1254,14 +1255,13 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         }
                         double markAvg = sum / col;
 
-                        markAvg = Math.Round(Convert.ToDouble(markAvg.ToString().Replace(',', '.')),2);
 
                         SqlCommand command = new SqlCommand("Add_Atestat", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@abiturient", AbiturientID);
                         command.Parameters.AddWithValue("@scaleName", ((ComboBox)stackPanel.Children[7]).SelectedItem);
                         command.Parameters.AddWithValue("@attestatSeries", ((TextBox)stackPanel.Children[3]).Text);
-                        command.Parameters.AddWithValue("@avgMarks", markAvg.ToString());
+                        command.Parameters.AddWithValue("@avgMarks", Math.Round(markAvg, 2));
                         SqlDataReader reader = command.ExecuteReader();
                         reader.Read();
                         int AtestatID = (int)reader[0];
