@@ -13,13 +13,11 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWorkingWindow.xaml
-    /// </summary>
     public partial class MainWorkingWindow : Window
     {
         private readonly string connectionString;
 
+        private int planPriemaColumn = 0;
         private PlanPriema curentPlanPriema = null;
         private int AbiturientID = 0;
         private int PlanPriemaID = 0;
@@ -167,7 +165,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             PlanPriemaTable.Visibility = Visibility.Visible;
             LabelFormaObrazovaniya.Text = canvas.Children[2].GetValue(TagProperty).ToString();
-            abiturientTableLoad(curentPlanPriema.Id);
+            AbiturientTableLoad(curentPlanPriema.Id);
             filterCB.SelectedIndex = 0;
         }
 
@@ -175,8 +173,28 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         {
             PlaniPriemaLoad(((TabItem)TabControl.SelectedItem).Header.ToString());
         }
+
+        private void MainWorkingWindowForm_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                ButtonPos(4);
+            }
+            else if (this.Width < 1300)
+            {
+                ButtonPos(2);
+            }
+            else if (this.Width < 1600)
+            {
+                ButtonPos(3);
+            }
+            else
+            {
+                ButtonPos(4);
+            }
+        }
         #endregion
-            #region Таблица данных
+        #region Таблица данных
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
             AbiturientInfoShow();
@@ -251,8 +269,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 try
                 {
                     SqlConnection connection = new SqlConnection(connectionString);
-                    SqlCommand command = new SqlCommand("Get_AbiturientMainInfo", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+                    SqlCommand command = new SqlCommand("Get_AbiturientMainInfo", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     command.Parameters.AddWithValue("@abiturient", abiturient.ID);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
@@ -286,8 +306,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         for (int j = 0; j < 3; j++)
                         {
                             CheckBox checkBox = panel.Children[j] as CheckBox;
-                            SqlCommand command1 = new SqlCommand("HasStatya", con);
-                            command1.CommandType = CommandType.StoredProcedure;
+                            SqlCommand command1 = new SqlCommand("HasStatya", con)
+                            {
+                                CommandType = CommandType.StoredProcedure
+                            };
                             command1.Parameters.AddWithValue("@abiturient", abiturient.ID);
                             command1.Parameters.AddWithValue("@statya", checkBox.Content);
                             SqlDataReader reader1 = command1.ExecuteReader();
@@ -306,8 +328,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     SqlConnection connection = new SqlConnection(connectionString);
                     connection.Open();
 
-                    SqlCommand command = new SqlCommand("Get_AbiturientaKontakti", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+                    SqlCommand command = new SqlCommand("Get_AbiturientaKontakti", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     command.Parameters.AddWithValue("@abiturient", abiturient.ID);
                     SqlDataReader reader = command.ExecuteReader();
                     int lastPoint = 0;
@@ -354,8 +378,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     SqlConnection connection = new SqlConnection(connectionString);
                     connection.Open();
 
-                    SqlCommand command = new SqlCommand("Get_AbiturientaAttestat", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+                    SqlCommand command = new SqlCommand("Get_AbiturientaAttestat", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     command.Parameters.AddWithValue("@abiturient", abiturient.ID);
                     SqlDataReader reader = command.ExecuteReader();
                     int lastPoint = 0;
@@ -410,8 +436,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     SqlConnection connection = new SqlConnection(connectionString);
                     connection.Open();
 
-                    SqlCommand command = new SqlCommand("Get_AbiturientaSertificati", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+                    SqlCommand command = new SqlCommand("Get_AbiturientaSertificati", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     command.Parameters.AddWithValue("@abiturient", abiturient.ID);
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
@@ -469,14 +497,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         foreach (AbiturientDGItem abiturient in dataGridAbiturients.SelectedItems)
                         {
                             SqlConnection connection = new SqlConnection(connectionString);
-                            SqlCommand command = new SqlCommand("Del_AbiturientMarks", connection);
-                            command.CommandType = CommandType.StoredProcedure;
+                            SqlCommand command = new SqlCommand("Del_AbiturientMarks", connection)
+                            {
+                                CommandType = CommandType.StoredProcedure
+                            };
                             command.Parameters.AddWithValue("@abiturient", abiturient.ID);
                             connection.Open();
                             command.ExecuteNonQuery();
                             connection.Close();
                         }
-                        abiturientTableLoad(curentPlanPriema.Id);
+                        AbiturientTableLoad(curentPlanPriema.Id);
                     }
                     catch (Exception ex)
                     {
@@ -484,21 +514,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     }
                 }
             }
-            if (e.Key == Key.Enter)
-            {
-                List<AbiturientDGItem> list = new List<AbiturientDGItem>();
-                if (dataGridAbiturients.SelectedItems.Count <= 1) list = (List<AbiturientDGItem>)dataGridAbiturients.ItemsSource;
-                else
-                {
-                    foreach (AbiturientDGItem item in dataGridAbiturients.SelectedItems)
-                    {
-                        list.Add(item);
-                    }
-                }
-
-            }
         }
-        private void dataGridAbiturients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void DataGridAbiturients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             AbiturientInfoShow();
         }
@@ -519,7 +536,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 if (GridInfo.Visibility == Visibility.Hidden)
                 {
                     bool isSortByRating = (bool)dataGridAbiturients.Tag; 
-                    abiturientTableLoad(curentPlanPriema.Id);
+                    AbiturientTableLoad(curentPlanPriema.Id);
                     if (isSortByRating)
                     {
                         Button_Click(null, null);
@@ -540,14 +557,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 try
                 {
                     SqlConnection connection = new SqlConnection(connectionString);
-                    SqlCommand command = new SqlCommand("Del_AbiturientMarks", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+                    SqlCommand command = new SqlCommand("Del_AbiturientMarks", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
 
-                    abiturientTableLoad(curentPlanPriema.Id);
+                    AbiturientTableLoad(curentPlanPriema.Id);
                 }
                 catch (Exception ex)
                 {
@@ -592,8 +611,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("AbiturientsPriority", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("AbiturientsPriority", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@ID", curentPlanPriema.Id);
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -621,7 +642,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         {
             ((Image)sender).ContextMenu.IsOpen = true;
         }
-        private void dataGridAbiturients_Sorting(object sender, DataGridSortingEventArgs e)
+        private void DataGridAbiturients_Sorting(object sender, DataGridSortingEventArgs e)
         {
             dataGridAbiturients.Tag = false;
         }
@@ -639,10 +660,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show("Не удалось найти или открыть файл шаблона!");
                 return;
             }
-            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application();
-            ex.Visible = true;
-            ex.SheetsInNewWorkbook = 1;
-            ex.Interactive = false;
+            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application
+            {
+                Visible = true,
+                SheetsInNewWorkbook = 1,
+                Interactive = false
+            };
             Excel.Workbook workBook = ex.Workbooks.Open(path + fileName);
             ex.DisplayAlerts = false;
             Excel.Worksheet sheet = (Excel.Worksheet)ex.Worksheets.get_Item(1);
@@ -694,10 +717,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show("Не удалось найти или открыть файл шаблона!");
                 return;
             }
-            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application();
-            ex.Visible = true;
-            ex.SheetsInNewWorkbook = 1;
-            ex.Interactive = false;
+            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application
+            {
+                Visible = true,
+                SheetsInNewWorkbook = 1,
+                Interactive = false
+            };
             Excel.Workbook workBook = ex.Workbooks.Open(path + fileName);
             ex.DisplayAlerts = false;
             Excel.Worksheet sheet = (Excel.Worksheet)ex.Worksheets.get_Item(1);
@@ -746,10 +771,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show("Не удалось найти или открыть файл шаблона!");
                 return;
             }
-            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application();
-            ex.Visible = true;
-            ex.SheetsInNewWorkbook = 1;
-            ex.Interactive = false;
+            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application
+            {
+                Visible = true,
+                SheetsInNewWorkbook = 1,
+                Interactive = false
+            };
             Excel.Workbook workBook = ex.Workbooks.Open(path + fileName);
             ex.DisplayAlerts = false;
             Excel.Worksheet sheet = (Excel.Worksheet)ex.Worksheets.get_Item(1);
@@ -758,8 +785,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                SqlCommand command = new SqlCommand("ImportAD", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("ImportAD", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("id", curentPlanPriema.Id);
                 SqlDataReader reader = command.ExecuteReader();
                 int readNum = 2;
@@ -793,7 +822,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         private void Image_BackToAbiturients(object sender, MouseButtonEventArgs e)
         {
             GridInfo.Visibility = Visibility.Hidden;
-            abiturientTableLoad(curentPlanPriema.Id);
+            AbiturientTableLoad(curentPlanPriema.Id);
         }
 
         private void Image_AtestatRedakt(object sender, MouseButtonEventArgs e)
@@ -1132,8 +1161,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Update_MainData", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Update_MainData", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@surename", addEditFormSurename.Text);
                 command.Parameters.AddWithValue("@name", addEditFormName.Text);
                 command.Parameters.AddWithValue("@otchestvo", addEditFormOtchestvo.Text);
@@ -1172,8 +1203,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     {
                         StackPanel stackPanel = AddEditFormContacts.Children[i] as StackPanel;
 
-                        SqlCommand command = new SqlCommand("Add_ContctData", connection);
-                        command.CommandType = CommandType.StoredProcedure;
+                        SqlCommand command = new SqlCommand("Add_ContctData", connection)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
                         command.Parameters.AddWithValue("@abiturient", AbiturientID);
                         command.Parameters.AddWithValue("@svedeniya", ((TextBox)stackPanel.Children[5]).Text.Replace("_", string.Empty));
                         command.Parameters.AddWithValue("@contactType", ((ComboBox)stackPanel.Children[3]).SelectedItem);
@@ -1336,7 +1369,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 MessageBox.Show(ex.Message, "Статьи");
             }//Статьи* ?
-            abiturientTableLoad(curentPlanPriema.Id);
+            AbiturientTableLoad(curentPlanPriema.Id);
             addEditForm.Visibility = Visibility.Hidden;
         }
 
@@ -1547,7 +1580,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 planPriemaADD_Finanse.SelectedIndex = 0;
                 reader.Close();
 
-                planPriemaADD_ForaObucheniya_SelectionChanged(planPriemaADD_ForaObucheniya, null);
+                PlanPriemaADD_ForaObucheniya_SelectionChanged(planPriemaADD_ForaObucheniya, null);
                 planPriemaADD_Spec.SelectedItem = ((TabItem)TabControl1.SelectedItem).Header;
             }
             catch (Exception ex)
@@ -1560,7 +1593,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             buttonEdit.Visibility = Visibility.Collapsed;
         }
 
-        private void planPriemaADD_ForaObucheniya_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PlanPriemaADD_ForaObucheniya_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (planPriemaADD_ForaObucheniya.Tag == null || planPriemaADD_ForaObucheniya.SelectedValue == null) return;
             string forma = planPriemaADD_ForaObucheniya.SelectedValue.ToString();
@@ -1573,7 +1606,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             planPriemaADD_Obrazovanie.SelectedIndex = 0;
         }
-        private void planPriemaADD_Finanse_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PlanPriemaADD_Finanse_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if((string)planPriemaADD_Finanse.SelectedItem == "Хозрасчет")
             {
@@ -1664,14 +1697,14 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         }
 
-        private void planPrieaADD_kolvoCelevihMest_LostFocus(object sender, RoutedEventArgs e)
+        private void PlanPrieaADD_kolvoCelevihMest_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
             if (textBox.Text == "")
                 textBox.Text = "0";
         }
 
-        private void imagecCick_UpdatePlanPriema(object sender, MouseButtonEventArgs e)
+        private void ImagecCick_UpdatePlanPriema(object sender, MouseButtonEventArgs e)
         {
             datagridPlanPriemaAdd.Visibility = Visibility.Visible;
             try
@@ -1711,7 +1744,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     planPriemaADD_Finanse.Items.Add(reader[0]);
                 reader.Close();
 
-                planPriemaADD_ForaObucheniya_SelectionChanged(planPriemaADD_ForaObucheniya, null);
+                PlanPriemaADD_ForaObucheniya_SelectionChanged(planPriemaADD_ForaObucheniya, null);
             }
             catch (Exception ex)
             {
@@ -1731,7 +1764,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             buttonEdit.Visibility = Visibility.Visible;
         }
 
-        private void imagecCick_DeletePlanPriema(object sender, MouseButtonEventArgs e)
+        private void ImagecCick_DeletePlanPriema(object sender, MouseButtonEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Удалить план приема?", "Удаление", MessageBoxButton.OKCancel);
             if(result == MessageBoxResult.OK)
@@ -1762,11 +1795,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
-        private void dataGridPlani_OpenPlanPriema(object sender, MouseButtonEventArgs e)
+        private void DataGridPlani_OpenPlanPriema(object sender, MouseButtonEventArgs e)
         {
             if (dataGridPlani.SelectedItem == null) return;
             TabControl.SelectedIndex = TabControl1.SelectedIndex;
-            abiturientTableLoad(((PlanPriema)dataGridPlani.SelectedItem).Id);
+            AbiturientTableLoad(((PlanPriema)dataGridPlani.SelectedItem).Id);
             PlanPriemaTable.Visibility = Visibility.Visible; 
             tabWork.SelectedIndex = 0;
         }
@@ -1789,11 +1822,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             TextBox textbox = (TextBox)sender;
             string text = textbox.Text;
             text = text.Insert(textbox.SelectionStart, e.Text);
-            e.Handled = !Double.TryParse(text, out double a);
+            e.Handled = !Double.TryParse(text, out _);
         }
 
 
-        private void tbMaskFloat_TextInput(object sender, TextChangedEventArgs e)
+        private void TbMaskFloat_TextInput(object sender, TextChangedEventArgs e)
         {
             TextBox textbox = (TextBox)sender;
             while (textbox.Text.Length > 1 && textbox.Text[0] == '0' && textbox.Text[1] != ',')
@@ -1926,11 +1959,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
         }
 
-        private void dataGridStats_OpenPlanPriema(object sender, MouseButtonEventArgs e)
+        private void DataGridStats_OpenPlanPriema(object sender, MouseButtonEventArgs e)
         {
             if (DGStats.SelectedItem == null) return;
             TabControl.SelectedIndex = TabControl2.SelectedIndex;
-            abiturientTableLoad(((DocSubmissionStat)DGStats.SelectedItem).IDAdmissionPlan);
+            AbiturientTableLoad(((DocSubmissionStat)DGStats.SelectedItem).IDAdmissionPlan);
             PlanPriemaTable.Visibility = Visibility.Visible;
             tabWork.SelectedIndex = 0;
         }
@@ -2070,7 +2103,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show(ex.Message);
             }
         }
-        private void abiturientTableLoad(int PlanPriemaID)
+        private void AbiturientTableLoad(int PlanPriemaID)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try
@@ -2564,7 +2597,23 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         }
 
-
+        private void ButtonPos(int col) //изменение позиций кнопок под размер экрана
+        {
+            if (planPriemaColumn == col) return;
+            int buttons = 0;
+            int row = 1;
+            while (buttons < planPriemaButtons.Count)
+            {
+                for (int i = 1; i <= col && buttons < planPriemaButtons.Count; i++)
+                {
+                    planPriemaButtons[buttons].SetValue(Grid.RowProperty, row);
+                    planPriemaButtons[buttons].SetValue(Grid.ColumnProperty, i);
+                    buttons++;
+                }
+                row++;
+            }
+            planPriemaColumn = col;
+        }
         #endregion
     }
 }

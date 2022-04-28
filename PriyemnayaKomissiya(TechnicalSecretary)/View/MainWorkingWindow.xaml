@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:PriyemnayaKomissiya_TechnicalSecretary_.View"
         mc:Ignorable="d"
         Background="#FFF6F7FA"
-        Title="MainWorkingWindow" Height="700" Width="1200" Loaded="Window_Loaded" MinHeight="600" MinWidth="800">
+        Title="MainWorkingWindow" Height="700" Width="1200" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height ="80"/>
@@ -232,7 +232,7 @@
                             <TextBlock Text="Днеаная, Бюджет, На основе базового" Name="LabelFormaObrazovaniya" TextWrapping="Wrap" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" Grid.Row="1" Grid.Column="1" Canvas.Top="23" Margin="20,22,0,22" MinHeight="32" Width="190"/>
                             <TextBlock x:Name="GridCountWrite" MinHeight="14" Text="24" FontFamily="{StaticResource Montserrat-Regular}" FontSize="12" Background="#FFE4E3E3" VerticalAlignment="Center" TextAlignment="Center" MaxWidth="30" Width="24" Margin="0,29,0,31" Foreground="#FF747474"/>
                         </StackPanel>
-                        <DataGrid x:Name="dataGridAbiturients" Tag="false" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource dgAbbiturients}" PreviewKeyDown="Table_PressDelete" HeadersVisibility="Column" CanUserReorderColumns="False" Sorting="dataGridAbiturients_Sorting" MouseDoubleClick="dataGridAbiturients_MouseDoubleClick">
+                        <DataGrid x:Name="dataGridAbiturients" Tag="false" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource dgAbbiturients}" PreviewKeyDown="Table_PressDelete" HeadersVisibility="Column" CanUserReorderColumns="False" Sorting="DataGridAbiturients_Sorting" MouseDoubleClick="DataGridAbiturients_MouseDoubleClick">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="№" Width="5*" Binding="{Binding Num}"/>
                                 <DataGridTextColumn Header="№ ЭКЗ ЛИСТА" Width="7*" Binding="{Binding ExamNum}"/>
@@ -1236,22 +1236,22 @@
                             <Label Content="Правоведение" Name="labelSpec" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" Grid.Row="1" Grid.Column="1" Canvas.Top="23" Margin="40,23,0,23"/>
                             <TextBlock x:Name="PlaniCountWrite" MinHeight="14" Text="24" FontFamily="{StaticResource Montserrat-Regular}" FontSize="12" Background="#FFE4E3E3" VerticalAlignment="Center" TextAlignment="Center" MaxWidth="30" Width="24" Margin="0,30,0,31" Foreground="#FF747474"/>
                         </StackPanel>
-                        <DataGrid x:Name="dataGridPlani" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource dgAbbiturients}" PreviewMouseDoubleClick="dataGridPlani_OpenPlanPriema">
+                        <DataGrid x:Name="dataGridPlani" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource dgAbbiturients}" PreviewMouseDoubleClick="DataGridPlani_OpenPlanPriema">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Код специальости" Binding="{Binding codeSpec}" Width="100*"/>
-                                <DataGridTextColumn Header="Наименование" Binding="{Binding nameSpec}" Width="100*"/>
-                                <DataGridTextColumn Header="Прием на основе" Binding="{Binding nameObrazovaie}" Width="110*"/>
-                                <DataGridTextColumn Header="Форма получения образования" Binding="{Binding nameForm}" Width="100*"/>
-                                <DataGridTextColumn Header="Финансирование" Binding="{Binding nameFinance}" Width="100*"/>
-                                <DataGridTextColumn Header="Общее количество мест" Binding="{Binding count}" Width="70*"/>
-                                <DataGridTextColumn Header="Количество целевых мест" Binding="{Binding countCelevihMest}" Width="70*"/>
-                                <DataGridCheckBoxColumn Header="ЦТ" Binding="{Binding ct}" Width="30*"/>
+                                <DataGridTextColumn Header="Код специальости" Binding="{Binding CodeSpec}" Width="100*"/>
+                                <DataGridTextColumn Header="Наименование" Binding="{Binding NameSpec}" Width="100*"/>
+                                <DataGridTextColumn Header="Прием на основе" Binding="{Binding NameObrazovaie}" Width="110*"/>
+                                <DataGridTextColumn Header="Форма получения образования" Binding="{Binding NameForm}" Width="100*"/>
+                                <DataGridTextColumn Header="Финансирование" Binding="{Binding NameFinance}" Width="100*"/>
+                                <DataGridTextColumn Header="Общее количество мест" Binding="{Binding Count}" Width="70*"/>
+                                <DataGridTextColumn Header="Количество целевых мест" Binding="{Binding CountCelevihMest}" Width="70*"/>
+                                <DataGridCheckBoxColumn Header="ЦТ" Binding="{Binding Ct}" Width="30*"/>
                                 <DataGridTemplateColumn Header="ДЕЙСТВИЕ" Width="120">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <Image Margin="10,0,0,0" Source="pack://application:,,,/Resources/pencil-alt.png" MouseUp="imagecCick_UpdatePlanPriema"/>
-                                                <Image Margin="10,0,0,0" Source="pack://application:,,,/Resources/Layer 3.png" MouseUp="imagecCick_DeletePlanPriema"/>
+                                                <Image Margin="10,0,0,0" Source="pack://application:,,,/Resources/pencil-alt.png" MouseUp="ImagecCick_UpdatePlanPriema"/>
+                                                <Image Margin="10,0,0,0" Source="pack://application:,,,/Resources/Layer 3.png" MouseUp="ImagecCick_DeletePlanPriema"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -1295,15 +1295,15 @@
                         <Label Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Специальность" Grid.ColumnSpan="3"/>
                         <ComboBox Name="planPriemaADD_Spec" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3"/>
                         <Label Grid.Row="7" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Форма обучения"/>
-                        <ComboBox Name="planPriemaADD_ForaObucheniya" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="8" SelectionChanged="planPriemaADD_ForaObucheniya_SelectionChanged"/>
+                        <ComboBox Name="planPriemaADD_ForaObucheniya" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="8" SelectionChanged="PlanPriemaADD_ForaObucheniya_SelectionChanged"/>
                         <Label Grid.Row="7" Grid.Column="3" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Финансирование"/>
-                        <ComboBox Name="planPriemaADD_Finanse" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="3" Grid.Row="8" SelectionChanged="planPriemaADD_Finanse_SelectionChanged"/>
+                        <ComboBox Name="planPriemaADD_Finanse" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="3" Grid.Row="8" SelectionChanged="PlanPriemaADD_Finanse_SelectionChanged"/>
                         <Label Grid.Row="10" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Прием на основе" Grid.ColumnSpan="3"/>
                         <ComboBox Name="planPriemaADD_Obrazovanie" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="3"/>
                         <Label Grid.Row="13" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Общее количество мест"/>
-                        <TextBox x:Name="planPrieaADD_kolvoMest" Text="0" Style="{DynamicResource TextBox}" Grid.Row="14" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="planPrieaADD_kolvoCelevihMest_LostFocus"/>
+                        <TextBox x:Name="planPrieaADD_kolvoMest" Text="0" Style="{DynamicResource TextBox}" Grid.Row="14" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus"/>
                         <Label Grid.Row="13" Grid.Column="3" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Количество целевых мест"/>
-                        <TextBox x:Name="planPrieaADD_kolvoCelevihMest" Text="0" Style="{DynamicResource TextBox}"  Grid.Row="14" Grid.Column="3" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="planPrieaADD_kolvoCelevihMest_LostFocus"/>
+                        <TextBox x:Name="planPrieaADD_kolvoCelevihMest" Text="0" Style="{DynamicResource TextBox}"  Grid.Row="14" Grid.Column="3" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus"/>
                         <CheckBox x:Name="planPrieaADD_CT" Content="Прием по ЦТ" Style="{DynamicResource CheckBoxStyleObshchiy}" VerticalContentAlignment="Center" FontSize="16" Grid.Row="15" Grid.Column="1" Margin="0,19,0,0" Grid.RowSpan="2" />
                         <Button x:Name="buttonAdd" Visibility="Collapsed" Grid.Column="3" Grid.Row="15" Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Записать" FontSize="16" Click="Button_Add" Margin="0,10,0,0" Grid.RowSpan="2"/>
                         <Button x:Name="buttonEdit" Grid.Column="3" Grid.Row="15" Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Сохранить" FontSize="16" Click="Button_Edit" Margin="0,10,0,0" Grid.RowSpan="2"/>
@@ -1353,9 +1353,9 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="Начальное значение отметки" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="0,10,1,10" Height="14"/>
-                            <TextBox x:Name="tbStartValue" Text="3,0" Grid.Column="2" Margin="0,3,10,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="tbMaskFloat_TextInput"/>
+                            <TextBox x:Name="tbStartValue" Text="3,0" Grid.Column="2" Margin="0,3,10,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="TbMaskFloat_TextInput"/>
                             <TextBlock Text="Шаг диапазона отметок" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" Margin="10,10,5,10" Height="14"/>
-                            <TextBox x:Name="tbStep" Text="1,0" Grid.Column="4" Margin="0,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="tbMaskFloat_TextInput"/>
+                            <TextBox x:Name="tbStep" Text="1,0" Grid.Column="4" Margin="0,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="TbMaskFloat_TextInput"/>
                             <Button Content="Экспорт" Style="{DynamicResource ButtonStyleObshchiyRED}" Grid.ColumnSpan="2" Grid.Column="5" Margin="13, 3" Grid.Row="1" Click="Button_Click_2"/>
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="2" Background="#FF1A95B0">
@@ -1399,7 +1399,7 @@
                             <Label Content="8,1-&#10;9,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="11"/>
                             <Label Content="9,1-&#10;10" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="12"/>
                         </Grid>
-                        <DataGrid FontSize="16" Name="DGStats" Style="{DynamicResource dgAbbiturients}" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="3" HeadersVisibility="None" PreviewMouseDoubleClick="dataGridStats_OpenPlanPriema">
+                        <DataGrid FontSize="16" Name="DGStats" Style="{DynamicResource dgAbbiturients}" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="3" HeadersVisibility="None" PreviewMouseDoubleClick="DataGridStats_OpenPlanPriema">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding TotalToAdmissionPlan}" Width="80*" Header="Всего"/>
                                 <DataGridTextColumn Binding="{Binding AdmissionPlanDogovor}" Width="150*" Header="В том числе на&#10;условях целевой подготовки"/>
