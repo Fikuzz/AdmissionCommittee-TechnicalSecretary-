@@ -27,9 +27,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
         {
             SqlConnection connection = new SqlConnection(connectionString);
 
-            if (tbLogin.Text == "Admin" && tbPassword.Password == "priemadmin")
+            if (tbPassword.Password == "priemadmin")
             {
-                string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}'";
+                string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}' AND IDроли = 4";
                 try
                 {
                     SqlCommand command = new SqlCommand(hasUser, connection);
@@ -37,11 +37,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(Convert.ToInt32(reader[0]), "Admin");
+                        View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(reader.GetInt32(0), "Admin");
                         mainWorkingWindow.Show();
                         Close();
+                        return;
                     }
-                    return;
                 }
                 catch
                 {

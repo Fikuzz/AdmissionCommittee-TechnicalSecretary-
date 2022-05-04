@@ -195,7 +195,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         }
         #endregion
-        #region Таблица данных
+            #region Таблица данных
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
             AbiturientInfoShow();
@@ -996,7 +996,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             else
                 ((TextBox)sender).Tag = "";
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < AddEditFormContacts.Children.Count; i++)
@@ -1027,7 +1026,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }//добавление нового контакта
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Xceed.Wpf.Toolkit.MaskedTextBox textBox = ((StackPanel)((ComboBox)sender).Parent).Children[5] as Xceed.Wpf.Toolkit.MaskedTextBox;
@@ -1043,7 +1041,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     break;
             }
         }
-
         private void Button_NewAtestat(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < addEdifFormAtestati.Children.Count; i++)
@@ -1074,7 +1071,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
-
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsTextAllowed(e.Text);
@@ -1084,7 +1080,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         {
             return !_regex.IsMatch(text);
         }
-
         private void ButtonNewSertificatCT(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < addEdifFormCT.Children.Count; i++)
@@ -1097,14 +1092,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
-
         private void Button_PrewPage(object sender, RoutedEventArgs e)
         {
             TabControlAddEditForm.SelectedIndex -= 1;
             if (((TabItem)TabControlAddEditForm.SelectedItem).IsEnabled == false)
                 TabControlAddEditForm.SelectedIndex--;
         }
-
         private void Button_CloseNote(object sender, RoutedEventArgs e)
         {
             ((StackPanel)((Grid)((Button)sender).Parent).Parent).Visibility = Visibility.Collapsed;
@@ -1122,7 +1115,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 ScrollAddMain.ScrollToVerticalOffset(0);
             }
         }
-
         private void Button_NextStep_2(object sender, RoutedEventArgs e)
         {
             if (Correct_2())
@@ -1132,7 +1124,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
 
         }
-
         private void Button_NextStep_3(object sender, RoutedEventArgs e)
         {
             if (Correct_3())
@@ -1143,7 +1134,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     TabControlAddEditForm.SelectedIndex++;
             }
         }
-
         private void Button_NextStep_4(object sender, RoutedEventArgs e)
         {
             if (Correct_4())
@@ -1152,8 +1142,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 TabControlAddEditForm.SelectedIndex++;
             }
         }
-
-
         //завершение редактирования
         private void Button_EditEnd(object sender, RoutedEventArgs e)
         {
@@ -1443,7 +1431,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 reader.Close();
                 connection.Close();
                 addEditFormobrazovanie.SelectedIndex = 0;
-                SetExamList();
             }
             catch (Exception ex)
             {
@@ -1462,6 +1449,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
                 PlanPriemaID = Convert.ToInt32(reader[0]);
+                SetExamList();
                 reader.Close();
                 connection.Close();
             }
