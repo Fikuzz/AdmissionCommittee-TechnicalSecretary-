@@ -685,7 +685,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 ex.Cells[9 + i, 1] = i + 1;
                 ex.Cells[9 + i, 18] = Convert.ToBoolean(((CheckBox)dataGridAbiturients.Columns[18].GetCellContent(dataGridAbiturients.Items[i])).IsChecked) ? "+" : "0";
                 for (int j = 2; j < 18; j++)
+                {
                     ex.Cells[9 + i, j] = dataGridAbiturients.Columns[j].GetCellContent(dataGridAbiturients.Items[i]).GetValue(TextBlock.TextProperty);
+                }
                 if (abiturient.DifferentAttestat == true)
                 {
                     Excel.Range range = ex.Cells[9 + i, 17];
@@ -820,6 +822,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         #endregion
             #region Просмотр информации
+        //TODO: добавить номер экзаменационного листа
         private void Image_BackToAbiturients(object sender, MouseButtonEventArgs e)
         {
             GridInfo.Visibility = Visibility.Hidden;
@@ -960,7 +963,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
             }
         }
-        #endregion
+            #endregion
             #region редактирование записи
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -1071,6 +1074,24 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
+        private void Tb_IdentNuber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[0-9a-zA-Z]+");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void Tb_SeriyaPasporta_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Z]+$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+        private void PassportSeriya_TextInput(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int selStart = tb.SelectionStart;
+            tb.Text = tb.Text.ToUpper();
+            tb.SelectionStart = selStart;
+        }
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsTextAllowed(e.Text);
@@ -1145,7 +1166,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         //завершение редактирования
         private void Button_EditEnd(object sender, RoutedEventArgs e)
         {
-            if (!EnterIsCorrect()) return;
+            if (!InputIsCorrect()) return;
 
             try
             {
@@ -1476,7 +1497,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         private void AddEditFormobrazovanie_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
-        #endregion
+            #endregion
         private void MaskedTB_IsComplited(object sender, TextChangedEventArgs e)
         {
             Xceed.Wpf.Toolkit.MaskedTextBox maskedText = sender as Xceed.Wpf.Toolkit.MaskedTextBox;
@@ -2345,7 +2366,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         } //открытие информации об абитуриенте
 
-        private bool EnterIsCorrect()
+        private bool InputIsCorrect()
         {
             //проверка заполнения паспортных данных
             bool correct = true;
