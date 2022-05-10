@@ -20,12 +20,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         private int planPriemaColumn = 0;
         private PlanPriema curentPlanPriema = null;
         private int AbiturientID = 0;
-        private int PlanPriemaID = 0;
-        private int UserID;
-        private string UserName;
+        private readonly int UserID;
+        private readonly string UserName;
         private List<AbiturientDGItem> abiturients;
-        private List<Canvas> planPriemaButtons = new List<Canvas>();
-        private List<PlanPriema> planPriemaDGsource = new List<PlanPriema>();
+        private readonly List<Canvas> planPriemaButtons = new List<Canvas>();
+        private readonly List<PlanPriema> planPriemaDGsource = new List<PlanPriema>();
 
         #region Общее
         public MainWorkingWindow(int id, string name)
@@ -851,8 +850,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 try
                 {
                     SqlConnection connection = new SqlConnection(connectionString);
-                    SqlCommand command = new SqlCommand("Get_AbiturientaAttestat", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+                    SqlCommand command = new SqlCommand("Get_AbiturientaAttestat", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
 
                     SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -1183,7 +1184,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 command.Parameters.AddWithValue("@grajdaninRB", AddFormChekBoxGrajdanstvo.IsChecked == true ? 1 : 0);
                 command.Parameters.AddWithValue("@grajdanstvo", AddFormGrajdanstvo.Text);
                 command.Parameters.AddWithValue("@obshejitie", addEditFormObshejitie.IsChecked == true ? 1 : 0);
-                command.Parameters.AddWithValue("@planPriema", PlanPriemaID);
+                command.Parameters.AddWithValue("@planPriema", curentPlanPriema.Id);
                 command.Parameters.AddWithValue("@workPlase", textBoxWorkPlace.Text);
                 command.Parameters.AddWithValue("@doljnost", textBoxDoljnost.Text);
                 command.Parameters.AddWithValue("@sirota", addEditForm_CheckBox_DetiSiroti.IsChecked == true ? 1 : 0);
@@ -1265,8 +1266,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         double markAvg = sum / col;
 
 
-                        SqlCommand command = new SqlCommand("Add_Atestat", connection);
-                        command.CommandType = CommandType.StoredProcedure;
+                        SqlCommand command = new SqlCommand("Add_Atestat", connection)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
                         command.Parameters.AddWithValue("@abiturient", AbiturientID);
                         command.Parameters.AddWithValue("@scaleName", ((ComboBox)stackPanel.Children[7]).SelectedItem);
                         command.Parameters.AddWithValue("@attestatSeries", ((TextBox)stackPanel.Children[3]).Text);
@@ -1277,8 +1280,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         reader.Close();
                         for (int j = 0; j < marks.Count; j++)
                         {
-                            command = new SqlCommand("Add_Mark", connection);
-                            command.CommandType = CommandType.StoredProcedure;
+                            command = new SqlCommand("Add_Mark", connection)
+                            {
+                                CommandType = CommandType.StoredProcedure
+                            };
                             command.Parameters.AddWithValue("@attestat", AtestatID);
                             command.Parameters.AddWithValue("@mark", j + 1);
                             command.Parameters.AddWithValue("@colvo", marks[j]);
@@ -1306,8 +1311,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     {
                         Grid grid = (Grid)(addEdifFormCT.Children[i] as StackPanel).Children[2];
 
-                        SqlCommand command = new SqlCommand("Add_Sertificat", connection);
-                        command.CommandType = CommandType.StoredProcedure;
+                        SqlCommand command = new SqlCommand("Add_Sertificat", connection)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
                         command.Parameters.AddWithValue("@sertificat", AbiturientID);
                         command.Parameters.AddWithValue("@disciplin", ((ComboBoxItem)((ComboBox)grid.Children[5]).SelectedItem).Content);
                         command.Parameters.AddWithValue("@mark", ((TextBox)grid.Children[7]).Text);
@@ -1326,8 +1333,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Update_PasportData", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Update_PasportData", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@dateVidachi", PassportDateVidachi.Text);
                 command.Parameters.AddWithValue("@dateOfBirth", dateOfBirth.Text);
                 command.Parameters.AddWithValue("@seriya", PassportSeriya.Text);
@@ -1363,8 +1372,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                             SqlDataReader reader = command.ExecuteReader();
                             reader.Read();
 
-                            command = new SqlCommand("Add_Stati", connection);
-                            command.CommandType = CommandType.StoredProcedure;
+                            command = new SqlCommand("Add_Stati", connection)
+                            {
+                                CommandType = CommandType.StoredProcedure
+                            };
                             command.Parameters.AddWithValue("@abiturient", AbiturientID);
                             command.Parameters.AddWithValue("@statya", reader[0]);
                             reader.Close();
@@ -1460,8 +1471,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_PlanPriemaID", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Get_PlanPriemaID", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@speciality", addEditFormspecialnost.SelectedItem);
                 command.Parameters.AddWithValue("@formOfEducation", addEditFormobushenie.SelectedItem);
                 command.Parameters.AddWithValue("@financing", addEditFormFinansirovanie.SelectedItem);
@@ -1469,7 +1482,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                PlanPriemaID = Convert.ToInt32(reader[0]);
+                UpdateCurentPlanPriema(reader.GetInt32(0));
                 SetExamList();
                 reader.Close();
                 connection.Close();
@@ -1481,7 +1494,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand($"SELECT ЦТ FROM ПланПриема WHERE IDПланПриема = {PlanPriemaID}", connection);
+                SqlCommand command = new SqlCommand($"SELECT ЦТ FROM ПланПриема WHERE IDПланПриема = {curentPlanPriema.Id}", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
@@ -1653,8 +1666,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Add_PlanPriema", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Add_PlanPriema", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@year", DateTime.Now.Year);
                 command.Parameters.AddWithValue("@spec", planPriemaADD_Spec.SelectedItem);
                 command.Parameters.AddWithValue("@form", planPriemaADD_ForaObucheniya.SelectedItem);
@@ -1682,8 +1697,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Update_PlanPriema", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Update_PlanPriema", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@id", ((PlanPriema)buttonEdit.Tag).Id);
                 command.Parameters.AddWithValue("@spec", planPriemaADD_Spec.SelectedItem);
                 command.Parameters.AddWithValue("@form", planPriemaADD_ForaObucheniya.SelectedItem);
@@ -1838,6 +1855,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         private void TbMaskFloat_TextInput(object sender, TextChangedEventArgs e)
         {
             TextBox textbox = (TextBox)sender;
+            textbox.Tag = "";
             while (textbox.Text.Length > 1 && textbox.Text[0] == '0' && textbox.Text[1] != ',')
             {
                 textbox.Text = textbox.Text.Substring(1);
@@ -1891,10 +1909,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show("Не удалось найти или открыть файл шаблона!");
                 return;
             }
-            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application();
-            ex.Visible = true;
-            ex.SheetsInNewWorkbook = 1;
-            ex.Interactive = false;
+            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application
+            {
+                Visible = true,
+                SheetsInNewWorkbook = 1,
+                Interactive = false
+            };
             Excel.Workbook workBook = ex.Workbooks.Open(path + fileName);
             ex.DisplayAlerts = false;
             Excel.Worksheet sheet = (Excel.Worksheet)ex.Worksheets.get_Item(1);
@@ -1929,8 +1949,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     connection.Open();
                     for (int j = 7; j <= cellIndex; j++)
                     {
-                        SqlCommand command = new SqlCommand("GetAbiturientCountForStats",connection);
-                        command.CommandType = CommandType.StoredProcedure;
+                        SqlCommand command = new SqlCommand("GetAbiturientCountForStats", connection)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
                         command.Parameters.AddWithValue("@IDPlanPriema", stats[i-5].IDAdmissionPlan);
                         string temp = ex.Cells[4, j].Value;
                         string[] headerValue = temp.Split('-');
@@ -1986,20 +2008,24 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                SqlCommand command = new SqlCommand("GetStats", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("GetStats", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@spec", specialnost);
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    DocSubmissionStat stat = new DocSubmissionStat(7);
-                    stat.IDAdmissionPlan = reader.GetInt32(0);
-                    stat.TotalToAdmissionPlan = reader.GetInt32(1);
-                    stat.AdmissionPlanDogovor = reader.GetInt32(2);
-                    stat.AdmissionPlanPayers = reader.GetInt32(3);
-                    stat.TotalToEntrant = reader.GetInt32(4);
-                    stat.EntrantDogovor = reader.GetInt32(5);
-                    stat.EntrantOutOfCompetition = reader.GetInt32(6);
+                    DocSubmissionStat stat = new DocSubmissionStat(7)
+                    {
+                        IDAdmissionPlan = reader.GetInt32(0),
+                        TotalToAdmissionPlan = reader.GetInt32(1),
+                        AdmissionPlanDogovor = reader.GetInt32(2),
+                        AdmissionPlanPayers = reader.GetInt32(3),
+                        TotalToEntrant = reader.GetInt32(4),
+                        EntrantDogovor = reader.GetInt32(5),
+                        EntrantOutOfCompetition = reader.GetInt32(6)
+                    };
 
                     list.Add(stat);
                 }
@@ -2011,8 +2037,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     int mark = 0;
                     for (double i = startValue; i <= 10 - step; i += step)
                     {
-                        SqlCommand command1 = new SqlCommand("GetAbiturientCountForStats", connection);
-                        command1.CommandType = CommandType.StoredProcedure;
+                        SqlCommand command1 = new SqlCommand("GetAbiturientCountForStats", connection)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
                         command1.Parameters.AddWithValue("@IDPlanPriema", list[j].IDAdmissionPlan);
                         double from = i + (mark == 0 ? 0 : 0.1);
                         double to = i + step;
@@ -2038,8 +2066,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                SqlCommand command = new SqlCommand("Get_PlanPrieaBySpeciality", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Get_PlanPrieaBySpeciality", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@spec", specialnost);
                 SqlDataReader reader = command.ExecuteReader();
                 planPriemaDGsource.Clear();
@@ -2083,8 +2113,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_PlaniPriema", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Get_PlaniPriema", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@specialost", specialost);
                 command.Parameters.AddWithValue("@budjet", CBFinBudjet.IsChecked == true ? "Бюджет" : "");
                 command.Parameters.AddWithValue("@hozrash", CBFinHozrach.IsChecked == true ? "Хозрасчет" : "");
@@ -2114,42 +2146,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void AbiturientTableLoad(int PlanPriemaID)
         {
+            UpdateCurentPlanPriema(PlanPriemaID);
             SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("Get_PlanPrieaByID", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("id", PlanPriemaID);
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                curentPlanPriema = new PlanPriema
-                {
-                    Id = PlanPriemaID,
-                    IdSpec = reader.GetInt32(0),
-                    IdForm = reader.GetInt32(1),
-                    IdFinance = reader.GetInt32(2),
-                    Count = reader.GetInt32(3),
-                    CountCelevihMest = reader.GetInt32(4),
-                    Year = reader.GetString(5),
-                    CodeSpec = reader.GetString(6),
-                    NameSpec = reader.GetString(7),
-                    NameForm = reader.GetString(8),
-                    NameObrazovaie = reader.GetString(9),
-                    NameFinance = reader.GetString(10),
-                    Ct = reader.GetBoolean(11)
-                };
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            finally
-            {
-                connection.Close();
-            }
-
             abiturients = new List<AbiturientDGItem>();
             try
             {
@@ -2218,8 +2216,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
                 try
                 {
-                    SqlCommand command = new SqlCommand("Get_StatiAbiturienta", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+                    SqlCommand command = new SqlCommand("Get_StatiAbiturienta", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     command.Parameters.AddWithValue("@abiturient", abiturients[i].ID);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
@@ -2252,8 +2252,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_AbiturientaFullInfo", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Get_AbiturientaFullInfo", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -2299,8 +2301,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try//Атестаты
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_AbiturientaAttestat", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Get_AbiturientaAttestat", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
@@ -2331,8 +2335,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try//цт
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_AbiturientaSertificati", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Get_AbiturientaSertificati", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
@@ -2349,8 +2355,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             try//Контактные данные
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_AbiturientaKontakti", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SqlCommand command = new SqlCommand("Get_AbiturientaKontakti", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
@@ -2455,9 +2463,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 letter = reader[0].ToString(); ;
                 reader.Close();
 
-                command = new SqlCommand("NextExamList", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("id", PlanPriemaID);
+                command = new SqlCommand("NextExamList", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("id", curentPlanPriema.Id);
                 reader = command.ExecuteReader();
                 reader.Read();
                 if (reader[0] == DBNull.Value)
@@ -2622,6 +2632,47 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 row++;
             }
             planPriemaColumn = col;
+        }
+
+        private void UpdateCurentPlanPriema(int id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("Get_PlanPrieaByID", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("id", id);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                curentPlanPriema = new PlanPriema
+                {
+                    Id = id,
+                    IdSpec = reader.GetInt32(0),
+                    IdForm = reader.GetInt32(1),
+                    IdFinance = reader.GetInt32(2),
+                    Count = reader.GetInt32(3),
+                    CountCelevihMest = reader.GetInt32(4),
+                    Year = reader.GetString(5),
+                    CodeSpec = reader.GetString(6),
+                    NameSpec = reader.GetString(7),
+                    NameForm = reader.GetString(8),
+                    NameObrazovaie = reader.GetString(9),
+                    NameFinance = reader.GetString(10),
+                    Ct = reader.GetBoolean(11)
+                };
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
         #endregion
     }

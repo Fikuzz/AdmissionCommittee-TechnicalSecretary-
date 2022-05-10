@@ -1218,7 +1218,7 @@
                                 <ScrollViewer x:Name="PART_ContentHost" 
                                           Focusable="false" 
                                           HorizontalAlignment="Stretch"
-                                          Margin="20,0,0,0" 
+                                          Margin="15,0" 
                                           HorizontalScrollBarVisibility="Hidden" 
                                           VerticalScrollBarVisibility="Hidden" 
                                           Height="38"
