@@ -486,8 +486,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         abiturient = dataGridAbiturients.SelectedItems[i] as AbiturientDGItem;
                         i++;
                     } while (i < 3 && i < dataGridAbiturients.SelectedItems.Count && abiturient != null);
-                    if (dataGridAbiturients.SelectedItems.Count - 3 > 0)
-                        delItemsName += $"И еще {dataGridAbiturients.SelectedItems.Count - 3} запись(-и)";
+                    if (dataGridAbiturients.SelectedItems.Count > 3)
+                        delItemsName += $"И еще {dataGridAbiturients.SelectedItems.Count - 3} запись(-ей)";
                 }
 
                 if (MessageBox.Show($"Отметить данные записи как удаленные?\n\n {delItemsName}", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -601,9 +601,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             TextBoxSearch_TextChanged(sender, null);
         }
 
-        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void CloseButtonUp(object sender, MouseButtonEventArgs e)
         {
-            PlanPriemaTable.Visibility = Visibility.Hidden;
+            Panel controlElement = (Panel)((Image)sender).Tag;
+            controlElement.Visibility = Visibility.Hidden;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -616,13 +617,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@ID", curentPlanPriema.Id);
-
                 SqlDataReader reader = command.ExecuteReader();
                 List<AbiturientDGItem> list = new List<AbiturientDGItem>();
                 while (reader.Read())
                 {
                     int abiturientID = reader.GetInt32(0);
-                    list.Add(abiturients.Find(x => x.ID == abiturientID));
+                    list.Add(abiturients.Find(_ => _.ID == abiturientID));
                 }
                 reader.Close();
                 abiturients = list;
@@ -2157,32 +2157,30 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 while (reader.Read())
                 {
                     string lgoti = "";
-                    if (Convert.ToBoolean(reader[19]) == true) { lgoti += "Cирота"; }
-                    if (Convert.ToBoolean(reader[20]) == true) { lgoti += (lgoti.Length == 0 ? "" : "\n") + "Договор"; }
+                    if (Convert.ToBoolean(reader[24]) == true) { lgoti += "Cирота"; }
+                    if (Convert.ToBoolean(reader[25]) == true) { lgoti += (lgoti.Length == 0 ? "" : "\n") + "Договор"; }
 
                     string status = "";
                     if (Convert.ToBoolean(reader[4]) == true) { status = "Зачислен"; }
-                    else if (Convert.ToBoolean(reader[17]) == true) { status = "Отозвано"; }
+                    else if (Convert.ToBoolean(reader[22]) == true) { status = "Отозвано"; }
                     else status = "Принято";
 
-                    abiturients.Add(new AbiturientDGItem(Convert.ToInt32(reader[0]),
+                    int[] marks = new int[15];
+                    for (int i = 0; i < 15; i++)
+                        marks[i] = reader[i+5] == DBNull.Value ? 0 : Convert.ToInt32(reader[i + 5]);
+
+                    AbiturientDGItem abiturient = new AbiturientDGItem(Convert.ToInt32(reader[0]),
                         reader[1].ToString(), reader[2].ToString(),
                         Convert.ToInt32(reader[3]),
-                        reader[5] == DBNull.Value ? 0 : Convert.ToInt32(reader[5]),
-                        reader[6] == DBNull.Value ? 0 : Convert.ToInt32(reader[6]),
-                        reader[7] == DBNull.Value ? 0 : Convert.ToInt32(reader[7]),
-                        reader[8] == DBNull.Value ? 0 : Convert.ToInt32(reader[8]),
-                        reader[9] == DBNull.Value ? 0 : Convert.ToInt32(reader[9]),
-                        reader[10] == DBNull.Value ? 0 : Convert.ToInt32(reader[10]),
-                        reader[11] == DBNull.Value ? 0 : Convert.ToInt32(reader[11]),
-                        reader[12] == DBNull.Value ? 0 : Convert.ToInt32(reader[12]),
-                        reader[13] == DBNull.Value ? 0 : Convert.ToInt32(reader[13]),
-                        reader[14] == DBNull.Value ? 0 : Convert.ToInt32(reader[14]),
+                        marks,
                         reader[15] == DBNull.Value ? 0 : Convert.ToDouble(reader[15]),
-                        reader[16].ToString(),
-                        Convert.ToBoolean(reader[17]),
-                        reader[18] == DBNull.Value ? 0 : Convert.ToDouble(reader[18]),
-                        lgoti, status));
+                        reader[21].ToString(),
+                        Convert.ToBoolean(reader[22]),
+                        reader[23] == DBNull.Value ? 0 : Convert.ToDouble(reader[23]),
+                        lgoti, status);
+                    abiturient.ScaleSize = reader.GetInt32(26);
+
+                    abiturients.Add(abiturient);
                 }
 
             }
@@ -2243,6 +2241,24 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             abiturients.Sort((x, y) => x.Num - y.Num);
             dataGridAbiturients.ItemsSource = abiturients;
             dataGridAbiturients.Tag = false;
+
+            int scaleSizeMax = 0;
+            foreach(AbiturientDGItem abitur in abiturients)
+            {
+                if (abitur.ScaleSize > scaleSizeMax)
+                    scaleSizeMax = abitur.ScaleSize;
+            }
+            for(int i = 0; i <= 15; i++)
+            {
+                if(i > scaleSizeMax)
+                {
+                    dataGridAbiturients.Columns[i + 6].Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    dataGridAbiturients.Columns[i + 6].Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void AbiturientInfoShow()
@@ -2675,5 +2691,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         }
         #endregion
+
+        private void Image_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
     }
 }

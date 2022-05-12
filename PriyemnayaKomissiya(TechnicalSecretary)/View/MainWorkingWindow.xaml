@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PriyemnayaKomissiya_TechnicalSecretary_.View"
         mc:Ignorable="d"
-        Background="#FFF6F7FA"
+        Background="{StaticResource MainBackGround}"
         Title="MainWorkingWindow" Height="700" Width="1200" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <!--#region Верхняя панель-->
-        <Border BorderBrush="Black" Background="White" BorderThickness="0" Grid.ColumnSpan="2" CornerRadius="20" Height="80" VerticalAlignment="Top">
+        <Border Background="White" Grid.ColumnSpan="2" CornerRadius="20" Height="80">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="128"/>
@@ -46,7 +46,7 @@
         <!--#endregion-->
 
         <!--#region TabControl | Рабочая область-->
-        <TabControl x:Name="tabWork" TabStripPlacement="Left" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="#FFF6F7FA">
+        <TabControl x:Name="tabWork" TabStripPlacement="Left" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{StaticResource MainBackGround}">
             <TabItem Name="tabItemStats" Style="{DynamicResource TabItemleft}" Margin="0,35,0,-35">
                 <TabItem.Header>
                     <TextBlock TextWrapping="WrapWithOverflow" Text="Работа со сводными ведомостями" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="43" Margin="0,0,0,-10" Width="148" TextAlignment="Center"/>
@@ -214,7 +214,7 @@
                     </Grid>
                     <!--#endregion-->
                     <!--#region Таблица-->
-                    <Grid Visibility="Hidden" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="#FFF6F7FA">
+                    <Grid Visibility="Hidden" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="{StaticResource MainBackGround}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
                             <RowDefinition Height="76"/>
@@ -241,16 +241,21 @@
                                 <DataGridTextColumn Header="ГОД ОКОНЧАНИЯ" Width="12*" Binding="{Binding Year}"/>
                                 <DataGridTextColumn Header="ЛЬГОТЫ" Width="10*" Binding="{Binding Lgoti}"/>
                                 <DataGridTextColumn Header="СТАТЬИ" Width="10*" Binding="{Binding Stati}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="1" Binding="{Binding Mark1}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="2" Binding="{Binding Mark2}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="3" Binding="{Binding Mark3}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="4" Binding="{Binding Mark4}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="5" Binding="{Binding Mark5}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="6" Binding="{Binding Mark6}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="7" Binding="{Binding Mark7}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="8" Binding="{Binding Mark8}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="9" Binding="{Binding Mark9}"/>
-                                <DataGridTextColumn CanUserResize="False" Header="10" Binding="{Binding Mark10}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="1" Binding="{Binding Marks[0]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="2" Binding="{Binding Marks[1]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="3" Binding="{Binding Marks[2]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="4" Binding="{Binding Marks[3]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="5" Binding="{Binding Marks[4]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="6" Binding="{Binding Marks[5]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="7" Binding="{Binding Marks[6]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="8" Binding="{Binding Marks[7]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="9" Binding="{Binding Marks[8]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="10" Binding="{Binding Marks[9]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="11" Binding="{Binding Marks[10]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="12" Binding="{Binding Marks[11]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="13" Binding="{Binding Marks[12]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="14" Binding="{Binding Marks[13]}"/>
+                                <DataGridTextColumn CanUserResize="False" Header="15" Binding="{Binding Marks[14]}"/>
                                 <DataGridTextColumn CanUserResize="False" Header="СРЕДНИЙ БАЛЛ" Width="15*" Binding="{Binding MarkDecAvg}" ElementStyle="{DynamicResource MarkAvgCell}"/>
                                 <DataGridCheckBoxColumn Header="ДОКУМЕНТЫ ВЫДАНЫ" Width="12*" Binding="{Binding DocumentiVidani}"/>
                                 <DataGridTemplateColumn Header="ДЕЙСТВИЕ" Width="120">
@@ -301,13 +306,13 @@
                                 </Image>
                             </Border>
                             <Border Width="33" Height="33" Background="{StaticResource FF576B}" CornerRadius="10" Margin="10,22,10,21">
-                                <Image Source="pack://application:,,,/Resources/Layer 2.png" Margin="5" RenderTransformOrigin="0.478,0.522" MouseLeftButtonUp="Image_MouseLeftButtonUp"/>
+                                <Image Source="pack://application:,,,/Resources/Layer 2.png" Margin="5" Tag="{Binding ElementName=PlanPriemaTable}"  MouseLeftButtonUp="CloseButtonUp"/>
                             </Border>
                         </StackPanel>
                     </Grid>
                     <!--#endregion-->
                     <!--#region Просмотра информации-->
-                    <Grid x:Name="GridInfo" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="3" Margin="0" Background="#FFF6F7FA">
+                    <Grid x:Name="GridInfo" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="3" Margin="0" Background="{StaticResource MainBackGround}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="95"/>
                             <RowDefinition/>
@@ -577,7 +582,7 @@
         </Grid>
         <!--#endregion-->
                     <!--#region форма редактирования записей-->
-                <Grid Visibility="Hidden" x:Name="addEditForm" Grid.ColumnSpan="3" Margin="0,0,-17,0" Grid.Row="2" Background="#FFF6F7FA">
+                <Grid Visibility="Hidden" x:Name="addEditForm" Grid.ColumnSpan="3" Margin="0,0,-17,0" Grid.Row="2" Background="{StaticResource MainBackGround}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="93"/>
                         <ColumnDefinition Width="141*"/>
@@ -1218,7 +1223,7 @@
                     <Label VerticalAlignment="Top" HorizontalAlignment="Center" Content="Специальности" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" RenderTransformOrigin="0.637,1.883" MinWidth="125" MinHeight="30" Grid.Row="1" Height="30" Width="136" Grid.Column="1" Margin="0,1,0,0"/>
                     <TabControl x:Name="TabControl1" SelectedIndex="0" Style="{DynamicResource TabControlStyle}" Grid.Column="2" Grid.Row="1"/>
                     <!--#region Таблица-->
-                    <Grid Visibility="Visible" x:Name="datagridPlanPriema" Grid.ColumnSpan="3" Grid.Row="2" Background="#FFF6F7FA">
+                    <Grid Visibility="Visible" x:Name="datagridPlanPriema" Grid.ColumnSpan="3" Grid.Row="2" Background="{StaticResource MainBackGround}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="76"/>
@@ -1262,13 +1267,15 @@
                             <Button Style="{DynamicResource ButtonStyleObshchiyRED}" FontSize="16" Content="Создать" Width="122" Margin="20,17" Click="Button_AddPlanPriema" />
                         </StackPanel>
                     </Grid>
-                    <Grid Visibility="Hidden" x:Name="datagridPlanPriemaAdd" Grid.ColumnSpan="3" Grid.Row="2" Background="#FFF6F7FA">
+                    <Grid Visibility="Hidden" x:Name="datagridPlanPriemaAdd" Grid.ColumnSpan="3" Grid.Row="2" Background="{StaticResource MainBackGround}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="250*"/>
-                            <ColumnDefinition Width="190*"/>
+                            <ColumnDefinition Width="318*"/>
+                            <ColumnDefinition Width="242*"/>
                             <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="190*"/>
-                            <ColumnDefinition Width="250*"/>
+                            <ColumnDefinition Width="242*"/>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="26"/>
+                            <ColumnDefinition Width="187*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
@@ -1290,23 +1297,24 @@
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="5*"/>
                         </Grid.RowDefinitions>
+                        <Image Source="pack://application:,,,/Resources/Layer 3.png" Grid.Column="5" Grid.Row="1" Tag="{Binding ElementName=datagridPlanPriemaAdd}" MouseLeftButtonUp="CloseButtonUp"/>
                         <Label Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Код специальности"/>
                         <TextBox x:Name="planPrieaADD_kod" Style="{DynamicResource TextBox}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"/>
                         <Label Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Специальность" Grid.ColumnSpan="3"/>
-                        <ComboBox Name="planPriemaADD_Spec" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3"/>
+                        <ComboBox Name="planPriemaADD_Spec" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Height="Auto"/>
                         <Label Grid.Row="7" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Форма обучения"/>
-                        <ComboBox Name="planPriemaADD_ForaObucheniya" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="8" SelectionChanged="PlanPriemaADD_ForaObucheniya_SelectionChanged"/>
+                        <ComboBox Name="planPriemaADD_ForaObucheniya" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="8" SelectionChanged="PlanPriemaADD_ForaObucheniya_SelectionChanged" Height="Auto"/>
                         <Label Grid.Row="7" Grid.Column="3" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Финансирование"/>
-                        <ComboBox Name="planPriemaADD_Finanse" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="3" Grid.Row="8" SelectionChanged="PlanPriemaADD_Finanse_SelectionChanged"/>
+                        <ComboBox Name="planPriemaADD_Finanse" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="3" Grid.Row="8" SelectionChanged="PlanPriemaADD_Finanse_SelectionChanged" Height="Auto"/>
                         <Label Grid.Row="10" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Прием на основе" Grid.ColumnSpan="3"/>
-                        <ComboBox Name="planPriemaADD_Obrazovanie" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="3"/>
+                        <ComboBox Name="planPriemaADD_Obrazovanie" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="3" Height="Auto"/>
                         <Label Grid.Row="13" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Общее количество мест"/>
                         <TextBox x:Name="planPrieaADD_kolvoMest" Text="0" Style="{DynamicResource TextBox}" Grid.Row="14" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus"/>
                         <Label Grid.Row="13" Grid.Column="3" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Количество целевых мест"/>
                         <TextBox x:Name="planPrieaADD_kolvoCelevihMest" Text="0" Style="{DynamicResource TextBox}"  Grid.Row="14" Grid.Column="3" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus"/>
                         <CheckBox x:Name="planPrieaADD_CT" Content="Прием по ЦТ" Style="{DynamicResource CheckBoxStyleObshchiy}" VerticalContentAlignment="Center" FontSize="16" Grid.Row="15" Grid.Column="1" Margin="0,19,0,0" Grid.RowSpan="2" />
                         <Button x:Name="buttonAdd" Visibility="Collapsed" Grid.Column="3" Grid.Row="15" Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Записать" FontSize="16" Click="Button_Add" Margin="0,10,0,0" Grid.RowSpan="2"/>
-                        <Button x:Name="buttonEdit" Grid.Column="3" Grid.Row="15" Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Сохранить" FontSize="16" Click="Button_Edit" Margin="0,10,0,0" Grid.RowSpan="2"/>
+                        <Button x:Name="buttonEdit" Grid.Column="3" Grid.Row="16" Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Сохранить" FontSize="16" Click="Button_Edit"/>
                     </Grid>
                     <!--#endregion-->
                 </Grid>

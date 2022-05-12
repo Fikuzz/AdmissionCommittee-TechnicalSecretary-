@@ -15,8 +15,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
     /// </summary>
     public partial class Autorization : Window
     {
-        private string connectionString;
-        private string groupName = "grp_priem";
+        private readonly string connectionString;
+        private readonly string groupName = "grp_priem";
         public Autorization()
         {
             InitializeComponent();
@@ -48,8 +48,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                     
                 }
             }
-
-            List<GroupPrincipal> result = new List<GroupPrincipal>();
 
             PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
             if (tbLogin.Text != "")
@@ -93,8 +91,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                             else
                             {
                                 reader.Close();
-                                command = new SqlCommand("Add_User", connection);
-                                command.CommandType = CommandType.StoredProcedure;
+                                command = new SqlCommand("Add_User", connection)
+                                {
+                                    CommandType = CommandType.StoredProcedure
+                                };
                                 command.Parameters.AddWithValue("@login", tbLogin.Text);
                                 command.Parameters.AddWithValue("@fio", user.DisplayName);
                                 command.Parameters.AddWithValue("@role", "Test");

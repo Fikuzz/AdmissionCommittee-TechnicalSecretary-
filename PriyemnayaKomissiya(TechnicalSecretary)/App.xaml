@@ -23,6 +23,7 @@
         <SolidColorBrush x:Key="F2F4F7" Color="#F2F4F7"/>
         <SolidColorBrush x:Key="FF576B" Color="#FF576B"/>
         <SolidColorBrush x:Key="1A95B0" Color="#1A95B0"/>
+        <SolidColorBrush x:Key="MainBackGround" Color="#FFF6F7FA"/>
         <!--#endregion-->
 
         <!--#region textboxLogin | tbLogin Логин-->
