@@ -21,5 +21,26 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
         public string NameFinance { get; set; }
         public string NameObrazovaie { get; set; }
         public bool Ct { get; set; }
+        public int Writes { get; set; }
+        public PlanPriema Clone()
+        {
+            return new PlanPriema
+            {
+                Id = this.Id,
+                IdSpec = this.IdSpec,
+                IdForm = this.IdForm,
+                IdFinance = this.IdFinance,
+                Count = this.Count,
+                CountCelevihMest = this.CountCelevihMest,
+                Year = this.Year,
+                CodeSpec = this.CodeSpec,
+                NameSpec = this.NameSpec,
+                NameForm = this.NameForm,
+                NameFinance = this.NameFinance,
+                NameObrazovaie = this.NameObrazovaie,
+                Ct = this.Ct,
+                Writes = this.Writes
+            };
+        }
     }
 }

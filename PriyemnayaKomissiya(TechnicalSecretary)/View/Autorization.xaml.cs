@@ -25,13 +25,14 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
 
         private void BtnSignIn_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
-
-            if (tbPassword.Password == "priemadmin")
+            try
             {
-                string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}' AND IDроли = 4";
-                try
+                SqlConnection connection = new SqlConnection(connectionString);
+
+                if (tbPassword.Password == "priemadmin")
                 {
+                    string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}' AND IDроли = 4";
+
                     SqlCommand command = new SqlCommand(hasUser, connection);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
@@ -43,42 +44,36 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                         return;
                     }
                 }
-                catch
+
+                PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
+                if (tbLogin.Text != "")
                 {
-                    
-                }
-            }
 
-            PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
-            if (tbLogin.Text != "")
-            {
+                    UserPrincipal user = UserPrincipal.FindByIdentity(yourDomain, tbLogin.Text);
 
-                UserPrincipal user = UserPrincipal.FindByIdentity(yourDomain, tbLogin.Text);
-
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "college.local", "DC=college,DC=local", tbLogin.Text, tbPassword.Password))
-                {
-                    if (pc.ValidateCredentials(tbLogin.Text, tbPassword.Password))
+                    using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "college.local", "DC=college,DC=local", tbLogin.Text, tbPassword.Password))
                     {
-                        PrincipalSearchResult<Principal> groups = user.GetGroups();
-                        bool grpCorrect = false;
-                        foreach (GroupPrincipal g in groups)
+                        if (pc.ValidateCredentials(tbLogin.Text, tbPassword.Password))
                         {
-                            if (g.Name == groupName)
+                            PrincipalSearchResult<Principal> groups = user.GetGroups();
+                            bool grpCorrect = false;
+                            foreach (GroupPrincipal g in groups)
                             {
-                                grpCorrect = true;
+                                if (g.Name == groupName)
+                                {
+                                    grpCorrect = true;
+                                }
                             }
-                        }
-                        if (grpCorrect == false)
-                        {
-                            MessageBox.Show("Невозможно получить доступ для данного пользователя.");
-                            tbPassword.Clear();
-                            tbLogin.Focus();
-                            tbLogin.SelectAll();
-                            return;
-                        }
-                        string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}'";
-                        try
-                        {
+                            if (grpCorrect == false)
+                            {
+                                MessageBox.Show("Невозможно получить доступ для данного пользователя.");
+                                tbPassword.Clear();
+                                tbLogin.Focus();
+                                tbLogin.SelectAll();
+                                return;
+                            }
+                            string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}'";
+
                             SqlCommand command = new SqlCommand(hasUser, connection);
                             connection.Open();
                             SqlDataReader reader = command.ExecuteReader();
@@ -105,23 +100,19 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                                 Close();
                             }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show(ex.Message);
+                            tbPassword.SelectAll();
+                            tbPassword.Tag = "Error";
+                            tbLogin.Tag = "Error";
                         }
-                        finally
-                        {
-                            connection.Close();
-                        }
-                    }
-                    else
-                    {
-                        tbPassword.SelectAll();
-
-                        tbPassword.Tag = "Error";
-                        tbLogin.Tag = "Error";
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
             }
         }
         private void TbPassword_PasswordChanged(object sender, RoutedEventArgs e)

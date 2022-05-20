@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PriyemnayaKomissiya_TechnicalSecretary_.Controls;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_.View
@@ -23,7 +25,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         private readonly int UserID;
         private readonly string UserName;
         private List<AbiturientDGItem> abiturients;
-        private readonly List<Canvas> planPriemaButtons = new List<Canvas>();
+        private readonly List<Button> planPriemaButtons = new List<Button>();
         private readonly List<PlanPriema> planPriemaDGsource = new List<PlanPriema>();
 
         #region Общее
@@ -33,18 +35,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             UserID = id;
             UserName = name;
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            planPriemaButtons.Add(BlockPlana1);
-            planPriemaButtons.Add(BlockPlana2);
-            planPriemaButtons.Add(BlockPlana3);
-            planPriemaButtons.Add(BlockPlana4);
-            planPriemaButtons.Add(BlockPlana5);
-            planPriemaButtons.Add(BlockPlana6);
-            planPriemaButtons.Add(BlockPlana7);
-            planPriemaButtons.Add(BlockPlana8);
-            planPriemaButtons.Add(BlockPlana9);
             lUser_FIO.Text = UserName;
         }
-        private void MenuItem_Exit(object sender, RoutedEventArgs e)
+        private void TextBlock_Exit(object sender, MouseButtonEventArgs e)
         {
             Autorization authorization = new Autorization();
             this.Close();
@@ -53,28 +46,24 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            AddEditFormContacts.Tag = 0;
+            addEdifFormAtestati.Tag = 0;
+            addEdifFormCT.Tag = 0;
             var date = new StringBuilder(DateTime.Now.ToString("dddd, d MMMM"));
             date[0] = char.ToUpper(date[0]);
             lDate.Content = date.ToString();
             lbPlanPriemaYear.Content = "ПЛАН ПРИЁМА " + DateTime.Now.Year;
 
             //Заполнение специальностей
-            try
+
+            List<string> specialty = DB.Get_SpecialnostiName(false);
+            foreach (string name in specialty)
             {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_SpecialnostiName", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@useFilter", 0);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
                 {
                     TabItem tabItem = new TabItem
                     {
                         Style = (Style)FindResource("TabItemStyle"),
-                        Header = reader[0]
+                        Header = name
                     };
                     tabItem.PreviewMouseDown += new MouseButtonEventHandler(TabItem_MouseDown);
                     TabControl.Items.Add(tabItem);
@@ -82,7 +71,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     TabItem tabItem1 = new TabItem
                     {
                         Style = (Style)FindResource("TabItemStyle"),
-                        Header = reader[0]
+                        Header = name
                     };
                     tabItem1.PreviewMouseDown += new MouseButtonEventHandler(TabItem1_MouseDown);
                     TabControl1.Items.Add(tabItem1);
@@ -90,19 +79,14 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     TabItem tabItem2 = new TabItem
                     {
                         Style = (Style)FindResource("TabItemStyle"),
-                        Header = reader[0]
+                        Header = name
                     };
                     tabItem2.PreviewMouseDown += new MouseButtonEventHandler(TabItem2_MouseDown);
                     TabControl2.Items.Add(tabItem2);
                 }
-                connection.Close();
                 TabControl.SelectedItem = TabControl.Items[0];
+                PlaniPriemaLoad(((TabItem)TabControl.SelectedItem).Header.ToString());
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            PlaniPriemaLoad(((TabItem)TabControl.SelectedItem).Header.ToString());
         }
 
         private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -127,44 +111,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 PlaniPriemaLoad(((TabItem)TabControl.SelectedItem).Header.ToString());
         }
             #region Выбор плана приема
-        private void PlanPriema_MouseDown(object sender, MouseButtonEventArgs e)
+        private void PlanPriema_MouseDown(object sender, RoutedEventArgs e)
         {
-            Canvas canvas = (Canvas)sender;
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                SqlCommand command = new SqlCommand("Get_PlanPrieaByID", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("id", Convert.ToInt32(canvas.Tag));
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                curentPlanPriema = new PlanPriema
-                {
-                    Id = Convert.ToInt32(canvas.Tag),
-                    IdSpec = reader.GetInt32(0),
-                    IdForm = reader.GetInt32(1),
-                    IdFinance = reader.GetInt32(2),
-                    Count = reader.GetInt32(3),
-                    CountCelevihMest = reader.GetInt32(4),
-                    Year = reader.GetString(5),
-                    CodeSpec = reader.GetString(6),
-                    NameSpec = reader.GetString(7),
-                    NameForm = reader.GetString(8),
-                    NameObrazovaie = reader.GetString(9),
-                    NameFinance = reader.GetString(10),
-                    Ct = reader.GetBoolean(11)
-                };
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
+            Button button = (Button)sender;
+            curentPlanPriema = (PlanPriema)button.Tag;
             PlanPriemaTable.Visibility = Visibility.Visible;
-            LabelFormaObrazovaniya.Text = canvas.Children[2].GetValue(TagProperty).ToString();
+            LabelFormaObrazovaniya.Text = ButtonAdmissionPlanThemeProperties.GetFundingType((Button)sender) + ". " + ButtonAdmissionPlanThemeProperties.GetStudyType((Button)sender);
             AbiturientTableLoad(curentPlanPriema.Id);
             filterCB.SelectedIndex = 0;
         }
@@ -194,7 +146,30 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         }
         #endregion
-            #region Таблица данных
+        #region Таблица данных
+        private void Abiturient_IssueDocuments(object sender, RoutedEventArgs e)
+        {
+            if ((AbiturientDGItem)dataGridAbiturients.SelectedItem == null) return;
+            if (MessageBox.Show($"Отметить данную запись как отозванно?\n\n  {((AbiturientDGItem)dataGridAbiturients.SelectedItem).FIO}", "Выдать документы", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(connectionString);
+                    SqlCommand command = new SqlCommand("Del_AbiturientMarks", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    AbiturientTableLoad(curentPlanPriema.Id);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }//Выдать документы
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
             AbiturientInfoShow();
@@ -218,7 +193,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 ClearData<StackPanel>(addEdifFormCT);
                 ClearData<StackPanel>(AddEditFormPassport);
 
-                try
+                /*try
                 {
                     string sql1 = "SELECT Наименование FROM Шкала";
                     SqlConnection connection1 = new SqlConnection(connectionString);
@@ -235,30 +210,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                }
+                }*/
 
-                try
+                List<string> spec = DB.Get_SpecialnostiName(true);
+                foreach (string name in spec)
                 {
-                    SqlConnection connection = new SqlConnection(connectionString);
-                    SqlCommand command = new SqlCommand("Get_SpecialnostiName", connection)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    command.Parameters.AddWithValue("@useFilter", 1);
-                    connection.Open();
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    addEditFormspecialnost.Items.Clear();
-                    while (reader.Read())
-                    {
-                        addEditFormspecialnost.Items.Add(reader[0]);
-                    }
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    addEditFormspecialnost.Items.Add(name);
                 }
                 addEditFormspecialnost.SelectedIndex = TabControl.SelectedIndex;
                 string[] dataFormiObucheniya = LabelFormaObrazovaniya.Text.ToString().Split('.');
@@ -325,6 +282,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 catch (Exception ex) { MessageBox.Show(ex.Message); }//основные данные и паспортные данные
                 try
                 {
+                    AddEditFormContacts.Children.RemoveRange(0, (int)AddEditFormContacts.Tag);
+                    AddEditFormContacts.Tag = 0;
                     SqlConnection connection = new SqlConnection(connectionString);
                     connection.Open();
 
@@ -334,47 +293,33 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     };
                     command.Parameters.AddWithValue("@abiturient", abiturient.ID);
                     SqlDataReader reader = command.ExecuteReader();
-                    int lastPoint = 0;
                     while (reader.Read())
                     {
-                        for (int i = lastPoint; i < AddEditFormContacts.Children.Count; i++)
-                        {
-                            string Tag = ((StackPanel)AddEditFormContacts.Children[i]).Tag.ToString();
-                            if (Tag == "VisibleField" || Tag == "HIddenField")
-                            {
-                                try
-                                {
-                                    ComboBox comboBox = (ComboBox)((StackPanel)AddEditFormContacts.Children[i]).Children[3];
-                                    string sql = "SELECT Наименование FROM ТипКонтакта";
-                                    SqlConnection connection1 = new SqlConnection(connectionString);
-                                    SqlCommand command1 = new SqlCommand(sql, connection1);
-                                    connection1.Open();
-                                    SqlDataReader reader1 = command1.ExecuteReader();
-                                    comboBox.Items.Clear();
-                                    while (reader1.Read())
-                                        comboBox.Items.Add(reader1[0]);
-                                    comboBox.SelectedIndex = 0;
-                                    connection1.Close();
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show(ex.Message);
-                                }
+                        Visibility btClose = (int)AddEditFormContacts.Tag == 0 ? Visibility.Hidden : Visibility.Visible;
+                        ContactData contact = new ContactData(btClose, (int)AddEditFormContacts.Tag + 1);
+                        AddEditFormContacts.Children.Insert((int)AddEditFormContacts.Tag, contact);
+                        AddEditFormContacts.Tag = (int)AddEditFormContacts.Tag + 1;
 
-                                StackPanel stackPanel = AddEditFormContacts.Children[i] as StackPanel;
-                                stackPanel.Visibility = Visibility.Visible;
-                                ((ComboBox)stackPanel.Children[3]).SelectedItem = reader[2].ToString();
-                                ((Xceed.Wpf.Toolkit.MaskedTextBox)stackPanel.Children[5]).Text = reader[3].ToString();
-                                lastPoint = i + 1;
-                                break;
-                            }
-                        }
+                        contact.cbContactType.SelectedItem = reader.GetString(2);
+                        contact.mtbData.Text = reader.GetString(3);
+                        break;
+                    }
+                    if ((int)AddEditFormContacts.Tag == 0)
+                    {
+                        ContactData contact = new ContactData(Visibility.Hidden, 1);
+                        AddEditFormContacts.Children.Insert(0, contact);
+                        AddEditFormContacts.Tag = 1;
                     }
                     connection.Close();
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }//контактные данные
+                catch (Exception ex) 
+                { 
+                    MessageBox.Show(ex.Message); 
+                }//контактные данные
                 try
                 {
+                    addEdifFormAtestati.Children.RemoveRange(0, (int)addEdifFormAtestati.Tag);
+                    addEdifFormAtestati.Tag = 0;
                     SqlConnection connection = new SqlConnection(connectionString);
                     connection.Open();
 
@@ -384,55 +329,40 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     };
                     command.Parameters.AddWithValue("@abiturient", abiturient.ID);
                     SqlDataReader reader = command.ExecuteReader();
-                    int lastPoint = 0;
+
                     while (reader.Read())
                     {
-                        for (int i = lastPoint; i < addEdifFormAtestati.Children.Count; i++)
+                        Visibility btClose = (int)addEdifFormAtestati.Tag == 0 ? Visibility.Hidden : Visibility.Visible;
+                        Certificate certificate = new Certificate(btClose, (int)addEdifFormAtestati.Tag + 1);
+                        addEdifFormAtestati.Children.Insert((int)addEdifFormAtestati.Tag, certificate);
+                        addEdifFormAtestati.Tag = (int)addEdifFormAtestati.Tag + 1;
+
+                        certificate.tbSeries.Text = reader.GetString(reader.GetOrdinal("Num"));
+                        certificate.cbScaleType.SelectedItem = reader.GetString(reader.GetOrdinal("Scale"));
+                        for (int i = 0; i < certificate.Marks.Count; i++)
                         {
-                            string Tag = ((StackPanel)addEdifFormAtestati.Children[i]).Tag.ToString();
-                            if (Tag == "VisibleField" || Tag == "HIddenField")
-                            {
-                                try
-                                {
-                                    ComboBox comboBox = (ComboBox)((StackPanel)addEdifFormAtestati.Children[i]).Children[7];
-                                    string sql1 = "SELECT Наименование FROM Шкала";
-                                    SqlConnection connection1 = new SqlConnection(connectionString);
-                                    SqlCommand command1 = new SqlCommand(sql1, connection1);
-                                    connection1.Open();
-                                    SqlDataReader reader1 = command1.ExecuteReader();
-                                    comboBox.Items.Clear();
-                                    while (reader1.Read())
-                                        comboBox.Items.Add(reader1[0]);
-                                    addEdifFormAtestati.Height += 450;
-                                    comboBox.SelectedIndex = 0;
-                                    connection1.Close();
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show(ex.Message);
-                                }
-
-                                StackPanel stackPanel = addEdifFormAtestati.Children[i] as StackPanel;
-                                stackPanel.Visibility = Visibility.Visible;
-
-                                ((TextBox)stackPanel.Children[3]).Text = reader[1].ToString();
-
-                                Grid grid = stackPanel.Children[4] as Grid;
-                                for (int j = 4; j < 32; j += 2)
-                                {
-                                    ((TextBox)grid.Children[j]).Text = reader[j / 2].ToString();
-                                }
-                                ((ComboBox)stackPanel.Children[7]).SelectedItem = reader[17].ToString();
-                                lastPoint = i + 1;
+                            if (reader[reader.GetOrdinal("n" + (i + 1))] == DBNull.Value)
                                 break;
-                            }
+                            certificate.Marks[i].Text = reader.GetInt32(reader.GetOrdinal("n" + (i + 1))).ToString();
                         }
+                    }
+                    reader.Close();
+                    if ((int)addEdifFormAtestati.Tag == 0)
+                    {
+                        Certificate certificate = new Certificate(Visibility.Hidden, 1);
+                        addEdifFormAtestati.Children.Insert(0, certificate);
+                        addEdifFormAtestati.Tag = 1;
                     }
                     connection.Close();
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }//Атестаты
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }//Аттестаты
                 try
                 {
+                    addEdifFormCT.Children.RemoveRange(0, (int)addEdifFormCT.Tag);
+                    addEdifFormCT.Tag = 0;
                     SqlConnection connection = new SqlConnection(connectionString);
                     connection.Open();
 
@@ -444,21 +374,37 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        for (int i = 0; i < addEdifFormCT.Children.Count; i++)
-                        {
-                            if (addEdifFormCT.Children[i].Visibility == Visibility.Collapsed)
-                            {
-                                Grid grid = ((StackPanel)addEdifFormCT.Children[i]).Children[2] as Grid;
+                        Visibility btClose = (int)addEdifFormCT.Tag == 0 ? Visibility.Hidden : Visibility.Visible;
+                        CtCertificate ct = new CtCertificate((int)addEdifFormCT.Tag + 1);
+                        addEdifFormCT.Children.Insert((int)addEdifFormCT.Tag, ct);
+                        addEdifFormCT.Tag = (int)addEdifFormCT.Tag + 1;
 
-                                ((TextBox)grid.Children[1]).Text = reader[1].ToString();
-                                ((ComboBox)grid.Children[5]).SelectedItem = reader[2].ToString();
-                                ((Xceed.Wpf.Toolkit.MaskedTextBox)grid.Children[3]).Text = reader[3].ToString();
-                                ((TextBox)grid.Children[7]).Text = reader[4].ToString();
-                                addEdifFormCT.Height += 257;
-                                addEdifFormCT.Children[i].Visibility = Visibility.Visible;
-                                break;
+                        ct.tbSeries.Text = reader.GetString(reader.GetOrdinal("num"));
+                        string disciplin = reader.GetString(reader.GetOrdinal("Дисциплина"));
+                        bool hasDisc = false;
+                        foreach (ComboBoxItem item in ct.cbDisciplin.Items)
+                        {
+                            if (item.Content.ToString() == disciplin)
+                            {
+                                hasDisc = true;
+                                ct.cbDisciplin.SelectedItem = item;
+                                return;
                             }
                         }
+                        if (hasDisc == false)
+                        {
+                            ComboBoxItem item = new ComboBoxItem()
+                            {
+                                Content = disciplin
+                            };
+                            ct.cbDisciplin.Items.Add(item);
+                            ct.cbDisciplin.SelectedItem = item;
+                        }
+                        ct.cbDisciplin.SelectedItem =
+                        ct.mtbYear.Text = reader.GetInt32(reader.GetOrdinal("ГодПрохождения")).ToString();
+                        ct.tbScore.Text = reader.GetInt32(reader.GetOrdinal("Балл")).ToString();
+                        break;
+
                     }
                     connection.Close();
                 }
@@ -551,27 +497,13 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void Abiturient_Delete(object sender, RoutedEventArgs e)
         {
-            if ((AbiturientDGItem)dataGridAbiturients.SelectedItem == null) return;
-            if (MessageBox.Show($"Отметить данную запись как удаленную?\n\n  {((AbiturientDGItem)dataGridAbiturients.SelectedItem).FIO}", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            AbiturientDGItem abiturient = (AbiturientDGItem)dataGridAbiturients.SelectedItem;
+            MessageBoxResult acceptDeletion = MessageBox.Show("Удалить выбранную запись?\n" + abiturient.FIO, "Удаление", MessageBoxButton.YesNo);
+            if (acceptDeletion == MessageBoxResult.Yes)
             {
-                try
-                {
-                    SqlConnection connection = new SqlConnection(connectionString);
-                    SqlCommand command = new SqlCommand("Del_AbiturientMarks", connection)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                    AbiturientTableLoad(curentPlanPriema.Id);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                DB.DeleteAllAbiturientDataInTable(abiturient.ID, "Абитуриент");
+                AbiturientTableLoad(curentPlanPriema.Id);
+                GridInfo.Visibility = Visibility.Hidden;
             }
         }
 
@@ -964,8 +896,18 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
             }
         }
-            #endregion
+        #endregion
             #region редактирование записи
+        private void InUpperLetter(object sender, TextCompositionEventArgs e)
+        {
+            TextBox textBox = ((TextBox)sender);
+            if (textBox.Text.Length == 0)
+            {
+                textBox.Text = e.Text.ToUpper();
+                textBox.SelectionStart = 1;
+                e.Handled = true;
+            }
+        }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (((CheckBox)sender).IsChecked == true)
@@ -993,87 +935,18 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             else
                 ((Xceed.Wpf.Toolkit.MaskedTextBox)sender).Tag = "Error";
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (((TextBox)sender).Text == "")
-                ((TextBox)sender).Tag = "Error";
-            else
-                ((TextBox)sender).Tag = "";
-        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < AddEditFormContacts.Children.Count; i++)
-            {
-                if (AddEditFormContacts.Children[i].Visibility == Visibility.Collapsed)
-                {
-                    try
-                    {
-                        ComboBox comboBox = (ComboBox)((StackPanel)AddEditFormContacts.Children[i]).Children[3];
-                        string sql = "SELECT Наименование FROM ТипКонтакта";
-                        SqlConnection connection = new SqlConnection(connectionString);
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-                        comboBox.Items.Clear();
-                        while (reader.Read())
-                            comboBox.Items.Add(reader[0]);
-                        comboBox.SelectedIndex = 0;
-                        connection.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-
-                    AddEditFormContacts.Children[i].Visibility = Visibility.Visible;
-                    break;
-                }
-            }
+            ContactData contact = new ContactData(Visibility.Visible, (int)AddEditFormContacts.Tag + 1);
+            AddEditFormContacts.Children.Insert((int)AddEditFormContacts.Tag, contact);
+            AddEditFormContacts.Tag = (int)AddEditFormContacts.Tag + 1;
         }//добавление нового контакта
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Xceed.Wpf.Toolkit.MaskedTextBox textBox = ((StackPanel)((ComboBox)sender).Parent).Children[5] as Xceed.Wpf.Toolkit.MaskedTextBox;
-            switch (((ComboBox)sender).SelectedIndex)
-            {
-                case 0:
-                    textBox.Mask = "+0## 00 000-00-00";
-                    textBox.Text = "+375";
-                    break;
-                default:
-                    textBox.Mask = "";
-                    textBox.Text = "";
-                    break;
-            }
-        }
         private void Button_NewAtestat(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < addEdifFormAtestati.Children.Count; i++)
-            {
-                if (addEdifFormAtestati.Children[i].Visibility == Visibility.Collapsed)
-                {
-                    try
-                    {
-                        ComboBox comboBox = (ComboBox)((StackPanel)addEdifFormAtestati.Children[i]).Children[7];
-                        string sql = "SELECT Наименование FROM Шкала";
-                        SqlConnection connection = new SqlConnection(connectionString);
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-                        comboBox.Items.Clear();
-                        while (reader.Read())
-                            comboBox.Items.Add(reader[0]);
-                        comboBox.SelectedIndex = 0;
-                        connection.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                    addEdifFormAtestati.Height += 450;
-                    addEdifFormAtestati.Children[i].Visibility = Visibility.Visible;
-                    break;
-                }
-            }
+            Certificate certificate = new Certificate(Visibility.Visible, (int)addEdifFormAtestati.Tag + 1);
+            addEdifFormAtestati.Children.Insert((int)addEdifFormAtestati.Tag, certificate);
+            addEdifFormAtestati.Tag = (int)addEdifFormAtestati.Tag + 1;
         }
         private void Tb_IdentNuber_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -1095,24 +968,13 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsTextAllowed(e.Text);
-        }
-        private static readonly Regex _regex = new Regex("[^0-9]+");
-        private static bool IsTextAllowed(string text)
-        {
-            return !_regex.IsMatch(text);
+            e.Handled = !PLib.IsTextAllowed(e.Text);
         }
         private void ButtonNewSertificatCT(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < addEdifFormCT.Children.Count; i++)
-            {
-                if (addEdifFormCT.Children[i].Visibility == Visibility.Collapsed)
-                {
-                    addEdifFormCT.Height += 257;
-                    addEdifFormCT.Children[i].Visibility = Visibility.Visible;
-                    break;
-                }
-            }
+            CtCertificate ct = new CtCertificate((int)addEdifFormCT.Tag + 1);
+            addEdifFormCT.Children.Insert((int)addEdifFormCT.Tag, ct);
+            addEdifFormCT.Tag = (int)addEdifFormCT.Tag + 1;
         }
         private void Button_PrewPage(object sender, RoutedEventArgs e)
         {
@@ -1139,7 +1001,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void Button_NextStep_2(object sender, RoutedEventArgs e)
         {
-            if (Correct_2())
+            if (PLib.FormIsCorrect<ContactData>(AddEditFormContacts))
             {
                 ((TabItem)TabControlAddEditForm.SelectedItem).Tag = "True";
                 TabControlAddEditForm.SelectedIndex++;
@@ -1148,7 +1010,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void Button_NextStep_3(object sender, RoutedEventArgs e)
         {
-            if (Correct_3())
+            if ((PLib.FormIsCorrect<Certificate>(addEdifFormAtestati)))
             {
                 ((TabItem)TabControlAddEditForm.SelectedItem).Tag = "True";
                 TabControlAddEditForm.SelectedIndex++;
@@ -1158,7 +1020,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void Button_NextStep_4(object sender, RoutedEventArgs e)
         {
-            if (Correct_4())
+            if (PLib.FormIsCorrect<CtCertificate>(addEdifFormCT))
             {
                 ((TabItem)TabControlAddEditForm.SelectedItem).Tag = "True";
                 TabControlAddEditForm.SelectedIndex++;
@@ -1167,227 +1029,71 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         //завершение редактирования
         private void Button_EditEnd(object sender, RoutedEventArgs e)
         {
-            if (!InputIsCorrect()) return;
-
-            try
+            if (!InputIsCorrect())
             {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Update_MainData", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@surename", addEditFormSurename.Text);
-                command.Parameters.AddWithValue("@name", addEditFormName.Text);
-                command.Parameters.AddWithValue("@otchestvo", addEditFormOtchestvo.Text);
-                command.Parameters.AddWithValue("@shool", addEditFormShool.Text);
-                command.Parameters.AddWithValue("@graduationYear", addEditFormGraduationYear.Text);
-                command.Parameters.AddWithValue("@grajdaninRB", AddFormChekBoxGrajdanstvo.IsChecked == true ? 1 : 0);
-                command.Parameters.AddWithValue("@grajdanstvo", AddFormGrajdanstvo.Text);
-                command.Parameters.AddWithValue("@obshejitie", addEditFormObshejitie.IsChecked == true ? 1 : 0);
-                command.Parameters.AddWithValue("@planPriema", curentPlanPriema.Id);
-                command.Parameters.AddWithValue("@workPlase", textBoxWorkPlace.Text);
-                command.Parameters.AddWithValue("@doljnost", textBoxDoljnost.Text);
-                command.Parameters.AddWithValue("@sirota", addEditForm_CheckBox_DetiSiroti.IsChecked == true ? 1 : 0);
-                command.Parameters.AddWithValue("@dogovor", addEditForm_CheckBox_Dogovor.IsChecked == true ? 1 : 0);
-                command.Parameters.AddWithValue("@redaktor", UserID);
-                command.Parameters.AddWithValue("@abiturient", AbiturientID);
-                command.Parameters.AddWithValue("@ExamList", addEditFormExamList.Text);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Основные данные");
                 return;
-            }//Основные данные +-
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                string sqldel = $"DELETE FROM КонтактныеДанные WHERE IDАбитуриента = {AbiturientID}";
-                SqlCommand del = new SqlCommand(sqldel, connection);
-                del.ExecuteNonQuery();
-                for (int i = 0; i < AddEditFormContacts.Children.Count - 1; i++)
-                {
-                    if (AddEditFormContacts.Children[i].Visibility == Visibility.Visible && (AddEditFormContacts.Children[i] as StackPanel) != null)
-                    {
-                        StackPanel stackPanel = AddEditFormContacts.Children[i] as StackPanel;
+            }
+            DB.UpdateAbiturientMainData(AbiturientID,
+                addEditFormSurename.Text,
+                addEditFormName.Text,
+                addEditFormOtchestvo.Text,
+                addEditFormShool.Text,
+                addEditFormGraduationYear.Text,
+                AddFormChekBoxGrajdanstvo.IsChecked == true,
+                AddFormGrajdanstvo.Text,
+                addEditFormObshejitie.IsChecked == true,
+                curentPlanPriema.Id,
+                textBoxWorkPlace.Text,
+                textBoxDoljnost.Text,
+                addEditForm_CheckBox_DetiSiroti.IsChecked == true,
+                addEditForm_CheckBox_Dogovor.IsChecked == true,
+                UserID,
+                addEditFormExamList.Text);
+            //Основные данные 
 
-                        SqlCommand command = new SqlCommand("Add_ContctData", connection)
-                        {
-                            CommandType = CommandType.StoredProcedure
-                        };
-                        command.Parameters.AddWithValue("@abiturient", AbiturientID);
-                        command.Parameters.AddWithValue("@svedeniya", ((TextBox)stackPanel.Children[5]).Text.Replace("_", string.Empty));
-                        command.Parameters.AddWithValue("@contactType", ((ComboBox)stackPanel.Children[3]).SelectedItem);
-                        command.ExecuteNonQuery();
+            DB.DeleteAllAbiturientDataInTable(AbiturientID, "КонтактныеДанные");
+            for (int i = 0; i < (int)AddEditFormContacts.Tag; i++)
+            {
+                if (AddEditFormContacts.Children[i] is ContactData contactData)
+                {
+                    DB.InsertContactData(contactData, AbiturientID);
+                }
+            } //Контактные данные* ?
+
+            DB.DeleteAllAbiturientDataInTable(AbiturientID, "Атестат");
+            for (int i = 0; i < (int)addEdifFormAtestati.Tag; i++)
+            {
+                if (addEdifFormAtestati.Children[i] is Certificate certificate)
+                {
+                    DB.InsertCertificate(certificate, AbiturientID);
+                }
+            } //Образование* ?
+
+            DB.DeleteAllAbiturientDataInTable(AbiturientID, "СертификатЦТ");
+            for (int i = 0; i < (int)addEdifFormCT.Tag; i++)
+            {
+                if (addEdifFormCT.Children[i] is CtCertificate ct)
+                {
+                    DB.InsertCtCertificate(ct, AbiturientID);
+                }
+            } //Сертификаты ЦТ* ?
+
+            DB.UpdatePasportData(AbiturientID, PassportDateVidachi.Text, dateOfBirth.Text, PassportSeriya.Text, PassportNomer.Text, PassportVidan.Text, PassportIdentNum.Text);
+            //Паспортные данные*
+
+            DB.DeleteAllAbiturientDataInTable(AbiturientID, "СтатьиАбитуриента");
+
+            for (int i = 0; i < 2; i++)
+            {
+                StackPanel stackPanel = (StackPanel)Stati.Children[i];
+                for (int j = 0; j < 3; j++)
+                {
+                    CheckBox checkBox = (CheckBox)stackPanel.Children[j];
+                    if (checkBox.IsChecked == true)
+                    {
+                        DB.InsertArticles(AbiturientID, (string)checkBox.Content);
                     }
                 }
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Контактные данные");
-            }//Контактные данные* ?
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                string sqldel = $"DELETE FROM Атестат WHERE IDАбитуриента = {AbiturientID}";
-                SqlCommand del = new SqlCommand(sqldel, connection);
-                del.ExecuteNonQuery();
-                for (int i = 0; i < addEdifFormAtestati.Children.Count - 1; i++)
-                {
-                    if (addEdifFormAtestati.Children[i].Visibility == Visibility.Visible && (addEdifFormAtestati.Children[i] as StackPanel) != null)
-                    {
-                        StackPanel stackPanel = addEdifFormAtestati.Children[i] as StackPanel;
-
-                        List<int> marks = new List<int>();
-                        List<int> marksDec = new List<int>();
-                        Grid grid = stackPanel.Children[4] as Grid;
-
-                        for (int j = 4; j < 32; j += 2)
-                        {
-                            if (((TextBox)grid.Children[j]).Text != "")
-                            {
-                                marks.Add(Convert.ToInt16(((TextBox)grid.Children[j]).Text));
-                            }
-                            else break;
-                        }
-
-                        double sum = 0;
-                        int col = 0;
-                        for (int j = 0; j < marks.Count; j++)
-                        {
-                            sum += (marks[j]) * (j + 1);
-                            col += marks[j];
-                        }
-                        double markAvg = sum / col;
-
-
-                        SqlCommand command = new SqlCommand("Add_Atestat", connection)
-                        {
-                            CommandType = CommandType.StoredProcedure
-                        };
-                        command.Parameters.AddWithValue("@abiturient", AbiturientID);
-                        command.Parameters.AddWithValue("@scaleName", ((ComboBox)stackPanel.Children[7]).SelectedItem);
-                        command.Parameters.AddWithValue("@attestatSeries", ((TextBox)stackPanel.Children[3]).Text);
-                        command.Parameters.AddWithValue("@avgMarks", Math.Round(markAvg, 2));
-                        SqlDataReader reader = command.ExecuteReader();
-                        reader.Read();
-                        int AtestatID = (int)reader[0];
-                        reader.Close();
-                        for (int j = 0; j < marks.Count; j++)
-                        {
-                            command = new SqlCommand("Add_Mark", connection)
-                            {
-                                CommandType = CommandType.StoredProcedure
-                            };
-                            command.Parameters.AddWithValue("@attestat", AtestatID);
-                            command.Parameters.AddWithValue("@mark", j + 1);
-                            command.Parameters.AddWithValue("@colvo", marks[j]);
-                            command.ExecuteNonQuery();
-                        }
-
-                    }
-                }
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Образование");
-            }//Образование* ?
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                string sqldel = $"DELETE FROM СертификатЦТ WHERE IDАбитуриента = {AbiturientID}";
-                SqlCommand del = new SqlCommand(sqldel, connection);
-                del.ExecuteNonQuery();
-                for (int i = 0; i < addEdifFormCT.Children.Count - 1; i++)
-                {
-                    if (addEdifFormCT.Children[i].Visibility == Visibility.Visible && (addEdifFormCT.Children[i] as StackPanel) != null)
-                    {
-                        Grid grid = (Grid)(addEdifFormCT.Children[i] as StackPanel).Children[2];
-
-                        SqlCommand command = new SqlCommand("Add_Sertificat", connection)
-                        {
-                            CommandType = CommandType.StoredProcedure
-                        };
-                        command.Parameters.AddWithValue("@sertificat", AbiturientID);
-                        command.Parameters.AddWithValue("@disciplin", ((ComboBoxItem)((ComboBox)grid.Children[5]).SelectedItem).Content);
-                        command.Parameters.AddWithValue("@mark", ((TextBox)grid.Children[7]).Text);
-                        command.Parameters.AddWithValue("@decMark", (Convert.ToDouble(((TextBox)grid.Children[7]).Text) / 10).ToString().Replace(',', '.'));
-                        command.Parameters.AddWithValue("@year", ((TextBox)grid.Children[3]).Text);
-                        command.Parameters.AddWithValue("@serialNum", ((TextBox)grid.Children[1]).Text);
-                        command.ExecuteNonQuery();
-                    }
-                }
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Сертификаты ЦТ");
-            }//Сертификаты ЦТ* ?
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Update_PasportData", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@dateVidachi", PassportDateVidachi.Text);
-                command.Parameters.AddWithValue("@dateOfBirth", dateOfBirth.Text);
-                command.Parameters.AddWithValue("@seriya", PassportSeriya.Text);
-                command.Parameters.AddWithValue("@pasportNum", PassportNomer.Text);
-                command.Parameters.AddWithValue("@vidan", PassportVidan.Text);
-                command.Parameters.AddWithValue("@identNum", PassportIdentNum.Text);
-                command.Parameters.AddWithValue("@abiturient", AbiturientID);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Паспортные данные");
-            }//Паспортные данные*
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                string sqldel = $"DELETE FROM СтатьиАбитуриента WHERE IDАбитуриента = {AbiturientID}";
-                SqlCommand del = new SqlCommand(sqldel, connection);
-                del.ExecuteNonQuery();
-                for (int i = 0; i < 2; i++)
-                {
-                    StackPanel stackPanel = (StackPanel)Stati.Children[i];
-                    for (int j = 0; j < 3; j++)
-                    {
-                        CheckBox checkBox = (CheckBox)stackPanel.Children[j];
-                        if (checkBox.IsChecked == true)
-                        {
-                            string sql1 = $"SELECT IDСтатьи FROM Статьи WHERE ПолноеНаименование LIKE N'{checkBox.Content}'";
-                            SqlCommand command = new SqlCommand(sql1, connection);
-                            SqlDataReader reader = command.ExecuteReader();
-                            reader.Read();
-
-                            command = new SqlCommand("Add_Stati", connection)
-                            {
-                                CommandType = CommandType.StoredProcedure
-                            };
-                            command.Parameters.AddWithValue("@abiturient", AbiturientID);
-                            command.Parameters.AddWithValue("@statya", reader[0]);
-                            reader.Close();
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Статьи");
             }//Статьи* ?
             AbiturientTableLoad(curentPlanPriema.Id);
             addEditForm.Visibility = Visibility.Hidden;
@@ -1482,7 +1188,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                UpdateCurentPlanPriema(reader.GetInt32(0));
+                curentPlanPriema = DB.Get_PlanPriemaByID(reader.GetInt32(0));
                 SetExamList();
                 reader.Close();
                 connection.Close();
@@ -1533,17 +1239,17 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         break;
 
                     case 1:
-                        if (Correct_2()) ((TabItem)TabControlAddEditForm.Items[1]).Tag = "True";
+                        if (PLib.FormIsCorrect<ContactData>(AddEditFormContacts)) ((TabItem)TabControlAddEditForm.Items[1]).Tag = "True";
                         else ((TabItem)TabControlAddEditForm.Items[1]).Tag = "";
                         break;
 
                     case 2:
-                        if (Correct_3()) ((TabItem)TabControlAddEditForm.Items[2]).Tag = "True";
+                        if (PLib.FormIsCorrect<Certificate>(addEdifFormAtestati)) ((TabItem)TabControlAddEditForm.Items[2]).Tag = "True";
                         else ((TabItem)TabControlAddEditForm.Items[2]).Tag = "";
                         break;
 
                     case 3:
-                        if (Correct_4()) ((TabItem)TabControlAddEditForm.Items[3]).Tag = "True";
+                        if (PLib.FormIsCorrect<CtCertificate>(addEdifFormCT)) ((TabItem)TabControlAddEditForm.Items[3]).Tag = "True";
                         else ((TabItem)TabControlAddEditForm.Items[3]).Tag = "";
                         break;
                 }
@@ -2104,49 +1810,39 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void PlaniPriemaLoad(string specialost)
         {
-            foreach (Canvas canvas in planPriemaButtons)
-            {
-                canvas.Visibility = Visibility.Hidden;
-            }
+            Brush[] colors = { new SolidColorBrush(Color.FromRgb(255, 87, 107)), new SolidColorBrush(Color.FromRgb(26, 149, 176)), new SolidColorBrush(Color.FromRgb(68, 166, 212)), new SolidColorBrush(Color.FromRgb(220, 136, 51)), new SolidColorBrush(Color.FromRgb(93, 79, 236)) };
+            int i = 0;
+            planPriemaButtons.Clear();
+            grdAdmissionPlans.Children.Clear();
 
-            int buttInd = 0;
-            try
+            List<PlanPriema> AdmissionsPlans = DB.Get_PlaniPriema(specialost, CBFinBudjet.IsChecked, CBFinHozrach.IsChecked, CBObrBaz.IsChecked, CBObrsred.IsChecked, CBFormDnev.IsChecked, CBformZaoch.IsChecked);
+            foreach (PlanPriema plan in AdmissionsPlans)
             {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_PlaniPriema", connection)
+                Button button = new Button()
                 {
-                    CommandType = CommandType.StoredProcedure
+                    Style = (Style)FindResource("AdmissionPlan"),
                 };
-                command.Parameters.AddWithValue("@specialost", specialost);
-                command.Parameters.AddWithValue("@budjet", CBFinBudjet.IsChecked == true ? "Бюджет" : "");
-                command.Parameters.AddWithValue("@hozrash", CBFinHozrach.IsChecked == true ? "Хозрасчет" : "");
-                command.Parameters.AddWithValue("@bazovoe", CBObrBaz.IsChecked == true ? "На основе базового образования" : "");
-                command.Parameters.AddWithValue("@srednee", CBObrsred.IsChecked == true ? "На основе среднего образования" : "");
-                command.Parameters.AddWithValue("@dnevnaya", CBFormDnev.IsChecked == true ? "Дневная" : "");
-                command.Parameters.AddWithValue("@zaochnaya", CBformZaoch.IsChecked == true ? "Заочная" : "");
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    Canvas canvas = planPriemaButtons[buttInd];
-                    canvas.Tag = reader[5];
-                    canvas.Visibility = Visibility.Visible;
-                    canvas.Children[2].SetValue(TextBlock.TextProperty, reader[3].ToString().ToUpper());
-                    canvas.Children[3].SetValue(TextBlock.TextProperty, reader[2].ToString().ToUpper() + ". " + reader[4]);
-                    canvas.Children[5].SetValue(TextBlock.TextProperty, reader[6].ToString());
-                    canvas.Children[2].SetValue(TextBlock.TagProperty, reader[3].ToString() + ". " + reader[2].ToString() + ". " + reader[4].ToString());
-                    buttInd++;
-                }
-                connection.Close();
+                button.Click += PlanPriema_MouseDown;
+                planPriemaButtons.Add(button);
+                button.Tag = plan;
+                ButtonAdmissionPlanThemeProperties.SetFundingType(button, plan.NameForm.ToUpper());
+                ButtonAdmissionPlanThemeProperties.SetStudyType(button, plan.NameFinance + ". " + plan.NameObrazovaie);
+                ButtonAdmissionPlanThemeProperties.SetWritesCount(button, plan.Writes.ToString());
+                ButtonAdmissionPlanThemeProperties.SetTickBrush(button, colors[i]);
+                grdAdmissionPlans.Children.Add(button);
+                i++;
+                if (i == 4) i = 0;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            planPriemaColumn = 0;
+            MainWorkingWindowForm_SizeChanged(null, null);
+        }
+        private void ClearError(object sender, TextChangedEventArgs e)
+        {
+            PLib.ClearError(sender);
         }
         private void AbiturientTableLoad(int PlanPriemaID)
         {
-            UpdateCurentPlanPriema(PlanPriemaID);
+            curentPlanPriema = DB.Get_PlanPriemaByID(PlanPriemaID);
             SqlConnection connection = new SqlConnection(connectionString);
             abiturients = new List<AbiturientDGItem>();
             try
@@ -2211,31 +1907,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             for (int i = 0; i < abiturients.Count; i++)
             {
                 abiturients[i].Num = i + 1;
-
-                try
-                {
-                    SqlCommand command = new SqlCommand("Get_StatiAbiturienta", connection)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    command.Parameters.AddWithValue("@abiturient", abiturients[i].ID);
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    string statyi = "";
-                    while (reader.Read())
-                    {
-                        statyi += reader[0] + " ";
-                    }
-                    abiturients[i].Stati = statyi;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+                string statyi = DB.Get_StatiAbiturienta(abiturients[i].ID);
+                abiturients[i].Stati = statyi;
             }
             GridCountWrite.Text = abiturients.Count.ToString();
             abiturients.Sort((x, y) => x.Num - y.Num);
@@ -2260,55 +1933,57 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
-
         private void AbiturientInfoShow()
         {
             if ((AbiturientDGItem)dataGridAbiturients.SelectedItem == null) return;
             GridInfo.Visibility = Visibility.Visible;
             try
             {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Get_AbiturientaFullInfo", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@abiturient", ((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
+                Abiturient abiturient = DB.Get_AbiturientFullInfo(((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID);
 
-                InfoFIO.Text = reader[0].ToString();
-                infoSchool.Text = reader[1].ToString();
-                infoYear.Text = reader[2].ToString();
-                infoDate.Text = reader[3].ToString() != "" ? DateTime.Parse(reader[3].ToString()).ToString("D") : "-";
+                InfoFIO.Text = abiturient.FIO;
+                infoSchool.Text = abiturient.Shool;
+                infoYear.Text = abiturient.YearOfGraduation;
+                infoDate.Text = abiturient.BirthDate;
                 infoLgoti.Text = ((AbiturientDGItem)dataGridAbiturients.SelectedItem).Lgoti.Replace('\n', ' ');
-                if (infoLgoti.Text == "") infoLgotiTB.Visibility = Visibility.Collapsed; else infoLgotiTB.Visibility = Visibility.Visible;
+                if (infoLgoti.Text == "")
+                    infoLgotiTB.Visibility = Visibility.Collapsed;
+                else
+                    infoLgotiTB.Visibility = Visibility.Visible;
                 infoStati.Text = ((AbiturientDGItem)dataGridAbiturients.SelectedItem).Stati.Replace('\n', ' ');
-                if (infoStati.Text == "") infoStatiTB.Visibility = Visibility.Collapsed; else infoStatiTB.Visibility = Visibility.Visible;
-                infoDateVidoci.Text = reader[4].ToString() != "" ? DateTime.Parse(reader[4].ToString()).ToString("D") : "-";
-                infoSeriya.Text = reader[5].ToString();
-                infoPassNum.Text = reader[6].ToString();
-                infokemvidan.Text = reader[7].ToString();
-                infoIdentNum.Text = reader[8].ToString();
-                infoGrajdanstvo.Text = reader[9].ToString();
-                if (reader[10].ToString() == "")
+                if (infoStati.Text == "")
+                    infoStatiTB.Visibility = Visibility.Collapsed;
+                else
+                    infoStatiTB.Visibility = Visibility.Visible;
+                infoDateVidoci.Text = abiturient.PassportDateIssued;
+                infoSeriya.Text = abiturient.PassportSeries;
+                infoPassNum.Text = abiturient.PassportNum;
+                infokemvidan.Text = abiturient.PassportIssuedBy;
+                infoIdentNum.Text = abiturient.PassportIdentnum;
+                infoGrajdanstvo.Text = abiturient.Сitizenship;
+                if (abiturient.WorkPlase == "")
                 {
                     RowInfoWork.Height = new GridLength(0);
                 }
                 else
                 {
-                    infoMestoRaboti.Text = reader[10].ToString();
-                    infoDoljnost.Text = reader[11].ToString();
+                    infoMestoRaboti.Text = abiturient.WorkPlase;
+                    infoDoljnost.Text = abiturient.Position;
                     RowInfoWork.Height = new GridLength(91);
                 }
-                infoVladelec.Text = reader[12].ToString();
-                infoRedaktor.Text = reader[13].ToString();
-                if (infoRedaktor.Text == "") infoRedaktorTB.Visibility = Visibility.Hidden; else infoRedaktorTB.Visibility = Visibility.Visible;
-                infoDateVvoda.Text = reader[14].ToString();
-                infoDateRedact.Text = reader[15].ToString();
-                if (infoDateRedact.Text == "") infoDateRedactTB.Visibility = Visibility.Hidden; else infoDateRedactTB.Visibility = Visibility.Visible;
-                if ((bool)reader[16]) InfoShow_Status.Text = "Зачислен"; else if ((bool)reader[17]) InfoShow_Status.Text = "Отозвано"; else InfoShow_Status.Text = "Принято";
-                connection.Close();
+                infoVladelec.Text = abiturient.Vladelec;
+                infoRedaktor.Text = abiturient.Editor;
+                if (infoRedaktor.Text == "")
+                    infoRedaktorTB.Visibility = Visibility.Hidden;
+                else
+                    infoRedaktorTB.Visibility = Visibility.Visible;
+                infoDateVvoda.Text = abiturient.Date;
+                infoDateRedact.Text = abiturient.EditDate;
+                if (infoDateRedact.Text == "")
+                    infoDateRedactTB.Visibility = Visibility.Hidden;
+                else
+                    infoDateRedactTB.Visibility = Visibility.Visible;
+                InfoShow_Status.Text = abiturient.Status;
             }
             catch (Exception ex)
             {
@@ -2410,51 +2085,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             //проверка корректности всех вкладок
             foreach (TabItem tabItem in TabControlAddEditForm.Items)
             {
-                if (tabItem.Tag.ToString() != "True")
+                if (tabItem.Tag.ToString() != "True" && tabItem.IsEnabled == true)
                 {
                     TabControlAddEditForm.SelectedItem = tabItem;
                     return false;
-                }
-            }
-
-            for (int i = 0; i < addEdifFormAtestati.Children.Count - 1; i++)
-            {
-                if (addEdifFormAtestati.Children[i].Visibility == Visibility.Visible && (addEdifFormAtestati.Children[i] as StackPanel) != null)
-                {
-                    SqlConnection connection = new SqlConnection(connectionString);
-                    connection.Open();
-
-                    StackPanel stackPanel = addEdifFormAtestati.Children[i] as StackPanel;
-                    Grid grid = stackPanel.Children[4] as Grid;
-                    for (int j = 4; j < 32; j += 2)
-                    {
-                        ((TextBox)grid.Children[j]).Tag = "";
-                    }
-                    bool error = false;
-                    try
-                    {
-                        SqlCommand comm = new SqlCommand($"SELECT КоличествоБаллов FROM Шкала WHERE Наименование = '{((ComboBox)stackPanel.Children[7]).SelectedItem}'", connection);
-                        SqlDataReader reader = comm.ExecuteReader();
-                        reader.Read();
-                        int count = Convert.ToInt16(reader[0]);
-                        reader.Close();
-                        for (int j = 4; j < 32; j += 2)
-                        {
-                            if ((((TextBox)grid.Children[j]).Text == "" && count * 2 + 4 > j) ||
-                                (((TextBox)grid.Children[j]).Text != "" && count * 2 + 4 <= j))
-                            {
-                                error = true;
-                                ((TextBox)grid.Children[j]).Tag = "Error";
-                            }
-                        }
-                    }
-                    catch { }
-
-                    if (error)
-                    {
-                        TabControlAddEditForm.SelectedIndex = 2;
-                        return false;
-                    }
                 }
             }
             return true;
@@ -2470,28 +2104,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             string additional = "";
             try
             {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                string sql1 = $"SELECT Буква FROM Специальность WHERE Наименование = '{addEditFormspecialnost.SelectedValue}'";
-                SqlCommand command = new SqlCommand(sql1, connection);
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                letter = reader[0].ToString(); ;
-                reader.Close();
-
-                command = new SqlCommand("NextExamList", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("id", curentPlanPriema.Id);
-                reader = command.ExecuteReader();
-                reader.Read();
-                if (reader[0] == DBNull.Value)
-                    num = 1;
-                else
-                    num = Convert.ToInt32(reader[0]);
-                reader.Close();
-                connection.Close();
+                letter = DB.Get_SpecialtyLetter((string)addEditFormspecialnost.SelectedValue);
+                num = DB.Get_NextExamList(curentPlanPriema.Id);
                 if (addEditFormobushenie.SelectedValue.ToString() == "Заочная")
                     additional = "зб";
                 else if (addEditFormFinansirovanie.SelectedValue.ToString() == "Хозрасчет")
@@ -2559,66 +2173,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             return correct;
         }
-        private bool Correct_2()
-        {
-            bool correct = true;
-            for (int i = 0; i < AddEditFormContacts.Children.Count; i++)
-            {
-                if (AddEditFormContacts.Children[i].Visibility == Visibility.Visible)
-                {
-                    if (!(AddEditFormContacts.Children[i] is StackPanel stackPanel)) break;
-                    if (((Xceed.Wpf.Toolkit.MaskedTextBox)stackPanel.Children[5]).IsMaskCompleted == false || ((Xceed.Wpf.Toolkit.MaskedTextBox)stackPanel.Children[5]).Text == "")
-                    {
-                        correct = false;
-                        ((Xceed.Wpf.Toolkit.MaskedTextBox)stackPanel.Children[5]).Tag = "Error";
-                    }
-                    else
-                        ((Xceed.Wpf.Toolkit.MaskedTextBox)stackPanel.Children[5]).Tag = "";
-                }
-            }
-            return correct;
-        }
-        private bool Correct_3()
-        {
-            bool correct = true;
-            for (int i = 0; i < addEdifFormAtestati.Children.Count; i++)
-            {
-                if (addEdifFormAtestati.Children[i].Visibility == Visibility.Visible)
-                {
-                    if (!(addEdifFormAtestati.Children[i] is StackPanel stackPanel)) break;
-                    if (((TextBox)stackPanel.Children[3]).Text == "")
-                    {
-                        correct = false;
-                        ((TextBox)stackPanel.Children[3]).Tag = "Error";
-                    }
-                    else
-                        ((TextBox)stackPanel.Children[3]).Tag = "";
-                }
-            }
-            return correct;
-        }
-        private bool Correct_4()
-        {
-            bool correct = true;
-            for (int i = 0; i < addEdifFormCT.Children.Count; i++)
-            {
-                if (addEdifFormCT.Children[i].Visibility == Visibility.Visible)
-                {
-                    if (addEdifFormCT.Children[i] as StackPanel == null) break;
-                    Grid grid = ((StackPanel)addEdifFormCT.Children[i]).Children[2] as Grid;
-                    TextBoxCheck((TextBox)grid.Children[1], ref correct);
-                    TextBoxCheck((TextBox)grid.Children[7], ref correct);
-                    if (((Xceed.Wpf.Toolkit.MaskedTextBox)grid.Children[3]).IsMaskCompleted == false)
-                    {
-                        ((Xceed.Wpf.Toolkit.MaskedTextBox)grid.Children[3]).Tag = "Error";
-                        correct = false;
-                    }
-                    else
-                        ((Xceed.Wpf.Toolkit.MaskedTextBox)grid.Children[3]).Tag = "";
-                }
-            }
-            return correct;
-        }
+        
         private void TextBoxCheck(TextBox textBox, ref bool correct)
         {
             if (textBox.Text == "")
@@ -2648,47 +2203,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 row++;
             }
             planPriemaColumn = col;
-        }
-
-        private void UpdateCurentPlanPriema(int id)
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("Get_PlanPrieaByID", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("id", id);
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                curentPlanPriema = new PlanPriema
-                {
-                    Id = id,
-                    IdSpec = reader.GetInt32(0),
-                    IdForm = reader.GetInt32(1),
-                    IdFinance = reader.GetInt32(2),
-                    Count = reader.GetInt32(3),
-                    CountCelevihMest = reader.GetInt32(4),
-                    Year = reader.GetString(5),
-                    CodeSpec = reader.GetString(6),
-                    NameSpec = reader.GetString(7),
-                    NameForm = reader.GetString(8),
-                    NameObrazovaie = reader.GetString(9),
-                    NameFinance = reader.GetString(10),
-                    Ct = reader.GetBoolean(11)
-                };
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            finally
-            {
-                connection.Close();
-            }
         }
         #endregion
 

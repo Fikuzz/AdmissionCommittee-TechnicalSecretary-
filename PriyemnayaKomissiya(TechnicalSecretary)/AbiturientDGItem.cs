@@ -25,6 +25,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
         public bool DifferentAttestat { get; set; }
         public int ScaleSize { get; set; }
 
+
         public AbiturientDGItem(int id, string fio, string shool, int year, int[] marks, double markAvg, string examNum, bool doc, double marcDecAvg, string lgoti, string status)
         {
             Marks = new int[15];
