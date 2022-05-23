@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PriyemnayaKomissiya_TechnicalSecretary_.Controls" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="315" d:DesignWidth="800">
-    <StackPanel Visibility="Visible" Tag="HIddenField" Background="#FFF3F4F8">
+    <StackPanel Visibility="Visible" Tag="HIddenField" Background="{StaticResource MainBackGround}">
         <Grid MinHeight="30" Height="29">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
