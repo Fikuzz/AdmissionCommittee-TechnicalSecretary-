@@ -150,9 +150,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 			}
 		}
 
-		private void UserControl_Loaded(object sender, RoutedEventArgs e)
-		{
-
-		}
-	}
+        private void cbScaleType_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+			e.Handled = true;
+        }
+    }
 }
