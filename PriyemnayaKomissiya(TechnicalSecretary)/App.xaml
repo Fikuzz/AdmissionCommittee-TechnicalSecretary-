@@ -1061,6 +1061,11 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#50ffffff"/>
+                    <Setter Property="BorderBrush" Value="#dfdfdf"/>
+
+                </Trigger>
                 <Trigger Property="Tag" Value="Error">
                     <Setter Property="BorderBrush" Value="{StaticResource FF576B}"/>
                 </Trigger>

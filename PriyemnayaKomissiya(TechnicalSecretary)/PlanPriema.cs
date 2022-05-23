@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_
 {
-    class PlanPriema
+    public class PlanPriema
     {
         public int Id { get; set; }
         public int IdSpec { get; set; }
