@@ -338,7 +338,15 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         addEdifFormAtestati.Tag = (int)addEdifFormAtestati.Tag + 1;
 
                         certificate.tbSeries.Text = reader.GetString(reader.GetOrdinal("Num"));
-                        certificate.cbScaleType.SelectedItem = reader.GetString(reader.GetOrdinal("Scale"));
+                        string scaleName = reader.GetString(reader.GetOrdinal("Scale")); ;
+                        foreach (ComboBoxItem item in certificate.cbScaleType.Items)
+                        {
+                            if(item.Content.ToString() == scaleName)
+                            {
+                                certificate.cbScaleType.SelectedItem = item;
+                                break;
+                            }
+                        }
                         for (int i = 0; i < certificate.Marks.Count; i++)
                         {
                             if (reader[reader.GetOrdinal("n" + (i + 1))] == DBNull.Value)
@@ -951,13 +959,19 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         private void Tb_IdentNuber_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[0-9a-zA-Z]+");
-            e.Handled = !regex.IsMatch(e.Text);
+            bool isMatch = regex.IsMatch(e.Text);
+            ttpIdentNum.PlacementTarget = (UIElement)sender;
+            ttpIdentNum.IsOpen = !isMatch;
+            e.Handled = !isMatch;
         }
 
         private void Tb_SeriyaPasporta_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[a-zA-Z]+$");
-            e.Handled = !regex.IsMatch(e.Text);
+            bool isMatch = regex.IsMatch(e.Text);
+            ttpSerya.PlacementTarget = (UIElement)sender;
+            ttpSerya.IsOpen = !isMatch;
+            e.Handled = !isMatch;
         }
         private void PassportSeriya_TextInput(object sender, TextChangedEventArgs e)
         {
@@ -1098,6 +1112,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             AbiturientTableLoad(curentPlanPriema.Id);
             addEditForm.Visibility = Visibility.Hidden;
         }
+
 
         #region заполнение ComboBoks для формы редактирования
         private void AddEditFormspecialnost_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1260,240 +1275,25 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         #region Настройка контрольных цифр приема
         private void TabItem1_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            AddAdmissionPlan.Children.Clear();
             PlanPriemaTableLoad(((TabItem)sender).Header.ToString());
-            datagridPlanPriemaAdd.Visibility = Visibility.Hidden;
         }
 
         private void Button_AddPlanPriema(object sender, RoutedEventArgs e)
         {
-            datagridPlanPriemaAdd.Visibility = Visibility.Visible;
-            ClearData<Grid>(datagridPlanPriemaAdd);
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                SqlCommand comand = new SqlCommand("SELECT Наименование FROM Специальность", connection);
-                SqlDataReader reader = comand.ExecuteReader();
-                planPriemaADD_Spec.Items.Clear();
-                while (reader.Read())
-                    planPriemaADD_Spec.Items.Add(reader[0]);
-                planPriemaADD_Spec.SelectedIndex = 0;
-                reader.Close();
-
-                comand = new SqlCommand("SELECT Наименование, Образование FROM ФормаОбучения", connection);
-                reader = comand.ExecuteReader();
-                List<string[]> formiObusheniya = new List<string[]>();
-                planPriemaADD_ForaObucheniya.Items.Clear();
-                while (reader.Read())
-                {
-                    string[] form = new string[2];
-                    form[0] = reader.GetString(0);
-                    form[1] = reader.GetString(1);
-
-                    if (!planPriemaADD_ForaObucheniya.Items.Contains(reader[0]))
-                    {
-                        planPriemaADD_ForaObucheniya.Items.Add(reader[0]);
-                    }
-                    formiObusheniya.Add(form);
-                }
-                planPriemaADD_ForaObucheniya.Tag = formiObusheniya;
-                planPriemaADD_ForaObucheniya.SelectedIndex = 0;
-                reader.Close();
-
-                comand = new SqlCommand("SELECT Наименование FROM Финансирование", connection);
-                reader = comand.ExecuteReader();
-                planPriemaADD_Finanse.Items.Clear();
-                while (reader.Read())
-                    planPriemaADD_Finanse.Items.Add(reader[0]);
-                planPriemaADD_Finanse.SelectedIndex = 0;
-                reader.Close();
-
-                PlanPriemaADD_ForaObucheniya_SelectionChanged(planPriemaADD_ForaObucheniya, null);
-                planPriemaADD_Spec.SelectedItem = ((TabItem)TabControl1.SelectedItem).Header;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            planPrieaADD_kolvoCelevihMest.Text = "0";
-            planPrieaADD_kolvoMest.Text = "0";
-            buttonAdd.Visibility = Visibility.Visible;
-            buttonEdit.Visibility = Visibility.Collapsed;
+            AddAdissionPlanControl addAdissionPlan = new AddAdissionPlanControl(((TabItem)TabControl1.SelectedItem).Header.ToString());
+            addAdissionPlan.CloseControl += CloseAdmissionControl;   
+            AddAdmissionPlan.Children.Add(addAdissionPlan);
         }
-
-        private void PlanPriemaADD_ForaObucheniya_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CloseAdmissionControl(object sender, RoutedEventArgs e)
         {
-            if (planPriemaADD_ForaObucheniya.Tag == null || planPriemaADD_ForaObucheniya.SelectedValue == null) return;
-            string forma = planPriemaADD_ForaObucheniya.SelectedValue.ToString();
-            List<string[]> formiObusheniya = (List<string[]>)planPriemaADD_ForaObucheniya.Tag;
-            planPriemaADD_Obrazovanie.Items.Clear();
-            for (int i = 0; i < formiObusheniya.Count; i++)
-            {
-                if (formiObusheniya[i][0] == forma)
-                    planPriemaADD_Obrazovanie.Items.Add(formiObusheniya[i][1]);
-            }
-            planPriemaADD_Obrazovanie.SelectedIndex = 0;
-        }
-        private void PlanPriemaADD_Finanse_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if((string)planPriemaADD_Finanse.SelectedItem == "Хозрасчет")
-            {
-                planPrieaADD_kolvoCelevihMest.Tag = planPrieaADD_kolvoCelevihMest.Text;
-                planPrieaADD_kolvoCelevihMest.Text = "0";
-                planPrieaADD_kolvoCelevihMest.IsEnabled = false;
-            }
-            else
-            {
-                if (planPrieaADD_kolvoCelevihMest.Tag != null)
-                {
-                    planPrieaADD_kolvoCelevihMest.Text = planPrieaADD_kolvoCelevihMest.Tag.ToString();
-                }
-                planPrieaADD_kolvoCelevihMest.IsEnabled = true;
-            }
-        }
-
-        private void Button_Add(object sender, RoutedEventArgs e)
-        {
-            if (planPrieaADD_kod.Text == "" || planPrieaADD_kod.Text.Length > 13)
-            {
-                planPrieaADD_kod.Tag = "Error";
-                return;
-            }
-            if (planPrieaADD_kolvoMest.Text == "")
-            {
-                planPrieaADD_kolvoMest.Tag = "Error";
-                return;
-            }
-            if ( Convert.ToInt32(planPrieaADD_kolvoCelevihMest.Text) > Convert.ToInt32(planPrieaADD_kolvoMest.Text))
-            {
-                planPrieaADD_kolvoCelevihMest.Tag = "Error";
-                return;
-            }
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Add_PlanPriema", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@year", DateTime.Now.Year);
-                command.Parameters.AddWithValue("@spec", planPriemaADD_Spec.SelectedItem);
-                command.Parameters.AddWithValue("@form", planPriemaADD_ForaObucheniya.SelectedItem);
-                command.Parameters.AddWithValue("@fin", planPriemaADD_Finanse.SelectedItem);
-                command.Parameters.AddWithValue("@obr", planPriemaADD_Obrazovanie.SelectedItem);
-                command.Parameters.AddWithValue("@kolva", planPrieaADD_kolvoMest.Text);
-                command.Parameters.AddWithValue("@kolvaCel", planPrieaADD_kolvoCelevihMest.Text);
-                command.Parameters.AddWithValue("@CT", planPrieaADD_CT.IsChecked);
-                command.Parameters.AddWithValue("@Code", planPrieaADD_kod.Text);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-                datagridPlanPriemaAdd.Visibility = Visibility.Hidden;
-                PlanPriemaTableLoad(((TabItem)TabControl1.SelectedItem).Header.ToString());
-                
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void Button_Edit(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("Update_PlanPriema", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@id", ((PlanPriema)buttonEdit.Tag).Id);
-                command.Parameters.AddWithValue("@spec", planPriemaADD_Spec.SelectedItem);
-                command.Parameters.AddWithValue("@form", planPriemaADD_ForaObucheniya.SelectedItem);
-                command.Parameters.AddWithValue("@fin", planPriemaADD_Finanse.SelectedItem);
-                command.Parameters.AddWithValue("@obr", planPriemaADD_Obrazovanie.SelectedItem);
-                command.Parameters.AddWithValue("@kolva", planPrieaADD_kolvoMest.Text);
-                command.Parameters.AddWithValue("@kolvaCel", planPrieaADD_kolvoCelevihMest.Text);
-                command.Parameters.AddWithValue("@CT", planPrieaADD_CT.IsChecked);
-                command.Parameters.AddWithValue("@Code", planPrieaADD_kod.Text);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-
-                datagridPlanPriemaAdd.Visibility = Visibility.Hidden;
-                PlanPriemaTableLoad(((TabItem)TabControl1.SelectedItem).Header.ToString());
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void PlanPrieaADD_kolvoCelevihMest_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (textBox.Text == "")
-                textBox.Text = "0";
+            PlaniPriemaLoad(((TabItem)TabControl1.SelectedItem).Header.ToString());
         }
 
         private void ImagecCick_UpdatePlanPriema(object sender, MouseButtonEventArgs e)
         {
-            datagridPlanPriemaAdd.Visibility = Visibility.Visible;
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                SqlCommand comand = new SqlCommand("SELECT Наименование FROM Специальность", connection);
-                SqlDataReader reader = comand.ExecuteReader();
-                planPriemaADD_Spec.Items.Clear();
-                while (reader.Read())
-                    planPriemaADD_Spec.Items.Add(reader[0]);
-                reader.Close();
-
-                comand = new SqlCommand("SELECT Наименование, Образование FROM ФормаОбучения", connection);
-                reader = comand.ExecuteReader();
-                List<string[]> formiObusheniya = new List<string[]>();
-                planPriemaADD_ForaObucheniya.Items.Clear();
-                while (reader.Read())
-                {
-                    string[] form = new string[2];
-                    form[0] = reader.GetString(0);
-                    form[1] = reader.GetString(1);
-
-                    if (!planPriemaADD_ForaObucheniya.Items.Contains(reader[0]))
-                    {
-                        planPriemaADD_ForaObucheniya.Items.Add(reader[0]);
-                    }
-                    formiObusheniya.Add(form);
-                }
-                planPriemaADD_ForaObucheniya.Tag = formiObusheniya;
-                reader.Close();
-
-                comand = new SqlCommand("SELECT Наименование FROM Финансирование", connection);
-                reader = comand.ExecuteReader();
-                planPriemaADD_Finanse.Items.Clear();
-                while (reader.Read())
-                    planPriemaADD_Finanse.Items.Add(reader[0]);
-                reader.Close();
-
-                PlanPriemaADD_ForaObucheniya_SelectionChanged(planPriemaADD_ForaObucheniya, null);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            PlanPriema planPriema = (PlanPriema)dataGridPlani.SelectedItem;
-            planPrieaADD_kod.Text = planPriema.CodeSpec;
-            planPriemaADD_Spec.SelectedItem = planPriema.NameSpec;
-            planPriemaADD_ForaObucheniya.SelectedItem = planPriema.NameForm;
-            planPriemaADD_Finanse.SelectedItem = planPriema.NameFinance;
-            planPriemaADD_Obrazovanie.SelectedItem = planPriema.NameObrazovaie;
-            planPrieaADD_kolvoCelevihMest.Text = planPriema.CountCelevihMest.ToString();
-            planPrieaADD_kolvoMest.Text = planPriema.Count.ToString();
-            planPrieaADD_CT.IsChecked = planPriema.Ct;
-            buttonEdit.Tag = planPriema;
-            buttonAdd.Visibility = Visibility.Collapsed;
-            buttonEdit.Visibility = Visibility.Visible;
+            AddAdissionPlanControl addAdissionPlan = new AddAdissionPlanControl((PlanPriema)dataGridPlani.SelectedItem);
+            AddAdmissionPlan.Children.Add(addAdissionPlan);
         }
 
         private void ImagecCick_DeletePlanPriema(object sender, MouseButtonEventArgs e)
