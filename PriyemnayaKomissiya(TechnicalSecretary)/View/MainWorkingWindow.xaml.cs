@@ -38,6 +38,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             lUser_FIO.Text = user.Name;
 
             ucSpeciality.EndEdit += Speciality_EndEdit;
+            ucArticles.BlockCheckBox += BlockCheckBox;
         }
         private void TextBlock_Exit(object sender, MouseButtonEventArgs e)
         {
@@ -253,25 +254,15 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
                     SqlConnection con = new SqlConnection(connectionString);
                     con.Open();
-                    for (int k = 0; k < 2; k++)
+                    foreach (CheckBox checkBox in ucArticles.checkBoxes)
                     {
-                        StackPanel panel = Stati.Children[k] as StackPanel;
-                        for (int j = 0; j < 3; j++)
-                        {
-                            CheckBox checkBox = panel.Children[j] as CheckBox;
-                            SqlCommand command1 = new SqlCommand("HasStatya", con)
-                            {
-                                CommandType = CommandType.StoredProcedure
-                            };
-                            command1.Parameters.AddWithValue("@abiturient", abiturient.ID);
-                            command1.Parameters.AddWithValue("@statya", checkBox.Content);
-                            SqlDataReader reader1 = command1.ExecuteReader();
-                            if (reader1.HasRows)
-                            {
-                                checkBox.IsChecked = true;
-                            }
-                            reader1.Close();
-                        }
+                        SqlCommand command1 = new SqlCommand("HasStatya", con);
+                        command1.CommandType = CommandType.StoredProcedure;
+                        command1.Parameters.AddWithValue("@abiturient", abiturient.ID);
+                        command1.Parameters.AddWithValue("@statya", checkBox.Content);
+                        SqlDataReader reader1 = command1.ExecuteReader();
+                        checkBox.IsChecked = reader1.HasRows;
+                        reader1.Close();
                     }
                     con.Close();
                 }
@@ -1098,23 +1089,50 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
             DB.DeleteAllAbiturientDataInTable(AbiturientID, "СтатьиАбитуриента");
 
-            for (int i = 0; i < 2; i++)
+            foreach (CheckBox checkBox in ucArticles.checkBoxes)
             {
-                StackPanel stackPanel = (StackPanel)Stati.Children[i];
-                for (int j = 0; j < 3; j++)
+                if (checkBox.IsChecked == true)
                 {
-                    CheckBox checkBox = (CheckBox)stackPanel.Children[j];
-                    if (checkBox.IsChecked == true)
-                    {
-                        DB.InsertArticles(AbiturientID, (string)checkBox.Content);
-                    }
+                    DB.InsertArticles(AbiturientID, (string)checkBox.Content);
                 }
-            }//Статьи* ?
+            }
+            //Статьи* ?
             AbiturientTableLoad(curentPlanPriema.Id);
             addEditForm.Visibility = Visibility.Hidden;
         }
-
-
+        private void BlockCheckBox(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox == null) return;
+            if(checkBox.IsChecked == true)
+            {
+                addEditForm_CheckBox_DetiSiroti.IsChecked = false;
+                addEditForm_CheckBox_DetiSiroti.IsEnabled = false;
+            }
+            else
+            {
+                addEditForm_CheckBox_DetiSiroti.IsEnabled = true;
+            }
+        }
+        private void BlockCheckBox2(object sender, RoutedEventArgs e)
+        {
+            foreach(CheckBox checkBox in ucArticles.checkBoxes)
+            {
+                if(checkBox.Content.ToString() == "Сирота ")
+                {
+                    if (addEditForm_CheckBox_DetiSiroti.IsChecked == true)
+                    {
+                        checkBox.IsChecked = false;
+                        checkBox.IsEnabled = false;
+                    }
+                    else
+                    {
+                        checkBox.IsEnabled = true;
+                    }
+                    return;
+                }
+            }
+        }
         #region заполнение ComboBoks для формы редактирования
         private void AddEditFormspecialnost_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1164,6 +1182,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            if(addEditFormobushenie.SelectedItem.ToString() == "Дневная")
+            {
+                AddEditWork.Visibility = Visibility.Collapsed;
+                textBoxWorkPlace.Text = "";
+                textBoxDoljnost.Text = "";
+            }
+            else
+            {
+                AddEditWork.Visibility = Visibility.Visible;
             }
         }
         private void AddEditFormFinansirovanie_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1311,7 +1339,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     reader.Read();
                     if (reader.GetInt32(0) > 0)
                     {
-                        if (MessageBox.Show("В плане приема есть записи о абитуриентах!\nПродолжить?", "Удаление", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                        if (MessageBox.Show("В плане приема есть записи о абитуриентах!\n(Они будут удалены!)\nПродолжить?", "Удаление", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                         {
                             return;
                         }

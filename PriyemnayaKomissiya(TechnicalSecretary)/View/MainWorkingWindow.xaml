@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Background="{StaticResource MainBackGround}"
         Title="Приемная комиссия «Полоцкий государственный экономический колледж»"
-        Height="754" Width="1302" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
+        Height="878.5" Width="1302" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height ="80"/>
@@ -227,7 +227,7 @@
                                     <Image.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="Зачислить" Click="Abiturient_SetStatus" Tag="0,1"/>
-                                            <MenuItem Header="Принято" Click="Abiturient_SetStatus" Tag="0,0"/>
+                                            <MenuItem Header="Принять" Click="Abiturient_SetStatus" Tag="0,0"/>
                                             <MenuItem Header="Выдать документы" Click="Abiturient_IssueDocuments"/>
                                             <Separator/>
                                             <MenuItem Header="Удалить" Click="Abiturient_Delete"/>
@@ -310,7 +310,7 @@
                     <TextBlock Style="{DynamicResource TextBlock1}" Margin="10,44,10,0"><Run Text="Место работы: " FontWeight="Bold"/><InlineUIContainer>
                             <TextBlock x:Name="infoMestoRaboti" Text="" Style="{DynamicResource TextBlock2}" Height="24" Width="470"/>
                         </InlineUIContainer></TextBlock>
-                    <TextBlock Style="{DynamicResource TextBlock1}" Margin="10,44,10,0" Grid.Column="1"><Run Text="Занимаемая должность: " FontWeight="Bold"/><InlineUIContainer>
+                    <TextBlock Style="{DynamicResource TextBlock1}" Margin="0,44,10,0" Grid.Column="1"><Run Text="Занимаемая должность: " FontWeight="Bold"/><InlineUIContainer>
                             <TextBlock x:Name="infoDoljnost" Text="" Style="{DynamicResource TextBlock2}" Height="30" Width="485"/>
                         </InlineUIContainer></TextBlock>
                 </Grid>
@@ -324,18 +324,18 @@
                     <TextBlock Style="{DynamicResource TextBlock1}" Margin="10,44,10,10"><Run Text="Владелец: " FontWeight="Bold"/><InlineUIContainer>
                             <TextBlock x:Name="infoVladelec" Text="" Style="{DynamicResource TextBlock2}" Height="29" Width="475"/>
                         </InlineUIContainer></TextBlock>
-                    <TextBlock x:Name="infoRedaktorTB" Style="{DynamicResource TextBlock1}" Margin="10,44,10,10" Grid.Column="1"><Run Text="Редактор: " FontWeight="Bold"/><InlineUIContainer>
+                    <TextBlock x:Name="infoRedaktorTB" Style="{DynamicResource TextBlock1}" Margin="0,44,10,10" Grid.Column="1"><Run Text="Редактор: " FontWeight="Bold"/><InlineUIContainer>
                             <TextBlock x:Name="infoRedaktor" Text="" Style="{DynamicResource TextBlock2}" Height="27" Width="546"/>
                         </InlineUIContainer></TextBlock>
                     <TextBlock Style="{DynamicResource TextBlock1}" Margin="10,85,10,10"><Run Text="Дата ввода: " FontWeight="Bold"/><InlineUIContainer>
                             <TextBlock x:Name="infoDateVvoda" Text="" Style="{DynamicResource TextBlock2}" Height="23" Width="463"/>
                         </InlineUIContainer></TextBlock>
-                    <TextBlock x:Name="infoDateRedactTB" Style="{DynamicResource TextBlock1}" Margin="10,85,10,10" Grid.Column="1"><Run Text="Дата редактирования: " FontWeight="Bold"/><InlineUIContainer>
+                    <TextBlock x:Name="infoDateRedactTB" Style="{DynamicResource TextBlock1}" Margin="0,85,10,10" Grid.Column="1"><Run Text="Дата редактирования: " FontWeight="Bold"/><InlineUIContainer>
                             <TextBlock x:Name="infoDateRedact" Text="" Style="{DynamicResource TextBlock2}" Height="26" Width="456"/>
                         </InlineUIContainer></TextBlock>
                 </Grid>
                 <TabControl Grid.Column="1" Style="{DynamicResource TabControlStyle}" Grid.Row="4" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="284">
-                    <TabItem Margin="10,0,-33,0" Header="Аттестат" Style="{DynamicResource TabItemStyle}">
+                    <TabItem Margin="10,0,-33,0" Header="Документы об образовании" Style="{DynamicResource TabItemStyle}">
                         <Grid Background="White">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="993*"/>
@@ -343,7 +343,7 @@
                                 <ColumnDefinition Width="17"/>
                             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,183" Grid.ColumnSpan="3" >
-                <Label Content="Оценки в аттестате" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,17,0,3" Height="43" MinHeight="32" Width="149"/>
+                <Label Content="Документы об образовании" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,17,0,3" Height="43" MinHeight="32" Width="195"/>
                 <TextBlock x:Name="atestatCount" MinHeight="14"  FontFamily="{StaticResource Montserrat-Regular}" FontSize="12" Background="#FFE4E3E3" VerticalAlignment="Center" TextAlignment="Center" MaxWidth="30" Width="24" Margin="0,23,0,26" Foreground="#FF747474" Height="9"/>
             </StackPanel>
             <DataGrid x:Name="AtestatGrid" Style="{DynamicResource dgAbbiturients}" Margin="0,58,0,10" Grid.ColumnSpan="3" HeadersVisibility="Column">
@@ -389,7 +389,7 @@
                 <TextBox Visibility="Hidden" Margin="0,10,0,200" Style="{DynamicResource textboxSearch}" Text="" Background="#2676829B" Foreground="#FF76829B" Grid.Column="1"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Margin="65,0,-95,0" Header="Cертификат ЦТ" Style="{DynamicResource TabItemStyle}">
+                    <TabItem Margin="65,0,-95,0" Header="Cертификаты ЦТ" Style="{DynamicResource TabItemStyle}">
                         <Grid Background="#FFE5E5E5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="993*"/>
@@ -475,7 +475,7 @@
         </Grid>
         <!--#endregion-->
                     <!--#region форма редактирования записей-->
-                <Grid Visibility="Hidden" x:Name="addEditForm" Grid.ColumnSpan="3" Margin="0,0,-17,0" Grid.Row="2" Background="{StaticResource MainBackGround}">
+                <Grid Visibility="Visible" x:Name="addEditForm" Grid.ColumnSpan="3" Margin="0,0,-17,0" Grid.Row="2" Background="{StaticResource MainBackGround}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="93"/>
                         <ColumnDefinition Width="141*"/>
@@ -523,30 +523,20 @@
                                     <TextBlock Text="ВЫБЕРИТЕ ЛЬГОТЫ" Margin="10,25,0,10"/>
                                     <StackPanel Orientation="Horizontal">
                                         <CheckBox x:Name="addEditForm_CheckBox_Dogovor" Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Целевой договор" Margin="20,0,0,0"/>
-                                        <CheckBox x:Name="addEditForm_CheckBox_DetiSiroti" Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Дети-сироты" Margin="100,0,0,0"/>
+                                        <CheckBox x:Name="addEditForm_CheckBox_DetiSiroti" Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Дети-сироты" Margin="100,0,0,0" Click="BlockCheckBox2"/>
                                     </StackPanel>
                                     <TextBlock Text="ШКОЛА" Margin="10,25,0,10"/>
                                     <TextBox TextChanged="ClearError" x:Name="addEditFormShool" Style="{DynamicResource TextBox}"/>
                                     <TextBlock Text="ГОД ОКОНЧАНИЯ ШКОЛЫ" Margin="10,25,0,10"/>
                                     <xctk:MaskedTextBox x:Name="addEditFormGraduationYear" Mask="0000" Style="{DynamicResource TextBox}" TextChanged="MaskedTB_IsComplited"/>
                                     <TextBlock Text="ВЫБЕРИТЕ СТАТЬИ" Margin="10,25,0,10"/>
-                                    <StackPanel x:Name="Stati" Orientation="Horizontal">
-                                        <StackPanel Width="201">
-                                            <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Инвалиды I и II группы" Margin="20,10,0,0"/>
-                                            <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Дети военнослужащих" Margin="20,10,0,0"/>
-                                            <CheckBox Visibility="Hidden" Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Диплом с отличием" Margin="20,10,0,0"/>
-                                        </StackPanel>
-                                        <StackPanel Width="183">
-                                            <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Инвалиды III группы" Margin="20,10,0,0"/>
-                                            <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Многодетная семья" Margin="20,10,0,0"/>
-                                            <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Чернобыльская АЭС" Margin="20,10,0,0"/>
-                                        </StackPanel>
-                                    </StackPanel>
+                                    <control:Articles x:Name="ucArticles"/>
                                     <TextBlock Text="МЕСТО РАБОТЫ" Margin="10,25,0,10"/>
+                                    <StackPanel x:Name="AddEditWork">
                                     <TextBox x:Name="textBoxWorkPlace" Style="{DynamicResource TextBox}"/>
                                     <TextBlock Text="ДОЛЖНОСТЬ" Margin="10,25,0,10"/>
                                     <TextBox x:Name="textBoxDoljnost" Style="{DynamicResource TextBox}"/>
-                                    
+                                    </StackPanel>
                                     <Button Style="{DynamicResource ButtonStyleObshchiyRED}" Height="53" Margin="139,25,139,0" Content="СЛЕДУЮЩИЙ ЭТАП" Click="Button_NextStep_1"/>
                                 </StackPanel>
                             </ScrollViewer>
