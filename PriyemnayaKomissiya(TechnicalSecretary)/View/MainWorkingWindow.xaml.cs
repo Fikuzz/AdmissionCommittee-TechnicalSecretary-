@@ -1978,5 +1978,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 UpdateSpeciality();
             }
         }
+
+        private void Image_MouseUp_3(object sender, MouseButtonEventArgs e)
+        {
+            addEditForm.Visibility = Visibility.Hidden;
+        }
     }
 }
