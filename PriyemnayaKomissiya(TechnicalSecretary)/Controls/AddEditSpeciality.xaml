@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="PriyemnayaKomissiya_TechnicalSecretary_.Controls.AddEditSpeciality"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PriyemnayaKomissiya_TechnicalSecretary_.Controls"
+             mc:Ignorable="d" d:DesignWidth="1102.5" Background="{StaticResource MainBackGround}" Height="300">
+    <Grid Grid.Row="3" Grid.Column="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="326*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="160*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="155*"/>
+            <ColumnDefinition Width="69*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Наименование" Grid.Column="1" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="tbTitle" FontSize="18" Grid.Column="1" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="1" Grid.ColumnSpan="3" MaxLength="50"/>
+        <TextBlock Text="Буква" Grid.Column="5" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16"/>
+        <TextBox x:Name="tbLetter" FontSize="18" Grid.Column="5" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="1" MaxLength="1" TextChanged="tbLetter_TextChanged"/>
+        <TextBlock Text="Краткое наименование" Grid.Column="1" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Grid.Row="3"/>
+        <TextBox x:Name="tbShortTitle" FontSize="18" Grid.Column="1" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="4" MaxLength="20"/>
+        <TextBlock Text="Код специальности" Grid.Column="3" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Grid.Row="3" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="tbCode" FontSize="18" Grid.Column="3" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="4" Grid.ColumnSpan="3" MaxLength="13"/>
+        <Button x:Name="btnClose" Visibility="Hidden" Content="Отмена" FontSize="18" Grid.Column="1" Margin="0,0,10,1" Grid.Row="6" Style="{DynamicResource ButtonStyleObshchiyRED}" Foreground="{StaticResource 94A1BB}" Background="#3376829B" Height="60" Width="250" HorizontalAlignment="Right" Click="CloseEdit"/>
+        <Button x:Name="btnSave" Content="Добавить" FontSize="18" Style="{DynamicResource ButtonStyleObshchiyRED}" Grid.Column="3" Margin="10,1,0,0" Grid.Row="6" Grid.ColumnSpan="3" Height="60" HorizontalAlignment="Left" Width="250" Click="SaveButtonClick"/>
+    </Grid>
+</UserControl>
