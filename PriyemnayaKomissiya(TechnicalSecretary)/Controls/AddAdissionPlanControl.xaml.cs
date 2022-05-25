@@ -32,11 +32,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                SqlCommand comand = new SqlCommand("SELECT Наименование FROM Специальность", connection);
+                SqlCommand comand = new SqlCommand("SELECT Наименование, Код FROM Специальность", connection);
                 SqlDataReader reader = comand.ExecuteReader();
                 Spec.Items.Clear();
                 while (reader.Read())
-                    Spec.Items.Add(reader[0]);
+                {
+                    ComboBoxItem item = new ComboBoxItem();
+                    item.Content = reader[0];
+                    item.Tag = reader[1];
+                    Spec.Items.Add(item);
+                }
                 Spec.SelectedIndex = 0;
                 reader.Close();
 
@@ -82,15 +87,22 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
         }
         public AddAdissionPlanControl(PlanPriema planPriema)
         {
+            InitializeComponent();
+            connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                SqlCommand comand = new SqlCommand("SELECT Наименование FROM Специальность", connection);
+                SqlCommand comand = new SqlCommand("SELECT Наименование, Код FROM Специальность", connection);
                 SqlDataReader reader = comand.ExecuteReader();
                 Spec.Items.Clear();
                 while (reader.Read())
-                    Spec.Items.Add(reader[0]);
+                {
+                    ComboBoxItem item = new ComboBoxItem();
+                    item.Content = reader[0];
+                    item.Tag = reader[1];
+                    Spec.Items.Add(item);
+                }
                 reader.Close();
 
                 comand = new SqlCommand("SELECT Наименование, Образование FROM ФормаОбучения", connection);
@@ -126,7 +138,14 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 MessageBox.Show(ex.Message);
             }
             kod.Text = planPriema.CodeSpec;
-            Spec.SelectedItem = planPriema.NameSpec;
+            foreach(ComboBoxItem boxItem in Spec.Items)
+            {
+                if(boxItem.Content.ToString() == planPriema.NameSpec)
+                {
+                    Spec.SelectedItem = boxItem;
+                    break;
+                }
+            }
             FormaObucheniya.SelectedItem = planPriema.NameForm;
             Finanse.SelectedItem = planPriema.NameFinance;
             Obrazovanie.SelectedItem = planPriema.NameObrazovaie;
@@ -193,7 +212,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@year", DateTime.Now.Year);
-                command.Parameters.AddWithValue("@spec", Spec.SelectedItem);
+                command.Parameters.AddWithValue("@spec", ((ComboBoxItem)Spec.SelectedItem).Content);
                 command.Parameters.AddWithValue("@form", FormaObucheniya.SelectedItem);
                 command.Parameters.AddWithValue("@fin", Finanse.SelectedItem);
                 command.Parameters.AddWithValue("@obr", Obrazovanie.SelectedItem);
@@ -224,7 +243,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@id", ((PlanPriema)buttonEdit.Tag).Id);
-                command.Parameters.AddWithValue("@spec", Spec.SelectedItem);
+                command.Parameters.AddWithValue("@spec", ((ComboBoxItem)Spec.SelectedItem).Content);
                 command.Parameters.AddWithValue("@form", FormaObucheniya.SelectedItem);
                 command.Parameters.AddWithValue("@fin", Finanse.SelectedItem);
                 command.Parameters.AddWithValue("@obr", Obrazovanie.SelectedItem);
@@ -291,6 +310,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
         {
             Grid grid = (Grid)this.Parent;
             grid.Children.Remove(this);
+        }
+
+        private void Spec_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            kod.Text = ((ComboBoxItem)Spec.SelectedItem).Tag.ToString();
         }
     }
 }

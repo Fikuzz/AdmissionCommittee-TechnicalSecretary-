@@ -33,14 +33,14 @@
             <RowDefinition Height="26"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Image Source="pack://application:,,,/Resources/Layer 3.png" Grid.Column="5" Grid.Row="1" Tag="{Binding ElementName=datagridPlanPriemaAdd}" MouseLeftButtonUp="CloseButtonUp"/>
         <Label Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Код специальности"/>
-        <TextBox x:Name="kod" Style="{DynamicResource TextBox}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBox IsEnabled="False" x:Name="kod" Style="{DynamicResource TextBox}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Width="Auto"/>
         <Label Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Специальность" Grid.ColumnSpan="3"/>
-        <ComboBox Name="Spec" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Height="Auto"/>
+        <ComboBox Name="Spec" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Height="Auto" SelectionChanged="Spec_SelectionChanged"/>
         <Label Grid.Row="7" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Форма обучения"/>
         <ComboBox Name="FormaObucheniya" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="8" SelectionChanged="PlanPriemaADD_ForaObucheniya_SelectionChanged" Height="Auto"/>
         <Label Grid.Row="7" Grid.Column="3" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Финансирование"/>
@@ -48,9 +48,9 @@
         <Label Grid.Row="10" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Прием на основе" Grid.ColumnSpan="3"/>
         <ComboBox Name="Obrazovanie" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="3" Height="Auto"/>
         <Label Grid.Row="13" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Общее количество мест"/>
-        <TextBox x:Name="kolvoMest" Text="0" Style="{DynamicResource TextBox}" Grid.Row="14" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus"/>
+        <TextBox x:Name="kolvoMest" Text="0" Style="{DynamicResource TextBox}" Grid.Row="14" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus" Width="Auto"/>
         <Label Grid.Row="13" Grid.Column="3" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Количество целевых мест"/>
-        <TextBox x:Name="kolvoCelevihMest" Text="0" Style="{DynamicResource TextBox}"  Grid.Row="14" Grid.Column="3" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus"/>
+        <TextBox x:Name="kolvoCelevihMest" Text="0" Style="{DynamicResource TextBox}"  Grid.Row="14" Grid.Column="3" PreviewTextInput="TextBox_PreviewTextInput" LostFocus="PlanPrieaADD_kolvoCelevihMest_LostFocus" Width="Auto"/>
         <CheckBox x:Name="CT" Content="Прием по ЦТ" Style="{DynamicResource CheckBoxStyleObshchiy}" VerticalContentAlignment="Center" FontSize="16" Grid.Row="15" Grid.Column="1" Margin="0,19,0,0" Grid.RowSpan="2" />
         <Button x:Name="buttonAdd" Visibility="Collapsed" Grid.Column="3" Grid.Row="15" Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Записать" FontSize="16" Click="Button_Add" Margin="0,10,0,0" Grid.RowSpan="2"/>
         <Button x:Name="buttonEdit" Grid.Column="3" Grid.Row="16" Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Сохранить" FontSize="16" Click="Button_Edit"/>
