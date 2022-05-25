@@ -214,6 +214,33 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand("Get_PlanPriemaID", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@speciality", ((ComboBoxItem)Spec.SelectedItem).Content);
+                command.Parameters.AddWithValue("@formOfEducation", FormaObucheniya.SelectedItem);
+                command.Parameters.AddWithValue("@financing", Finanse.SelectedItem);
+                command.Parameters.AddWithValue("@education", Obrazovanie.SelectedItem);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    MessageBoxResult result = MessageBox.Show("План приема с такими данными уже существует!\nПродолжить?", "", MessageBoxButton.YesNo);
+                    if(result == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                }
+                connection.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Проверка дубликатов плана приема");
+            }
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
                 SqlCommand command = new SqlCommand("Add_PlanPriema", connection)
                 {
                     CommandType = CommandType.StoredProcedure
