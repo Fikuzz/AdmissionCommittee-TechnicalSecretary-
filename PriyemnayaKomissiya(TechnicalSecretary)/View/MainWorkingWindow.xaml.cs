@@ -63,17 +63,18 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
         private void UpdateSpeciality()
         {
-            List<string> specialty = DB.Get_SpecialnostiName(false);
+            List<string[]> specialty = DB.Get_SpecialnostiName(false);
             TabControl.Items.Clear();
             TabControl1.Items.Clear();
             TabControl2.Items.Clear();
-            foreach (string name in specialty)
+            foreach (string[] names in specialty)
             {
                 {
                     TabItem tabItem = new TabItem
                     {
                         Style = (Style)FindResource("TabItemStyle"),
-                        Header = name
+                        Header = names[0],
+                        Tag = names[1]
                     };
                     tabItem.PreviewMouseDown += new MouseButtonEventHandler(TabItem_MouseDown);
                     TabControl.Items.Add(tabItem);
@@ -81,7 +82,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     TabItem tabItem1 = new TabItem
                     {
                         Style = (Style)FindResource("TabItemStyle"),
-                        Header = name
+                        Header = names[0],
+                        Tag = names[1]
                     };
                     tabItem1.PreviewMouseDown += new MouseButtonEventHandler(TabItem1_MouseDown);
                     TabControl1.Items.Add(tabItem1);
@@ -89,7 +91,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     TabItem tabItem2 = new TabItem
                     {
                         Style = (Style)FindResource("TabItemStyle"),
-                        Header = name
+                        Header = names[0],
+                        Tag = names[1]
                     };
                     tabItem2.PreviewMouseDown += new MouseButtonEventHandler(TabItem2_MouseDown);
                     TabControl2.Items.Add(tabItem2);
@@ -206,10 +209,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 PLib.ClearData<StackPanel>(addEdifFormCT);
                 PLib.ClearData<StackPanel>(AddEditFormPassport);
 
-                List<string> spec = DB.Get_SpecialnostiName(true);
-                foreach (string name in spec)
+                List<string[]> spec = DB.Get_SpecialnostiName(true);
+                foreach (string[] names in spec)
                 {
-                    addEditFormspecialnost.Items.Add(name);
+                    addEditFormspecialnost.Items.Add(names[1]);
                 }
                 addEditFormspecialnost.SelectedItem = temp.NameSpec;
                 addEditFormobushenie.SelectedItem = temp.NameForm;
@@ -1279,13 +1282,13 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
         private void Button_AddPlanPriema(object sender, RoutedEventArgs e)
         {
-            AddAdissionPlanControl addAdissionPlan = new AddAdissionPlanControl(((TabItem)TabControl1.SelectedItem).Header.ToString());
+            AddAdissionPlanControl addAdissionPlan = new AddAdissionPlanControl(((TabItem)TabControl1.SelectedItem).Tag.ToString());
             addAdissionPlan.CloseControl += CloseAdmissionControl;   
             AddAdmissionPlan.Children.Add(addAdissionPlan);
         }
         private void CloseAdmissionControl(object sender, RoutedEventArgs e)
         {
-            PlaniPriemaLoad(((TabItem)TabControl1.SelectedItem).Header.ToString());
+            PlanPriemaTableLoad(((TabItem)TabControl1.SelectedItem).Header.ToString());
         }
 
         private void ImagecCick_UpdatePlanPriema(object sender, MouseButtonEventArgs e)

@@ -256,9 +256,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Паспортные данные");
             }
         }
-        public static List<string> Get_SpecialnostiName(bool OnlyWithAdmissionsPlans)
+        public static List<string[]> Get_SpecialnostiName(bool OnlyWithAdmissionsPlans)
         {
-            List<string> Result = new List<string>();
+            List<string[]> Result = new List<string[]>();
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
@@ -271,7 +271,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Result.Add(reader.GetString(0));
+                    string[] arr = { reader.GetString(0), reader.GetString(1) };
+                    Result.Add(arr);
                 }
                 connection.Close();
             }
