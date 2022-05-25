@@ -74,7 +74,14 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 reader.Close();
 
                 ForaObucheniya_SelectionChanged(FormaObucheniya, null);
-                Spec.SelectedItem = specName;
+                foreach(ComboBoxItem item1 in Spec.Items)
+                {
+                    if (item1.Content.Equals(specName))
+                    {
+                        Spec.SelectedItem = item1;
+                        break;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -219,12 +226,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 command.Parameters.AddWithValue("@kolva", kolvoMest.Text);
                 command.Parameters.AddWithValue("@kolvaCel", kolvoCelevihMest.Text);
                 command.Parameters.AddWithValue("@CT", CT.IsChecked);
-                command.Parameters.AddWithValue("@Code", kod.Text);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
                 this.Visibility = Visibility.Hidden;
-                CloseControl(sender, e);
+                CloseControl?.Invoke(sender, e);
 
             }
             catch (Exception ex)
@@ -250,13 +256,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 command.Parameters.AddWithValue("@kolva", kolvoMest.Text);
                 command.Parameters.AddWithValue("@kolvaCel", kolvoCelevihMest.Text);
                 command.Parameters.AddWithValue("@CT", CT.IsChecked);
-                command.Parameters.AddWithValue("@Code", kod.Text);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
 
                 this.Visibility = Visibility.Hidden;
-                CloseControl(sender, e);
+                CloseControl?.Invoke(sender, e);
             }
             catch (Exception ex)
             {
