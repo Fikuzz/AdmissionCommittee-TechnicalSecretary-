@@ -112,6 +112,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 
 		private void TextBox_GetMarksSum(object sender, TextChangedEventArgs e)
 		{
+			if (Marks.Count == 0) return;
 			TextBox textBox = (TextBox)sender;
 			textBox.Tag = "";
 
@@ -154,5 +155,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
         {
 			e.Handled = true;
         }
-    }
+		private void TextBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			(sender as TextBox).SelectAll();
+		}
+	}
 }
