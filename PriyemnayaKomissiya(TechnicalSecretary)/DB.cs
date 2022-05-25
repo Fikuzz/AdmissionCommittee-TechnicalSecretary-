@@ -290,12 +290,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 SqlCommand command = new SqlCommand("Get_PlaniPriema", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@specialost", specialost);
-                command.Parameters.AddWithValue("@budjet", budjet == true ? "Бюджет" : "");
-                command.Parameters.AddWithValue("@hozrash", hozrash == true ? "Хозрасчет" : "");
-                command.Parameters.AddWithValue("@bazovoe", bazovoe == true ? "На основе базового образования" : "");
-                command.Parameters.AddWithValue("@srednee", srednee == true ? "На основе среднего образования" : "");
-                command.Parameters.AddWithValue("@dnevnaya", dnevnaya == true ? "Дневная" : "");
-                command.Parameters.AddWithValue("@zaochnaya", zaochnaya == true ? "Заочная" : "");
+                command.Parameters.AddWithValue("@budjet", budjet == true ? "Б%" : "");
+                command.Parameters.AddWithValue("@hozrash", hozrash == true ? "Х%" : "");
+                command.Parameters.AddWithValue("@bazovoe", bazovoe == true ? "%баз%" : "");
+                command.Parameters.AddWithValue("@srednee", srednee == true ? "%сред%" : "");
+                command.Parameters.AddWithValue("@dnevnaya", dnevnaya == true ? "Д%" : "");
+                command.Parameters.AddWithValue("@zaochnaya", zaochnaya == true ? "З%" : "");
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -481,6 +481,91 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message);
             }
             return abiturient;
+        }
+        public static List<Speciality> GetSpecialityTable() 
+        {
+            List<Speciality> list = new List<Speciality>();
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand("SELECT * FROM Специальность", sqlConnection);
+                sqlConnection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Speciality speciality = new Speciality
+                    {
+                        Num = reader.GetInt32(reader.GetOrdinal("IDСпециальность")),
+                        Title = reader.GetString(reader.GetOrdinal("Наименование")),
+                        Letter = reader.GetString(reader.GetOrdinal("Буква")),
+                        ShortTitle = reader.GetString(reader.GetOrdinal("КраткоеНаименование")),
+                        Code = reader.GetString(reader.GetOrdinal("Код"))
+                    };
+                    list.Add(speciality);
+                }
+                sqlConnection.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка получения специальностей");
+            }
+            return list;
+        }
+        public static void InsertSpeciality(Speciality speciality)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand("InsertSpeciality", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Title", speciality.Title);
+                command.Parameters.AddWithValue("@ShortTitle", speciality.ShortTitle);
+                command.Parameters.AddWithValue("@Letter", speciality.Letter);
+                command.Parameters.AddWithValue("@Code", speciality.Code);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка создания специальности");
+            }
+        }
+        public static void UpdateSpeciality(Speciality speciality)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand("UpdateSpeciality", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ID", speciality.Num);
+                command.Parameters.AddWithValue("@Title", speciality.Title);
+                command.Parameters.AddWithValue("@ShortTitle", speciality.ShortTitle);
+                command.Parameters.AddWithValue("@Letter", speciality.Letter);
+                command.Parameters.AddWithValue("@Code", speciality.Code);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка редактирования специальности");
+            }
+        }
+        public static void DeleteSpeciality(int id)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand($"DELETE Специальность WHERE IDСпециальность = {id}", connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка удаления специальности");
+            }
         }
     }
 }

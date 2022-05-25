@@ -38,7 +38,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(reader.GetInt32(0), "Admin");
+                        View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(reader.GetInt32(0), tbLogin.Text, "Admin");
                         mainWorkingWindow.Show();
                         Close();
                         return;
@@ -79,7 +79,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                             SqlDataReader reader = command.ExecuteReader();
                             if (reader.Read())
                             {
-                                View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(Convert.ToInt32(reader[0]), user.DisplayName);
+                                View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(Convert.ToInt32(reader[0]), tbLogin.Text, user.DisplayName);
                                 mainWorkingWindow.Show();
                                 Close();
                             }
@@ -95,7 +95,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                                 command.Parameters.AddWithValue("@role", "Test");
                                 reader = command.ExecuteReader();
                                 reader.Read();
-                                View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(Convert.ToInt32(reader[0]), user.DisplayName);
+                                View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(Convert.ToInt32(reader[0]), tbLogin.Text, user.DisplayName);
                                 mainWorkingWindow.Show();
                                 Close();
                             }
