@@ -8,7 +8,8 @@
         xmlns:control="clr-namespace:PriyemnayaKomissiya_TechnicalSecretary_.Controls"
         mc:Ignorable="d"
         Background="{StaticResource MainBackGround}"
-        Title="MainWorkingWindow" Height="1018" Width="1302" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged">
+        Title="Приемная комиссия «Полоцкий государственный экономический колледж»"
+        Height="754" Width="1302" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height ="80"/>
@@ -44,7 +45,7 @@
 
         <!--#region TabControl | Рабочая область-->
         <TabControl x:Name="tabWork" TabStripPlacement="Left" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,10,0,0" BorderBrush="{x:Null}" Background="{StaticResource MainBackGround}">
-            <TabItem Name="tabItemStats" Style="{DynamicResource TabItemleft}" Margin="0,35,0,-35">
+            <TabItem Name="tabItemStats" Style="{DynamicResource TabItemleft}" Margin="0,30,0,-30">
                 <TabItem.Header>
                     <TextBlock TextWrapping="WrapWithOverflow" Text="Работа со сводными ведомостями" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="43" Margin="0,0,0,-10" Width="148" TextAlignment="Center"/>
                 </TabItem.Header>
@@ -119,7 +120,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="White" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
                         <StackPanel Orientation="Horizontal"  Grid.Row="1" Grid.Column="1" >
-                            <TextBlock Text="Днеаная, Бюджет, На основе базового" Name="LabelFormaObrazovaniya" TextWrapping="Wrap" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" Grid.Row="1" Grid.Column="1" Canvas.Top="23" Margin="20,22,0,22" MinHeight="32" Width="190"/>
+                            <TextBlock Text="Днеаная, Бюджет, На основе базового" Name="LabelFormaObrazovaniya" TextWrapping="Wrap" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" Grid.Row="1" Grid.Column="1" Canvas.Top="23" Margin="22" MinHeight="32" Width="auto"/>
                             <TextBlock x:Name="GridCountWrite" MinHeight="14" Text="24" FontFamily="{StaticResource Montserrat-Regular}" FontSize="12" Background="#FFE4E3E3" VerticalAlignment="Center" TextAlignment="Center" MaxWidth="30" Width="24" Margin="0,29,0,31" Foreground="#FF747474"/>
                         </StackPanel>
                         <DataGrid x:Name="dataGridAbiturients" Tag="false" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource dgAbbiturients}" PreviewKeyDown="Table_PressDelete" HeadersVisibility="Column" CanUserReorderColumns="False" Sorting="DataGridAbiturients_Sorting" MouseDoubleClick="DataGridAbiturients_MouseDoubleClick">
@@ -474,7 +475,7 @@
         </Grid>
         <!--#endregion-->
                     <!--#region форма редактирования записей-->
-                <Grid Visibility="Visible" x:Name="addEditForm" Grid.ColumnSpan="3" Margin="0,0,-17,0" Grid.Row="2" Background="{StaticResource MainBackGround}">
+                <Grid Visibility="Hidden" x:Name="addEditForm" Grid.ColumnSpan="3" Margin="0,0,-17,0" Grid.Row="2" Background="{StaticResource MainBackGround}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="93"/>
                         <ColumnDefinition Width="141*"/>
@@ -532,7 +533,7 @@
                                         <StackPanel Width="201">
                                             <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Инвалиды I и II группы" Margin="20,10,0,0"/>
                                             <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Дети военнослужащих" Margin="20,10,0,0"/>
-                                            <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Диплом с отличием" Margin="20,10,0,0"/>
+                                            <CheckBox Visibility="Hidden" Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Диплом с отличием" Margin="20,10,0,0"/>
                                         </StackPanel>
                                         <StackPanel Width="183">
                                             <CheckBox Height="15" Style="{DynamicResource CheckBoxStyleObshchiy}" Content="Инвалиды III группы" Margin="20,10,0,0"/>
@@ -568,7 +569,7 @@
                                 <ScrollViewer x:Name="ScrollAddAtestats" Foreground="{StaticResource font}" VerticalScrollBarVisibility="Visible" FontWeight="Normal" FontSize="14" FontFamily="{StaticResource Montserrat-Regular}">
                                 <StackPanel x:Name="addEdifFormAtestati" VerticalAlignment="Top" Width="833" >
 
-                                <Button Style="{DynamicResource ButtonStyleObshchiyRED}" Background="{StaticResource 1A95B0}" Height="53" Margin="294,25,293,0" Content="ДОБАВИТЬ ДОКУМЕНТ" Click="Button_NewAtestat"/>
+                                <Button Style="{DynamicResource ButtonStyleObshchiyRED}" Background="{StaticResource 1A95B0}" Height="53" Margin="166,25,167,0" Content="ДОБАВИТЬ ДОКУМЕНТ" Click="Button_NewAtestat"/>
                                 <StackPanel Orientation="Horizontal" Width="500" Height="88" Margin="166,0,167,0">
                                     <Button Style="{DynamicResource ButtonStyleObshchiyRED}" Foreground="{StaticResource 94A1BB}" Background="#3376829B" Height="53" Margin="0,10,0,0" Content="ПРЕДЫДУЩИЙ ЭТАП" Width="235" Click="Button_PrewPage"/>
                                     <Button Style="{DynamicResource ButtonStyleObshchiyRED}" Height="53" Margin="30,10,0,0" Content="СЛЕДУЮЩИЙ ЭТАП" Width="235" Click="Button_NextStep_3"/>
@@ -646,7 +647,7 @@
                 </Grid>
                 <!--#endregion-->
             </TabItem>
-            <TabItem Name="tabItemPlanPriema" Style="{DynamicResource TabItemleft}" Margin="0,35,0,-35">
+            <TabItem Name="tabItemPlanPriema" Style="{DynamicResource TabItemleft}" Margin="0,30,0,-30">
                 <TabItem.Header>
                     <TextBlock TextWrapping="Wrap" Text="Настройка контрольных цифр приема" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="45" Margin="0,0,0,-12" Width="148" TextAlignment="Center"/>
                 </TabItem.Header>
@@ -714,9 +715,9 @@
                 </Grid>
                 <!--#endregion-->
             </TabItem>
-            <TabItem Style="{DynamicResource TabItemleft}" Margin="0,35,0,-35">
+            <TabItem Style="{DynamicResource TabItemleft}" Margin="0,30,0,-30">
                 <TabItem.Header>
-                    <TextBlock TextWrapping="Wrap" Text="Статистика подача документов" VerticalAlignment="Bottom" Height="45" TextAlignment="Center" HorizontalAlignment="Right" Width="148" Margin="0,0,21,-15"/>
+                    <TextBlock TextWrapping="Wrap" Text="Статистика подачи документов" VerticalAlignment="Bottom" Height="45" TextAlignment="Center" HorizontalAlignment="Right" Width="148" Margin="0,0,21,-15"/>
                 </TabItem.Header>
                     <Grid IsVisibleChanged="OpenStats">
                         <Grid.RowDefinitions>
@@ -755,9 +756,9 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="Начальное значение отметки" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="0,10,1,10" Height="14"/>
-                            <TextBox x:Name="tbStartValue" Text="3,0" Grid.Column="2" Margin="0,3,10,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="TbMaskFloat_TextInput"/>
+                            <TextBox x:Name="tbStartValue" Text="3,0" Grid.Column="2" Margin="0,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="TbMaskFloat_TextInput" Width="Auto"/>
                             <TextBlock Text="Шаг диапазона отметок" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" Margin="10,10,5,10" Height="14"/>
-                            <TextBox x:Name="tbStep" Text="1,0" Grid.Column="4" Margin="0,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="TbMaskFloat_TextInput"/>
+                            <TextBox x:Name="tbStep" Text="1,0" Grid.Column="4" Margin="0,3" Grid.Row="1" Style="{DynamicResource TextBox}" Background="#2676829B" PreviewTextInput="TbMaskFloat" TextChanged="TbMaskFloat_TextInput" Width="Auto"/>
                             <Button Content="Экспорт" Style="{DynamicResource ButtonStyleObshchiyRED}" Grid.ColumnSpan="2" Grid.Column="5" Margin="13, 3" Grid.Row="1" Click="Button_Click_2"/>
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="2" Background="#FF1A95B0">
@@ -819,6 +820,45 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
+            </TabItem>
+            <TabItem Style="{DynamicResource TabItemleft}" Margin="0,30,0,-30">
+                <TabItem.Header >
+                    <TextBlock MouseDown="TabItemClick_LoadSpecialityTable" TextWrapping="Wrap" Text="Перечень  специальностей" VerticalAlignment="Bottom" Height="45" TextAlignment="Center" HorizontalAlignment="Right" Width="148" Margin="0,0,21,-15"/>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="200*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="200*" MinHeight="260"/>
+                        <RowDefinition Height="10*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="dgSpeciality" Grid.Row="1" Grid.Column="1" Style="{DynamicResource dgAbbiturients}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="50" Header="№" Binding="{Binding Num}"/>
+                            <DataGridTextColumn Width="5*" Header="Название" Binding="{Binding Title}"/>
+                            <DataGridTextColumn Width="3*" Header="Код специальности" Binding="{Binding Code}"/>
+                            <DataGridTextColumn Width="3*" Header="Краткое наименование" Binding="{Binding ShortTitle}"/>
+                            <DataGridTextColumn Width="1*" Header="Буква" Binding="{Binding Letter}"/>
+                            <DataGridTemplateColumn Width="2*" Header="Действие">
+                                <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Image Margin="10,0,0,0" Source="pack://application:,,,/Resources/pencil-alt.png" MouseUp="MouseUp_SpecialityEdit" />
+                                                <Image Source="pack://application:,,,/Resources/Layer 3.png" MouseUp="MouseUp_SpecialityDelete"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <control:AddEditSpeciality x:Name="ucSpeciality" Grid.Column="1" Grid.Row="3"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
