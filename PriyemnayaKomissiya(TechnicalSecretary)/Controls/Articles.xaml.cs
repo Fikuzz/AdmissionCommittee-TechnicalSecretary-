@@ -33,7 +33,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand("SELECT Наименование, ПолноеНаименование FROM Статьи", connection);
+                SqlCommand command = new SqlCommand("SELECT Наименование, ПолноеНаименование, Примечание FROM Статьи", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 bool toLeftColumn = true;
@@ -45,17 +45,14 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                         Margin = new Thickness(20, 10, 0, 0)
                     };
 
-                    string discription = GetDiscription(reader.GetString(1));
-                    if (discription != "")
+                    checkBox.Content = reader.GetString(reader.GetOrdinal("ПолноеНаименование"));
+
+                    if (reader[reader.GetOrdinal("Примечание")] != DBNull.Value)
                     {
-                        checkBox.Content = reader.GetString(1).Replace($"({discription})", "");
-                        checkBox.ToolTip = discription;
+                        checkBox.ToolTip = reader.GetString(reader.GetOrdinal("Примечание"));
                     }
-                    else
-                    {
-                        checkBox.Content = reader.GetString(1);
-                    }
-                    if(checkBox.Content.ToString() == "Сирота ")
+
+                    if (checkBox.Content.ToString() == "Сирота")
                     {
                         checkBox.Click += BlockAnotherCB;
                     }
@@ -90,30 +87,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             {
                 checkBox.IsChecked = false;
             }
-        }
-        private string GetDiscription(string text)
-        {
-            string result = "";
-            char[] arr = text.ToCharArray();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (arr[i] == '(')
-                {
-                    for (int j = i + 1; j < arr.Length; j++)
-                    {
-                        if (arr[j] == ')')
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            result += arr[j];
-                        }
-                    }
-                    break;
-                }
-            }
-            return result;
         }
     }
 }
