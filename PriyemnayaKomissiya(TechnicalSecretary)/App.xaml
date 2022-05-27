@@ -1118,7 +1118,7 @@
                                     <Setter Property="BorderBrush" Value="{StaticResource FF576B}"/>
                                 </Trigger>
                                 <Trigger Property="Text" Value="">
-                                    <Setter TargetName="Hint" Property="Content" Value="A-00000"/>
+                                    <Setter TargetName="Hint" Property="Content" Value="A-0000000"/>
                                 </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
