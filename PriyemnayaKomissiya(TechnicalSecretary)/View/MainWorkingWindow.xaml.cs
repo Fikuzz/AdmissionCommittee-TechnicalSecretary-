@@ -1118,7 +1118,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         {
             foreach(CheckBox checkBox in ucArticles.checkBoxes)
             {
-                if(checkBox.Content.ToString() == "Сирота ")
+                if(checkBox.Content.ToString() == "Сирота")
                 {
                     if (addEditForm_CheckBox_DetiSiroti.IsChecked == true)
                     {
@@ -1994,6 +1994,20 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             MessageBoxResult result = MessageBox.Show($"Удалить выбранную специальность\n{((Speciality)dgSpeciality.SelectedItem).Title}", "Удаление", MessageBoxButton.YesNo);
             if(result == MessageBoxResult.Yes)
             {
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand($"Select IDПланПриема FROM ПланПриема where IDСпециальности = {(dgSpeciality.SelectedItem as Speciality).Num}", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = MessageBox.Show("Существуют планы приема с выбранной специальностью которые также будут удалены\nПродолжить?","Удаление", MessageBoxButton.YesNo);
+                    if(result != MessageBoxResult.Yes)
+                    {
+                        connection.Close();
+                        return;
+                    }
+                }
+                connection.Close();
                 DB.DeleteSpeciality(((Speciality)dgSpeciality.SelectedItem).Num);
                 dgSpeciality.ItemsSource = DB.GetSpecialityTable();
                 UpdateSpeciality();
@@ -2012,7 +2026,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
         private void Image_MouseUp_3(object sender, MouseButtonEventArgs e)
         {
-            addEditForm.Visibility = Visibility.Hidden;
+            MessageBoxResult messageBoxResult = MessageBox.Show("Данные не будут сохранены!", "Закрыт форму?", MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                addEditForm.Visibility = Visibility.Hidden;
+            }
         }
     }
 }
