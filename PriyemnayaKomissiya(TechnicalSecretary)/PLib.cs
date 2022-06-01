@@ -1,10 +1,8 @@
 ﻿using PriyemnayaKomissiya_TechnicalSecretary_.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -86,23 +84,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return correct;
         }
-        public static void ButtonPos(int coluns, int curentColumns, List<Button> planPriemaButtons) //изменение позиций кнопок под размер экрана
-        {
-            if (curentColumns == coluns) return;
-            int buttons = 0;
-            int row = 1;
-            while (buttons < planPriemaButtons.Count)
-            {
-                for (int i = 1; i <= coluns && buttons < planPriemaButtons.Count; i++)
-                {
-                    planPriemaButtons[buttons].SetValue(Grid.RowProperty, row);
-                    planPriemaButtons[buttons].SetValue(Grid.ColumnProperty, i);
-                    buttons++;
-                }
-                row++;
-            }
-            curentColumns = coluns;
-        }
+       
         public static void ClearData<T>(T obj) where T : Panel
         {
             foreach (object control in obj.Children)

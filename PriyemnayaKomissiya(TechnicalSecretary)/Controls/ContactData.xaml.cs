@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 {
@@ -47,9 +37,28 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             {
                 MessageBox.Show(ex.Message);
             }
+
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                From = 0,
+                To = 270,
+                Duration = TimeSpan.FromSeconds(0.2)
+            };
+            this.BeginAnimation(UserControl.HeightProperty, animation);
         }
 
         private void Button_CloseNote(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                From = this.Height,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(0.2)
+            };
+            animation.Completed += (_, __) => CloseForm();
+            this.BeginAnimation(UserControl.HeightProperty, animation);
+        }
+        void CloseForm()
         {
             Panel panel = this.Parent as Panel;
             panel.Children.Remove(this);

@@ -11,7 +11,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 {
@@ -144,19 +146,19 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         {
             if (this.WindowState == WindowState.Maximized)
             {
-                PLib.ButtonPos(4, planPriemaColumn, planPriemaButtons);
+                ButtonPos(4);
             }
             else if (this.Width < 1300)
             {
-                PLib.ButtonPos(2, planPriemaColumn, planPriemaButtons);
+                ButtonPos(2);
             }
             else if (this.Width < 1600)
             {
-                PLib.ButtonPos(3, planPriemaColumn, planPriemaButtons);
+                ButtonPos(3);
             }
             else
             {
-                PLib.ButtonPos(4, planPriemaColumn, planPriemaButtons);
+                ButtonPos(4);
             }
         }
         #endregion
@@ -180,7 +182,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Выдача документов");
                 }
             }
         }//Выдать документы
@@ -211,6 +213,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 PLib.ClearData<StackPanel>(AddEditFormPassport);
 
                 List<string[]> spec = DB.Get_SpecialnostiName(true);
+                addEditFormspecialnost.SelectedItem = 0;
+                addEditFormspecialnost.Items.Clear();
                 foreach (string[] names in spec)
                 {
                     addEditFormspecialnost.Items.Add(names[1]);
@@ -266,7 +270,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     }
                     con.Close();
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }//основные данные и паспортные данные
+                catch (Exception ex) 
+                { 
+                    MessageBox.Show(ex.Message, "Заполнение основных и паспортных данных"); 
+                }//основные данные и паспортные данные
                 try
                 {
                     AddEditFormContacts.Children.RemoveRange(0, (int)AddEditFormContacts.Tag);
@@ -301,7 +308,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
                 catch (Exception ex) 
                 { 
-                    MessageBox.Show(ex.Message); 
+                    MessageBox.Show(ex.Message, "Заполнение контактных данных"); 
                 }//контактные данные
                 try
                 {
@@ -352,7 +359,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Заполнение аттестатов");
                 }//Аттестаты
                 try
                 {
@@ -403,7 +410,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     }
                     connection.Close();
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }//сертификаты цт
+                catch (Exception ex) 
+                { 
+                    MessageBox.Show(ex.Message, "Заполнение сертификатов ЦТ"); 
+                }//сертификаты цт
             }
         } //нажатие кнопки редактирования
 
@@ -451,7 +461,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(ex.Message, "Выдача документов");
                     }
                 }
             }
@@ -487,7 +497,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Изменение статуса абитуриента");
             }
         }
         private void Abiturient_Delete(object sender, RoutedEventArgs e)
@@ -560,7 +570,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Сортировка по приоритету");
             }
             finally
             {
@@ -812,7 +822,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Скрытие неиспользуемых столбцов таблицы");
                 }
             }
         }
@@ -842,7 +852,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                catch (Exception ex) 
+                { 
+                    MessageBox.Show(ex.Message, "Удаление контактных данных"); 
+                }
                 try//Контактные данные
                 {
                     string sql = $"SELECT IDКонтактныеДанные, ROW_NUMbER() OVER(ORDER BY IDКонтактныеДанные) as Num, (SELECT Наименование FROM ТипКонтакта WHERE КонтактныеДанные.IDТипКонтакта = ТипКонтакта.IDТипКонтакта) as [ТипКонтакта], Сведения FROM  КонтактныеДанные WHERE IDАбитуриента = {((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID}";
@@ -858,7 +871,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Запись контактных данных абитуриента");
                 }
             }
         }
@@ -875,7 +888,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                catch (Exception ex) 
+                { 
+                    MessageBox.Show(ex.Message); 
+                }
                 try//цт
                 {
                     string sql = $"SELECT IDСертификатаЦТ, НомерСерии as num, Дисциплина, ГодПрохождения, Балл, ДесятибальноеЗначение FROM СертификатЦТ WHERE IDАбитуриента = {((AbiturientDGItem)dataGridAbiturients.SelectedItem).ID}";
@@ -1216,7 +1232,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Заполнение списка форм образования");
             }
             try
             {
@@ -1231,15 +1247,17 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 command.Parameters.AddWithValue("@education", addEditFormobrazovanie.SelectedItem);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                curentPlanPriema = DB.Get_PlanPriemaByID(reader.GetInt32(0));
-                SetExamList();
+                if (reader.Read())
+                {
+                    curentPlanPriema = DB.Get_PlanPriemaByID(reader.GetInt32(0));
+                    SetExamList();
+                }
                 reader.Close();
                 connection.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Получение плана приема");
             }
             try
             {
@@ -1254,7 +1272,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Активация формы сертификатов ЦТ");
             }
         }
         private void AddEditFormobrazovanie_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1352,7 +1370,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Удаление плана приема");
                 }
             }
         }
@@ -1536,6 +1554,36 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         #endregion
 
         #region Методы
+        private void ButtonPos(int col) //изменение позиций кнопок под размер экрана
+        {
+            if (planPriemaColumn == col) return;
+
+            double x = colButtonsize.Width.Value;
+            double y = rowButtonsize.Height.Value;
+
+            int buttons = 0;
+            int row = 1;
+            while (buttons < planPriemaButtons.Count)
+            {
+                for (int i = 1; i <= col && buttons < planPriemaButtons.Count; i++)
+                {
+                    Button button = planPriemaButtons[buttons];
+                    int curRow = (int)button.GetValue(Grid.RowProperty);
+                    int curCol = (int)button.GetValue(Grid.ColumnProperty);
+
+                    ThicknessAnimation animation = new ThicknessAnimation
+                    {
+                        From = button.Margin,
+                        To = new Thickness((i - curCol - 1) * x, (row - curRow - 1) * y, 0, 0),
+                        Duration = TimeSpan.FromSeconds(0.2)
+                    };
+                    planPriemaButtons[buttons].BeginAnimation(Button.MarginProperty, animation);
+                    buttons++;
+                }
+                row++;
+            }
+            planPriemaColumn = col;
+        }
         private void StatsLoad(string specialnost)
         {
             List<DocSubmissionStat> list = new List<DocSubmissionStat>();
@@ -1592,7 +1640,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Получение количества абитуриентов для статистики");
             }
         }
         private void PlanPriemaTableLoad(string specialnost)
@@ -1639,7 +1687,14 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         private void PlaniPriemaLoad(string specialost)
         {
-            Brush[] colors = { new SolidColorBrush(Color.FromRgb(255, 87, 107)), new SolidColorBrush(Color.FromRgb(26, 149, 176)), new SolidColorBrush(Color.FromRgb(68, 166, 212)), new SolidColorBrush(Color.FromRgb(220, 136, 51)), new SolidColorBrush(Color.FromRgb(93, 79, 236)) };
+            Brush[] colors = { 
+                new SolidColorBrush(Color.FromRgb(255, 87, 107)), 
+                new SolidColorBrush(Color.FromRgb(26, 149, 176)), 
+                new SolidColorBrush(Color.FromRgb(68, 166, 212)), 
+                new SolidColorBrush(Color.FromRgb(220, 136, 51)), 
+                new SolidColorBrush(Color.FromRgb(93, 79, 236)),
+                new SolidColorBrush(Color.FromRgb(87, 154, 255)),
+                new SolidColorBrush(Color.FromRgb(255, 222, 87))}; //сюда можно добавить цвета для кнопок плана приема
             int i = 0;
             planPriemaButtons.Clear();
             grdAdmissionPlans.Children.Clear();
@@ -1660,7 +1715,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 ButtonAdmissionPlanThemeProperties.SetTickBrush(button, colors[i]);
                 grdAdmissionPlans.Children.Add(button);
                 i++;
-                if (i == 4) i = 0;
+                if (i == colors.Length-1) i = 0;
             }
             planPriemaColumn = 0;
             MainWorkingWindowForm_SizeChanged(null, null);
@@ -1816,7 +1871,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Заполнение формы информации об абитуриенте");
             }
             try//Атестаты
             {
@@ -1850,7 +1905,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Заполнение таблицы аттестатов абитуиента");
             }
             try//цт
             {
@@ -1870,7 +1925,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Заполнение таблицы сертификатов ЦТ абитуиента");
             }
             try//Контактные данные
             {
@@ -1890,7 +1945,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Заполнение таблицы контактных данных абитуиента");
             }
         } //открытие информации об абитуриенте
 

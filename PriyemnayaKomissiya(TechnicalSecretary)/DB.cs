@@ -400,7 +400,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                string sql1 = $"SELECT Буква FROM Специальность WHERE Наименование = '{specialityName}'";
+                string sql1 = $"SELECT Буква FROM Специальность WHERE КраткоеНаименование = '{specialityName}'";
                 SqlCommand command = new SqlCommand(sql1, connection);
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
