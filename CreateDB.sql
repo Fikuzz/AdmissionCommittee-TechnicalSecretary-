@@ -1,40 +1,128 @@
+USE [master]
+GO
+/****** Object:  Database [Приемная комиссия]    Script Date: 01.06.2022 8:08:49 ******/
+CREATE DATABASE [Приемная комиссия]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Приемная комиссия', FILENAME = N'F:\MS SQL SERVER\Data\Приемная комиссия.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Приемная комиссия_log', FILENAME = N'F:\MS SQL SERVER\Data\Приемная комиссия_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [Приемная комиссия] SET COMPATIBILITY_LEVEL = 140
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [Приемная комиссия].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Приемная комиссия] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Приемная комиссия] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Приемная комиссия] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [Приемная комиссия] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Приемная комиссия] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [Приемная комиссия] SET  MULTI_USER 
+GO
+ALTER DATABASE [Приемная комиссия] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Приемная комиссия] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Приемная комиссия] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Приемная комиссия] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [Приемная комиссия] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [Приемная комиссия] SET QUERY_STORE = OFF
+GO
 USE [Приемная комиссия]
 GO
-/****** Object:  Table [dbo].[Абитуриент]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  User [fik]    Script Date: 01.06.2022 8:08:50 ******/
+CREATE USER [fik] FOR LOGIN [COLLEGE\fik] WITH DEFAULT_SCHEMA=[db_owner]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [fik]
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [fik]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [fik]
+GO
+/****** Object:  UserDefinedFunction [dbo].[GetMarkCount]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Абитуриент](
-	[IDАбитуриента] [int] IDENTITY(1,1) NOT NULL,
-	[Фамилия] [nvarchar](20) NOT NULL,
-	[Имя] [nvarchar](20) NOT NULL,
-	[Отчество] [nvarchar](20) NULL,
-	[Школа] [nvarchar](50) NOT NULL,
-	[ЭкзаменационныйЛист] [nvarchar](10) NULL,
-	[ГодОкончанияШколы] [int] NOT NULL,
-	[ГражданинРБ] [bit] NULL,
-	[Гражданство] [nvarchar](30) NULL,
-	[Общежитие] [bit] NULL,
-	[ГодПоступления] [int] NOT NULL,
-	[IDПланаПриема] [int] NOT NULL,
-	[МестоРаботы] [nvarchar](40) NULL,
-	[Должность] [nvarchar](40) NULL,
-	[Сирота] [bit] NULL,
-	[ЦелевойДоговор] [bit] NULL,
-	[АбитуриентЗачислен] [bit] NULL,
-	[IDВладельца] [int] NOT NULL,
-	[IDРедактора] [int] NULL,
-	[Удалено] [bit] NULL,
-	[ДатаСоздания] [datetime] NULL,
-	[ДатаРедактирования] [datetime] NULL,
- CONSTRAINT [PK__Абитурие__998FBBCDBBD36977] PRIMARY KEY CLUSTERED 
-(
-	[IDАбитуриента] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+Create FUNCTION [dbo].[GetMarkCount](
+@idAbiturient int,
+@Mark int)
+Returns int
+AS
+BEGIN
+	DECLARE @MarkCount int;
+	SELECT @MarkCount = 
+	(SELECT SUM(Количество)
+                               FROM            ОценкиАтестата INNER JOIN
+                                                         Атестат ON Атестат.IDАтестата = ОценкиАтестата.IDАтестата
+                               WHERE        (@idAbiturient = IDАбитуриента) AND (Балл = @Mark)
+                               GROUP BY Балл)
+	RETURN @MarkCount
+END
 GO
-/****** Object:  Table [dbo].[Атестат]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  UserDefinedFunction [dbo].[GetNum]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[GetNum](@st varchar(10))
+RETURNS int
+begin
+	return
+    left(
+        right(@st, 1 + len(@st) - patindex('%[0-9.]%', @st)), 
+        patindex('%[^0-9.]%', right(@st, 1 + len(@st) - patindex('%[0-9.]%', @st))) - 1)
+end
+GO
+/****** Object:  Table [dbo].[Атестат]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -52,23 +140,71 @@ CREATE TABLE [dbo].[Атестат](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ОценкиАтестата]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Шкала]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[ОценкиАтестата](
-	[IDОценкиАтестата] [int] IDENTITY(1,1) NOT NULL,
-	[Балл] [int] NOT NULL,
-	[Количество] [int] NOT NULL,
-	[IDАтестата] [int] NOT NULL,
- CONSTRAINT [PK__ОценкиАт__DFFC47AD44A93D7B] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Шкала](
+	[IDШкалы] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](25) NOT NULL,
+	[КоличествоБаллов] [int] NOT NULL,
+ CONSTRAINT [PK__Шкала__A0AAEA358404A57D] PRIMARY KEY CLUSTERED 
 (
-	[IDОценкиАтестата] ASC
+	[IDШкалы] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[GetAbiturientData]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[ШкалаСтраны]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ШкалаСтраны](
+	[IDШкалыСтраны] [int] IDENTITY(1,1) NOT NULL,
+	[IDШкалы] [int] NOT NULL,
+	[IDСтраныОбучения] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDШкалыСтраны] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Абитуриент]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Абитуриент](
+	[IDАбитуриента] [int] IDENTITY(1,1) NOT NULL,
+	[Фамилия] [nvarchar](20) NOT NULL,
+	[Имя] [nvarchar](20) NOT NULL,
+	[Отчество] [nvarchar](20) NULL,
+	[Школа] [nvarchar](50) NOT NULL,
+	[ЭкзаменационныйЛист] [nvarchar](10) NULL,
+	[ГодОкончанияШколы] [int] NOT NULL,
+	[ГражданинРБ] [bit] NULL,
+	[Гражданство] [nvarchar](30) NULL,
+	[Общежитие] [bit] NULL,
+	[ГодПоступления] [int] NOT NULL,
+	[IDПланаПриема] [int] NOT NULL,
+	[МестоРаботы] [nvarchar](60) NULL,
+	[Должность] [nvarchar](40) NULL,
+	[Сирота] [bit] NULL,
+	[ЦелевойДоговор] [bit] NULL,
+	[АбитуриентЗачислен] [bit] NULL,
+	[IDВладельца] [int] NOT NULL,
+	[IDРедактора] [int] NULL,
+	[Удалено] [bit] NULL,
+	[ДатаСоздания] [datetime] NULL,
+	[ДатаРедактирования] [datetime] NULL,
+ CONSTRAINT [PK__Абитурие__998FBBCDBBD36977] PRIMARY KEY CLUSTERED 
+(
+	[IDАбитуриента] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[GetAbiturientData]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -77,64 +213,74 @@ GO
 CREATE VIEW [dbo].[GetAbiturientData]
 AS
 SELECT        dbo.Абитуриент.IDАбитуриента, dbo.Абитуриент.Фамилия + ' ' + dbo.Абитуриент.Имя + ' ' + dbo.Абитуриент.Отчество AS ФИО, dbo.Абитуриент.Школа, dbo.Абитуриент.ГодОкончанияШколы, 
-                         dbo.Абитуриент.АбитуриентЗачислен,
-                             (SELECT        SUM(dbo.ОценкиАтестата.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата INNER JOIN
-                                                         dbo.Атестат ON dbo.Атестат.IDАтестата = dbo.ОценкиАтестата.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = dbo.Атестат.IDАбитуриента) AND (dbo.ОценкиАтестата.Балл = 1)
-                               GROUP BY dbo.ОценкиАтестата.Балл) AS Mark1,
-                             (SELECT        SUM(ОценкиАтестата_9.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_9 INNER JOIN
-                                                         dbo.Атестат AS Атестат_10 ON Атестат_10.IDАтестата = ОценкиАтестата_9.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_10.IDАбитуриента) AND (ОценкиАтестата_9.Балл = 2)
-                               GROUP BY ОценкиАтестата_9.Балл) AS Mark2,
-                             (SELECT        SUM(ОценкиАтестата_8.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_8 INNER JOIN
-                                                         dbo.Атестат AS Атестат_9 ON Атестат_9.IDАтестата = ОценкиАтестата_8.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_9.IDАбитуриента) AND (ОценкиАтестата_8.Балл = 3)
-                               GROUP BY ОценкиАтестата_8.Балл) AS Mark3,
-                             (SELECT        SUM(ОценкиАтестата_7.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_7 INNER JOIN
-                                                         dbo.Атестат AS Атестат_8 ON Атестат_8.IDАтестата = ОценкиАтестата_7.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_8.IDАбитуриента) AND (ОценкиАтестата_7.Балл = 4)
-                               GROUP BY ОценкиАтестата_7.Балл) AS Mark4,
-                             (SELECT        SUM(ОценкиАтестата_6.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_6 INNER JOIN
-                                                         dbo.Атестат AS Атестат_7 ON Атестат_7.IDАтестата = ОценкиАтестата_6.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_7.IDАбитуриента) AND (ОценкиАтестата_6.Балл = 5)
-                               GROUP BY ОценкиАтестата_6.Балл) AS Mark5,
-                             (SELECT        SUM(ОценкиАтестата_5.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_5 INNER JOIN
-                                                         dbo.Атестат AS Атестат_6 ON Атестат_6.IDАтестата = ОценкиАтестата_5.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_6.IDАбитуриента) AND (ОценкиАтестата_5.Балл = 6)
-                               GROUP BY ОценкиАтестата_5.Балл) AS Mark6,
-                             (SELECT        SUM(ОценкиАтестата_4.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_4 INNER JOIN
-                                                         dbo.Атестат AS Атестат_5 ON Атестат_5.IDАтестата = ОценкиАтестата_4.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_5.IDАбитуриента) AND (ОценкиАтестата_4.Балл = 7)
-                               GROUP BY ОценкиАтестата_4.Балл) AS Mark7,
-                             (SELECT        SUM(ОценкиАтестата_3.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_3 INNER JOIN
-                                                         dbo.Атестат AS Атестат_4 ON Атестат_4.IDАтестата = ОценкиАтестата_3.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_4.IDАбитуриента) AND (ОценкиАтестата_3.Балл = 8)
-                               GROUP BY ОценкиАтестата_3.Балл) AS Mark8,
-                             (SELECT        SUM(ОценкиАтестата_2.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_2 INNER JOIN
-                                                         dbo.Атестат AS Атестат_3 ON Атестат_3.IDАтестата = ОценкиАтестата_2.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_3.IDАбитуриента) AND (ОценкиАтестата_2.Балл = 9)
-                               GROUP BY ОценкиАтестата_2.Балл) AS Mark9,
-                             (SELECT        SUM(ОценкиАтестата_1.Количество) AS Expr1
-                               FROM            dbo.ОценкиАтестата AS ОценкиАтестата_1 INNER JOIN
-                                                         dbo.Атестат AS Атестат_2 ON Атестат_2.IDАтестата = ОценкиАтестата_1.IDАтестата
-                               WHERE        (dbo.Абитуриент.IDАбитуриента = Атестат_2.IDАбитуриента) AND (ОценкиАтестата_1.Балл = 10)
-                               GROUP BY ОценкиАтестата_1.Балл) AS Mark10, ROUND(SUM(Атестат_1.СреднийБалл) / COUNT(*), 2) AS СреднийБалл, dbo.Абитуриент.ЭкзаменационныйЛист, dbo.Абитуриент.Удалено, 
-                         ROUND(SUM(Атестат_1.ДесятибальнаяСистема) / COUNT(*), 2) AS СреднийБаллВДесятибальнойСистеме, dbo.Абитуриент.Сирота, dbo.Абитуриент.ЦелевойДоговор
+                         dbo.Абитуриент.АбитуриентЗачислен, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 1) AS Mark1, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 2) AS Mark2, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 3) 
+                         AS Mark3, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 4) AS Mark4, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 5) AS Mark5, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 6) AS Mark6, 
+                         dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 7) AS Mark7, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 8) AS Mark8, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 9) AS Mark9, 
+                         dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 10) AS Mark10, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 11) AS Mark11, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 12) AS Mark12, 
+                         dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 13) AS Mark13, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 14) AS Mark14, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 15) AS Mark15, 
+                         ROUND(SUM(dbo.Атестат.СреднийБалл) / COUNT(*), 2) AS СреднийБалл, dbo.Абитуриент.ЭкзаменационныйЛист, dbo.Абитуриент.Удалено, ROUND(SUM(dbo.Атестат.ДесятибальнаяСистема) / COUNT(*), 2) 
+                         AS СреднийБаллВДесятибальнойСистеме, dbo.Абитуриент.Сирота, dbo.Абитуриент.ЦелевойДоговор,
+                             (SELECT        КоличествоБаллов
+                               FROM            dbo.Шкала
+                               WHERE        (IDШкалы =
+                                                             (SELECT        IDШкалы
+                                                               FROM            dbo.ШкалаСтраны
+                                                               WHERE        (IDШкалыСтраны = dbo.Атестат.IDШкалыСтраны)))) AS [Размер шкалы]
 FROM            dbo.Абитуриент LEFT OUTER JOIN
-                         dbo.Атестат AS Атестат_1 ON dbo.Абитуриент.IDАбитуриента = Атестат_1.IDАбитуриента
+                         dbo.Атестат ON dbo.Абитуриент.IDАбитуриента = dbo.Атестат.IDАбитуриента
 GROUP BY dbo.Абитуриент.IDАбитуриента, dbo.Абитуриент.Фамилия, dbo.Абитуриент.Имя, dbo.Абитуриент.Отчество, dbo.Абитуриент.Школа, dbo.Абитуриент.ГодОкончанияШколы, dbo.Абитуриент.АбитуриентЗачислен, 
-                         dbo.Абитуриент.ЭкзаменационныйЛист, dbo.Абитуриент.Удалено, dbo.Абитуриент.Сирота, dbo.Абитуриент.ЦелевойДоговор, Атестат_1.IDШкалыСтраны
+                         dbo.Абитуриент.ЭкзаменационныйЛист, dbo.Абитуриент.Удалено, dbo.Абитуриент.Сирота, dbo.Абитуриент.ЦелевойДоговор, dbo.Атестат.IDШкалыСтраны
 GO
-/****** Object:  Table [dbo].[КонтактныеДанные]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Статьи]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Статьи](
+	[IDСтатьи] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](20) NOT NULL,
+	[Приоритет] [int] NOT NULL,
+	[ПолноеНаименование] [nvarchar](50) NOT NULL,
+	[Примечание] [nvarchar](40) NULL,
+ CONSTRAINT [PK__Статьи__039CE28169CFC07B] PRIMARY KEY CLUSTERED 
+(
+	[IDСтатьи] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[СтатьиАбитуриента]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[СтатьиАбитуриента](
+	[IDСтатьиАбитуриента] [int] IDENTITY(1,1) NOT NULL,
+	[IDАбитуриента] [int] NOT NULL,
+	[IDСтатьи] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDСтатьиАбитуриента] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  UserDefinedFunction [dbo].[AbiturientPriority]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[AbiturientPriority](@noteCount INT)
+RETURNS TABLE
+AS
+RETURN
+	SELECT TOP (@noteCount) Фамилия, Имя, Отчество, Сирота, ЦелевойДоговор,
+		(SELECT CASE WHEN MIN(Приоритет) IS NULL THEN 10 ELSE MIN(Приоритет) END 
+		FROM СтатьиАбитуриента JOIN Статьи ON (СтатьиАбитуриента.IDСтатьи = Статьи.IDСтатьи) 
+		WHERE Абитуриент.IDАбитуриента = СтатьиАбитуриента.IDАбитуриента) AS ПриоритетАбитуриента,
+		(SELECT ROUND(MAX(ДесятибальнаяСистема),2) FROM Атестат WHERE Атестат.IDАбитуриента = Абитуриент.IDАбитуриента) AS [Средний балл]
+	FROM Абитуриент
+	ORDER BY Сирота DESC, ПриоритетАбитуриента, [Средний балл] DESC
+GO
+/****** Object:  Table [dbo].[КонтактныеДанные]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -150,7 +296,7 @@ CREATE TABLE [dbo].[КонтактныеДанные](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Настройки]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Настройки]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,7 +310,23 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ПаспортныеДанные]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[ОценкиАтестата]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ОценкиАтестата](
+	[IDОценкиАтестата] [int] IDENTITY(1,1) NOT NULL,
+	[Балл] [int] NOT NULL,
+	[Количество] [int] NOT NULL,
+	[IDАтестата] [int] NOT NULL,
+ CONSTRAINT [PK__ОценкиАт__DFFC47AD44A93D7B] PRIMARY KEY CLUSTERED 
+(
+	[IDОценкиАтестата] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ПаспортныеДанные]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -184,7 +346,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Перевод]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Перевод]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -200,7 +362,7 @@ CREATE TABLE [dbo].[Перевод](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ПланПриема]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[ПланПриема]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -214,14 +376,13 @@ CREATE TABLE [dbo].[ПланПриема](
 	[Количество] [int] NOT NULL,
 	[КоличествоЦелевыхМест] [int] NOT NULL,
 	[ЦТ] [bit] NOT NULL,
-	[КодСпециальности] [nchar](13) NOT NULL,
  CONSTRAINT [PK__ПланПрие__2595E66AC64EC603] PRIMARY KEY CLUSTERED 
 (
 	[IDПланПриема] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Пользователь]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Пользователь]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -237,7 +398,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Роль]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Роль]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -251,7 +412,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[СертификатЦТ]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[СертификатЦТ]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -263,60 +424,31 @@ CREATE TABLE [dbo].[СертификатЦТ](
 	[Балл] [int] NOT NULL,
 	[ДесятибальноеЗначение] [float] NOT NULL,
 	[ГодПрохождения] [int] NULL,
-	[НомерСерии] [int] NULL,
+	[НомерСерии] [nvarchar](50) NULL,
  CONSTRAINT [PK__Сертифик__CD497088FCC4CBC1] PRIMARY KEY CLUSTERED 
 (
 	[IDСертификатаЦТ] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Специальность]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Специальность]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Специальность](
 	[IDСпециальность] [int] IDENTITY(1,1) NOT NULL,
-	[Наименование] [nvarchar](40) NOT NULL,
+	[Наименование] [nvarchar](50) NOT NULL,
 	[Буква] [char](1) NOT NULL,
+	[КраткоеНаименование] [nvarchar](20) NULL,
+	[Код] [nvarchar](13) NULL,
  CONSTRAINT [PK__Специаль__67713123C471BC0F] PRIMARY KEY CLUSTERED 
 (
 	[IDСпециальность] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Статьи]    Script Date: 10.05.2022 15:47:54 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Статьи](
-	[IDСтатьи] [int] IDENTITY(1,1) NOT NULL,
-	[Наименование] [nvarchar](20) NULL,
-	[Приоритет] [int] NOT NULL,
-	[ПолноеНаименование] [nvarchar](50) NULL,
- CONSTRAINT [PK__Статьи__039CE28169CFC07B] PRIMARY KEY CLUSTERED 
-(
-	[IDСтатьи] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[СтатьиАбитуриента]    Script Date: 10.05.2022 15:47:54 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[СтатьиАбитуриента](
-	[IDСтатьиАбитуриента] [int] IDENTITY(1,1) NOT NULL,
-	[IDАбитуриента] [int] NOT NULL,
-	[IDСтатьи] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[IDСтатьиАбитуриента] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[СтранаОбучения]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[СтранаОбучения]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -330,7 +462,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ТипКонтакта]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[ТипКонтакта]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -344,7 +476,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Финансирование]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[Финансирование]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -358,7 +490,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ФормаОбучения]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  Table [dbo].[ФормаОбучения]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -370,36 +502,6 @@ CREATE TABLE [dbo].[ФормаОбучения](
  CONSTRAINT [PK__ФормаОбу__7BE297F5ABAB32BF] PRIMARY KEY CLUSTERED 
 (
 	[IDФормаОбучения] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Шкала]    Script Date: 10.05.2022 15:47:54 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Шкала](
-	[IDШкалы] [int] IDENTITY(1,1) NOT NULL,
-	[Наименование] [nvarchar](25) NOT NULL,
-	[КоличествоБаллов] [int] NOT NULL,
- CONSTRAINT [PK__Шкала__A0AAEA358404A57D] PRIMARY KEY CLUSTERED 
-(
-	[IDШкалы] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[ШкалаСтраны]    Script Date: 10.05.2022 15:47:54 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ШкалаСтраны](
-	[IDШкалыСтраны] [int] IDENTITY(1,1) NOT NULL,
-	[IDШкалы] [int] NOT NULL,
-	[IDСтраныОбучения] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[IDШкалыСтраны] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -472,6 +574,8 @@ ALTER TABLE [dbo].[Перевод] CHECK CONSTRAINT [FK__Перевод__IDШк�
 GO
 ALTER TABLE [dbo].[ПланПриема]  WITH CHECK ADD  CONSTRAINT [FK__ПланПрием__IDСпе__787EE5A0] FOREIGN KEY([IDСпециальности])
 REFERENCES [dbo].[Специальность] ([IDСпециальность])
+ON UPDATE CASCADE
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[ПланПриема] CHECK CONSTRAINT [FK__ПланПрием__IDСпе__787EE5A0]
 GO
@@ -521,7 +625,7 @@ REFERENCES [dbo].[Шкала] ([IDШкалы])
 GO
 ALTER TABLE [dbo].[ШкалаСтраны] CHECK CONSTRAINT [FK__ШкалаСтра__IDШка__6166761E]
 GO
-/****** Object:  StoredProcedure [dbo].[AbiturientsPriority]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[AbiturientsPriority]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -537,10 +641,10 @@ BEGIN
 		(SELECT ROUND(MAX(ДесятибальнаяСистема),2) FROM Атестат WHERE Атестат.IDАбитуриента = Абитуриент.IDАбитуриента) AS [Средний балл], Удалено
 	FROM Абитуриент
 	WHERE IDПланаПриема = @ID
-	ORDER BY Удалено, Сирота DESC, ЦелевойДоговор DESC, ПриоритетАбитуриента, [Средний балл] DESC
+	ORDER BY Удалено, Сирота DESC, ЦелевойДоговор DESC, [Средний балл] DESC, ПриоритетАбитуриента
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Abiturient]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Abiturient]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -570,7 +674,7 @@ BEGIN
 	VALUES(@surename, @name, @otchestvo, @shool, @graduationYear, @grajdanstvoRB, @grajdanstvo, @obshejitie, YEAR(GETDATE()), @planPriema, @workPlace, @doljnost, @sirota, @dogovor, 0, @user, 0,  GETDATE(), @ExamList)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Atestat]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Atestat]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -594,7 +698,7 @@ ELSE
 		ROUND(@avgMarks,2),@avgMarks)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_ContctData]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_ContctData]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -610,7 +714,7 @@ INSERT INTO КонтактныеДанные(IDАбитуриента, Свед�
 			(SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = @contactType))
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Mark]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Mark]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -624,7 +728,7 @@ BEGIN
 	INSERT INTO ОценкиАтестата (Балл, Количество, IDАтестата) VALUES (@mark,@colvo,@attestat)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_PassportData]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_PassportData]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -643,7 +747,7 @@ BEGIN
 	VALUES(@abiturient,@dateIssue,@dateOfBirth,@series,@PasspornNum,@name,@identNum)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_PlanPriema]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_PlanPriema]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -656,23 +760,21 @@ CREATE PROC [dbo].[Add_PlanPriema]
 @obr varchar(50),
 @kolva int,
 @kolvaCel int,
-@CT bit,
-@Code varchar(13)
+@CT bit
 AS
 BEGIN
-	INSERT INTO ПланПриема(ГодПоступления, IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ЦТ, КодСпециальности) VALUES(
+	INSERT INTO ПланПриема(ГодПоступления, IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ЦТ) VALUES(
 		@year,
 		(SELECT IDСпециальность FROM Специальность WHERE Наименование = @spec),
 		(SELECT IDФормаОбучения FROM ФормаОбучения WHERE Наименование = @form AND Образование = @obr),
 		(SELECT IDФинансирования FROM Финансирование WHERE Наименование = @fin),
 		@kolva,
 		@kolvaCel,
-		@CT,
-		@Code
+		@CT
 	)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Sertificat]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Sertificat]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -690,7 +792,7 @@ BEGIN
 	VALUES(@sertificat,@disciplin,@mark,@decMark,@year,@serialNum)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Stati]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Stati]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -703,7 +805,7 @@ BEGIN
 	INSERT INTO СтатьиАбитуриента(IDАбитуриента,IDСтатьи) VALUES(@abiturient,@statya)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_User]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Add_User]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -719,7 +821,7 @@ INSERT INTO Пользователь(Логин, ФИО, IDРоли)
 		VALUES (@login, @fio, (SElECT IDРоли FROM Роль WHERE Наименование = @role))
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Del_AbiturientMarks]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Del_AbiturientMarks]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -737,7 +839,7 @@ BEGIN
 	DBCC CHECKIDENT (ОценкиАтестата, RESEED, @lastID);
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaAttestat]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaAttestat]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -766,7 +868,7 @@ BEGIN
 	ROUND (СреднийБалл, 2, 1) as СреднийБалл,ROUND (ДесятибальнаяСистема, 2, 1) as ДесятибальнаяСистема FROM Атестат WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaFullInfo]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaFullInfo]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -780,7 +882,7 @@ BEGIN
 	WHERE Абитуриент.IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaKontakti]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaKontakti]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -794,7 +896,7 @@ BEGIN
 	WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaSertificati]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaSertificati]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -808,7 +910,7 @@ BEGIN
 	WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientList]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientList]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -823,7 +925,7 @@ SELECT Абитуриент.IDАбитуриента,  Абитуриент.Фа
 	WHERE Абитуриент.IDПланаПриема = @PlanPriema
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientMainInfo]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientMainInfo]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -837,7 +939,7 @@ BEGIN
 	WHERE Абитуриент.IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientPriority]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientPriority]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -854,7 +956,7 @@ BEGIN
 	ORDER BY ПриоритетАбитуриента, [Средний балл] DESC
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_MarkConvert]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_MarkConvert]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -867,7 +969,7 @@ BEGIN
 	SELECT ДесятибальноеЗначение FROM Перевод WHERE IDШкалы = (SELECT IDШкалы FROM Шкала WHERE Наименование = @scaleName) AND Значение = @mark
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlaniPriema]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlaniPriema]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -879,17 +981,30 @@ CREATE PROC [dbo].[Get_PlaniPriema]
 @dnevnaya varchar(50), @zaochnaya varchar(50)
 AS
 BEGIN
-SELECT ГодПоступления, Специальность.Наименование, Финансирование.Наименование, ФормаОбучения.Наименование, Образование, ПланПриема.IDПланПриема, (SELECT COUNT(*) FROM Абитуриент WHERE IDПланаПриема = ПланПриема.IDПланПриема), КодСпециальности
+SELECT ГодПоступления,  --0
+		Специальность.Наименование, --1 
+		Финансирование.Наименование, --2
+		ФормаОбучения.Наименование, --3
+		Образование, --4
+		ПланПриема.IDПланПриема, --5 
+		(SELECT COUNT(*)FROM Абитуриент WHERE IDПланаПриема = ПланПриема.IDПланПриема),-- 6
+		Специальность.Код, --7
+		Специальность.IDСпециальность, -- 8
+		Финансирование.IDФинансирования, --7
+		Количество,--10
+		КоличествоЦелевыхМест, --11
+		ЦТ, -- 12
+		ФормаОбучения.IDФормаОбучения -- 13
 	FROM ПланПриема JOIN Специальность ON(ПланПриема.IDСпециальности = Специальность.IDСпециальность) 
 		JOIN Финансирование ON(ПланПриема.IDФинансирования = Финансирование.IDФинансирования) 
 		JOIN ФормаОбучения ON(ПланПриема.IDФормаОбучения = ФормаОбучения.IDФормаОбучения) 
-	WHERE Специальность.Наименование = @specialost
+	WHERE Специальность.КраткоеНаименование = @specialost
 		AND (Финансирование.Наименование like @budjet OR Финансирование.Наименование like @hozrash)
 		AND (Образование like @bazovoe OR Образование like @srednee) 
 		AND (ФормаОбучения.Наименование like @dnevnaya OR ФормаОбучения.Наименование like @zaochnaya)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaByID]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaByID]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -898,7 +1013,8 @@ CREATE proc [dbo].[Get_PlanPrieaByID]
 @id int
 AS
 BEGIN
-SELECT IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ГодПоступления, КодСпециальности, 
+SELECT IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ГодПоступления,
+	(SELECT Код FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
 	(SELECT Наименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
 	(SELECT Наименование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения), 
 	(SELECT Образование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения),
@@ -906,7 +1022,7 @@ SELECT IDСпециальности, IDФормаОбучения, IDФинан�
 FROM ПланПриема WHERE IDПланПриема = @id
 End
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaBySpeciality]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaBySpeciality]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -915,15 +1031,16 @@ CREATE proc [dbo].[Get_PlanPrieaBySpeciality]
 @spec nvarchar(50)
 AS
 BEGIN
-SELECT IDПланПриема, IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ГодПоступления, КодСпециальности, 
+SELECT IDПланПриема, IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ГодПоступления,
+	(SELECT Код FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
 	(SELECT Наименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
 	(SELECT Наименование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения), 
 	(SELECT Образование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения),
 	(SELECT Наименование FROM Финансирование WHERE Финансирование.IDФинансирования = ПланПриема.IDФинансирования), ЦТ 
-FROM ПланПриема WHERE (SELECT Наименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности) = @spec
+FROM ПланПриема WHERE (SELECT КраткоеНаименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности) = @spec
 End
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlanPriemaID]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlanPriemaID]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -938,13 +1055,13 @@ BEGIN
 	SELECT IDПланПриема FROM ПланПриема JOIN Специальность ON(ПланПриема.IDСпециальности = Специальность.IDСпециальность) 
 										JOIN ФормаОбучения ON (ПланПриема.IDФормаОбучения = ФормаОбучения.IDФормаОбучения) 
 										JOIN Финансирование ON (ПланПриема.IDФинансирования = Финансирование.IDФинансирования) 
-	WHERE Специальность.Наименование LIKE @speciality AND 
+	WHERE Специальность.КраткоеНаименование LIKE @speciality AND 
 		  ФормаОбучения.Наименование LIKE @formOfEducation AND 
 		  Финансирование.Наименование LIKE @financing AND 
 		  ФормаОбучения.Образование LIKE @education
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_SpecialnostiName]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_SpecialnostiName]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -953,10 +1070,10 @@ CREATE PROC [dbo].[Get_SpecialnostiName]
 @useFilter bit
 AS
 BEGIN
-	SELECT Наименование FROM Специальность WHERE IDСпециальность = ANY (SELECT IDСпециальности FROM ПланПриема) OR @useFilter = 0
+	SELECT КраткоеНаименование, Наименование FROM Специальность WHERE IDСпециальность = ANY (SELECT IDСпециальности FROM ПланПриема) OR @useFilter = 0
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_StatiAbiturienta]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Get_StatiAbiturienta]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -968,7 +1085,7 @@ BEGIN
 	SELECT Наименование FROM Статьи JOIN СтатьиАбитуриента ON (Статьи.IDСтатьи = СтатьиАбитуриента.IDСтатьи) WHERE СтатьиАбитуриента.IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetAbiturientCountForStats]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[GetAbiturientCountForStats]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -988,7 +1105,7 @@ BEGIN
 		HAVING ROUND(AVG(ДесятибальнаяСистема),1) >= @minMark AND ROUND(AVG(ДесятибальнаяСистема),1) <= @maxMark
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetStats]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[GetStats]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1005,10 +1122,10 @@ SELECT ПланПриема.IDПланПриема,
 	   (SELECT COUNT(*) FROM Абитуриент WHERE Абитуриент.IDПланаПриема = ПланПриема.IDПланПриема AND Абитуриент.ЦелевойДоговор = 1),
 	   (SELECT COUNT(*) FROM Абитуриент WHERE Абитуриент.IDПланаПриема = ПланПриема.IDПланПриема AND (Абитуриент.Сирота = 1 OR (SELECT MIN(Приоритет) FROM СтатьиАбитуриента JOIN Статьи ON (СтатьиАбитуриента.IDСтатьи = Статьи.IDСтатьи) WHERE Абитуриент.IDАбитуриента = IDАбитуриента)= 0))
 FROM ПланПриема
-WHERE @spec = (SELECT Наименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности)
+WHERE @spec = (SELECT КраткоеНаименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[HasStatya]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[HasStatya]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1021,7 +1138,7 @@ BEGIN
 SELECT * FROM СтатьиАбитуриента WHERE IDАбитуриента = @abiturient AND IDСтатьи = (SELECT IDСтатьи FROM Статьи WHERE ПолноеНаименование = @statya)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ImportAD]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[ImportAD]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1032,7 +1149,7 @@ as
 begin
 SELECT Фамилия, Имя, Отчество, 
 		(SELECT TOP(1) Сведения FROM КонтактныеДанные WHERE IDТипКонтакта = (SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = 'Домашний телефон' AND КонтактныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)),
-		(SELECT TOP(1) Сведения FROM КонтактныеДанные WHERE IDТипКонтакта = (SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = 'Мобильные телефон' AND КонтактныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)),
+		(SELECT TOP(1) Сведения FROM КонтактныеДанные WHERE IDТипКонтакта = (SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = 'Мобильный телефон' AND КонтактныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)),
 		(SELECT TOP(1) Сведения FROM КонтактныеДанные WHERE IDТипКонтакта = (SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = 'Домашний адрес' AND КонтактныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)),
 		(SELECT ДатаРождения FROM ПаспортныеДанные WHERE ПаспортныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента),
 		(SELECT Серия FROM ПаспортныеДанные WHERE ПаспортныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента),
@@ -1042,7 +1159,23 @@ SELECT Фамилия, Имя, Отчество,
 	where IDПланаПриема = @id AND АбитуриентЗачислен = 1
 end
 GO
-/****** Object:  StoredProcedure [dbo].[NextExamList]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[InsertSpeciality]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[InsertSpeciality]
+@Title nvarchar(50),
+@ShortTitle nvarchar(20),
+@Letter char(1),
+@Code nvarchar(13)
+AS
+BEGIN
+INSERT INTO Специальность (Наименование, КраткоеНаименование, Буква, Код)
+VALUES (@Title, @ShortTitle, @Letter, @Code)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[NextExamList]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1056,7 +1189,7 @@ from Абитуриент
 where IDПланаПриема = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Update_MainData]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Update_MainData]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1099,7 +1232,7 @@ BEGIN
 					WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Update_PasportData]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Update_PasportData]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1124,7 +1257,7 @@ BEGIN
 		WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Update_PlanPriema]    Script Date: 10.05.2022 15:47:54 ******/
+/****** Object:  StoredProcedure [dbo].[Update_PlanPriema]    Script Date: 01.06.2022 8:08:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1137,8 +1270,7 @@ CREATE PROC [dbo].[Update_PlanPriema]
 @obr varchar(50),
 @kolva int,
 @kolvaCel int,
-@CT bit,
-@Code varchar(13)
+@CT bit
 AS
 BEGIN
 UPDATE ПланПриема 
@@ -1147,10 +1279,30 @@ UPDATE ПланПриема
 		IDФинансирования = (SELECT IDФинансирования FROM Финансирование WHERE Наименование = @fin),
 		Количество = @kolva,
 		КоличествоЦелевыхМест = @kolvaCel,
-		ЦТ = @CT,
-		КодСпециальности = @Code
+		ЦТ = @CT
 	WHERE
 		IDПланПриема = @id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateSpeciality]    Script Date: 01.06.2022 8:08:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[UpdateSpeciality]
+@Title nvarchar(50),
+@ShortTitle nvarchar(20),
+@Letter char(1),
+@Code nvarchar(13),
+@ID int
+AS
+BEGIN
+UPDATE Специальность SET
+Наименование = @Title,
+КраткоеНаименование = @ShortTitle,
+Буква = @Letter,
+Код = @Code
+WHERE IDСпециальность = @ID
 END
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -1224,22 +1376,22 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "Атестат_1"
-            Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 273
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "Абитуриент"
             Begin Extent = 
                Top = 138
                Left = 38
                Bottom = 268
                Right = 272
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "Атестат"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 273
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -1273,4 +1425,8 @@ End
 ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'GetAbiturientData'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'GetAbiturientData'
+GO
+USE [master]
+GO
+ALTER DATABASE [Приемная комиссия] SET  READ_WRITE 
 GO
