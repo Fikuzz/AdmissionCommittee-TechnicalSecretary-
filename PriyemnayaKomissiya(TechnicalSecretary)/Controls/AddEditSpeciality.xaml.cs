@@ -16,18 +16,21 @@ using System.Windows.Shapes;
 namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для AddEditSpeciality.xaml
+    /// Логика взаимодействия для формы добавления и редактирования спейиальности
     /// </summary>
     public partial class AddEditSpeciality : IDataForm
     {
-        public event RoutedEventHandler EndEdit;
-        private int ID = -1;
+        public event RoutedEventHandler EndEdit; //Команда завершения редактирования
+        private int ID = -1; //ИД редактируемой записи
         public AddEditSpeciality()
         {
             InitializeComponent();
-            btnSave.Tag = true;
+            btnSave.Tag = true; //тег определяет какое действие будет выполнять кнопка true:добавление false:редактирование
         }
-
+        /// <summary>
+        /// Редактирование записи
+        /// </summary>
+        /// <param name="speciality">Редактируемая запись</param>
         public void Edit(Speciality speciality)
         {
             tbTitle.Text = speciality.Title;
@@ -39,7 +42,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             btnSave.Content = "Сохранить";
             btnSave.Tag = false;
         }
-
         public bool Validate()
         {
             bool corect = true;
@@ -49,7 +51,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             PLib.CorrectData(tbCode, ref corect);
             return corect;
         }
-
+        /// <summary>
+        /// Нажатие кнопки отме ны редактирования
+        /// </summary>
         private void CloseEdit(object sender, RoutedEventArgs e)
         {
             tbTitle.Text = "";
@@ -62,7 +66,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 
             EndEdit(sender, e);
         }
-
+        /// <summary>
+        /// Нажатие кнопки сохранения
+        /// </summary>
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
             if (Validate())
@@ -93,7 +99,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 CloseEdit(sender, e);
             }
         }
-
+        /// <summary>
+        /// установка верхнего регистра для текста
+        /// </summary>
         private void tbLetter_TextChanged(object sender, TextChangedEventArgs e)
         {
             (sender as TextBox).Text.ToUpper();

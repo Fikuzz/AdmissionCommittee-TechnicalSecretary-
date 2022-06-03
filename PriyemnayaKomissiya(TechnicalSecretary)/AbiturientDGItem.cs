@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_
 {
+    /// <summary>
+    /// Класс для заполнения таблицы абитуриентов
+    /// </summary>
     class AbiturientDGItem
     {
         public int ID { get; }
@@ -25,7 +28,20 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
         public bool DifferentAttestat { get; set; }
         public int ScaleSize { get; set; }
 
-
+        /// <summary>
+        /// Конструктор для элемента таблицы абитуриента
+        /// </summary>
+        /// <param name="id">ИД</param>
+        /// <param name="fio">фИО</param>
+        /// <param name="shool">Школа</param>
+        /// <param name="year">Год окончания школы</param>
+        /// <param name="marks">Оценки в аттестате</param>
+        /// <param name="markAvg">Средний балл</param>
+        /// <param name="examNum">Экзаменационный номер</param>
+        /// <param name="doc">Орган выдавший документ(Паспорт)</param>
+        /// <param name="marcDecAvg">Десятибальное значение для среднего балла</param>
+        /// <param name="lgoti">Льготы</param>
+        /// <param name="status">Статус</param>
         public AbiturientDGItem(int id, string fio, string shool, int year, int[] marks, double markAvg, string examNum, bool doc, double marcDecAvg, string lgoti, string status)
         {
             Marks = new int[15];

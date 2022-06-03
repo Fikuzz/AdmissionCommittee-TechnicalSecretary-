@@ -42,9 +42,9 @@
         <Label Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Специальность" Grid.ColumnSpan="3"/>
         <ComboBox Name="Spec" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Height="Auto" SelectionChanged="Spec_SelectionChanged"/>
         <Label Grid.Row="7" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Форма обучения"/>
-        <ComboBox Name="FormaObucheniya" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="8" SelectionChanged="PlanPriemaADD_ForaObucheniya_SelectionChanged" Height="Auto"/>
+        <ComboBox Name="FormaObucheniya" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="8" SelectionChanged="ForaObucheniya_SelectionChanged" Height="Auto"/>
         <Label Grid.Row="7" Grid.Column="3" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Финансирование"/>
-        <ComboBox Name="Finanse" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="3" Grid.Row="8" SelectionChanged="PlanPriemaADD_Finanse_SelectionChanged" Height="Auto"/>
+        <ComboBox Name="Finanse" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="3" Grid.Row="8" SelectionChanged="Finanse_SelectionChanged" Height="Auto"/>
         <Label Grid.Row="10" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Прием на основе" Grid.ColumnSpan="3"/>
         <ComboBox Name="Obrazovanie" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="3" Height="Auto"/>
         <Label Grid.Row="13" Grid.Column="1" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Content="Общее количество мест"/>

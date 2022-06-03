@@ -7,8 +7,12 @@ using System.Windows;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_
 {
+    /// <summary>
+    /// Класс настройки стиля вкладок на форме редакирования/добавления
+    /// </summary>
     class TabItemThemeProperties
     {
+        //Описание
         public static string GetDescription(DependencyObject obj)
         {
             return (string)obj.GetValue(dp: DescriptionProperty);
@@ -25,7 +29,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 typeof(string),
                 typeof(TabItemThemeProperties),
                 new FrameworkPropertyMetadata(""));
-
+        //Номер Вкладки
         public static string GetNumber(DependencyObject obj)
         {
             return (string)obj.GetValue(NumberProperty);

@@ -19,17 +19,22 @@ using System.Windows.Shapes;
 namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для AddAdissionPlanControl.xaml
+    /// Логика взаимодействия для редактирования плана приема
     /// </summary>
     public partial class AddAdissionPlanControl : UserControl
     {
         private readonly string connectionString;
+        /// <summary>
+        /// Конструктор для добавления плана приема
+        /// </summary>
+        /// <param name="specName">Имя специальности</param>
         public AddAdissionPlanControl(string specName)
         {
             InitializeComponent();
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             try
             {
+                //Заполнения списка специальностей
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand comand = new SqlCommand("SELECT Наименование, Код FROM Специальность", connection);
@@ -44,7 +49,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 }
                 Spec.SelectedIndex = 0;
                 reader.Close();
-
+                //Заплонение списка формы обучения
                 comand = new SqlCommand("SELECT Наименование, Образование FROM ФормаОбучения", connection);
                 reader = comand.ExecuteReader();
                 List<string[]> formiObusheniya = new List<string[]>();
@@ -65,6 +70,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 FormaObucheniya.SelectedIndex = 0;
                 reader.Close();
 
+                //Заполнение списа фонансирования
                 comand = new SqlCommand("SELECT Наименование FROM Финансирование", connection);
                 reader = comand.ExecuteReader();
                 Finanse.Items.Clear();
@@ -92,6 +98,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             buttonAdd.Visibility = Visibility.Visible;
             buttonEdit.Visibility = Visibility.Collapsed;
         }
+        /// <summary>
+        /// Конструктор для редактированияплана приема
+        /// </summary>
+        /// <param name="planPriema">редактируемый план приема</param>
         public AddAdissionPlanControl(PlanPriema planPriema)
         {
             InitializeComponent();
@@ -163,6 +173,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             buttonAdd.Visibility = Visibility.Collapsed;
             buttonEdit.Visibility = Visibility.Visible;
         }
+        /// <summary>
+        /// изменеие списка образования при изменении формы обучения
+        /// </summary>
         private void ForaObucheniya_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (FormaObucheniya.Tag == null || FormaObucheniya.SelectedValue == null) return;
@@ -176,6 +189,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             }
             Obrazovanie.SelectedIndex = 0;
         }
+        /// <summary>
+        /// Блокирование поля для целевых мест при выборе финансирования "Хозрасчет"
+        /// </summary>
         private void Finanse_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((string)Finanse.SelectedItem == "Хозрасчет")
@@ -193,9 +209,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
                 kolvoCelevihMest.IsEnabled = true;
             }
         }
-
+        /// <summary>
+        /// Нажатие кнопки добавления
+        /// </summary>
         private void Button_Add(object sender, RoutedEventArgs e)
         {
+            //проверка корректности данных
             if (kod.Text == "" || kod.Text.Length > 13)
             {
                 kod.Tag = "Error";
@@ -262,10 +281,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Добавление плана приема");
             }
         }
-
+        /// <summary>
+        /// Нажатие кнопки редактирования
+        /// </summary>
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
             try
@@ -296,54 +317,34 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
             }
         }
 
-        public RoutedEventHandler CloseControl;
-
+        public RoutedEventHandler CloseControl; //команда закрытия формы
+        /// <summary>
+        /// обработчик для ввода только числовых значений
+        /// </summary>
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !PLib.IsTextAllowed(e.Text);
         }
-        private void PlanPriemaADD_ForaObucheniya_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FormaObucheniya.Tag == null || FormaObucheniya.SelectedValue == null) return;
-            string forma = FormaObucheniya.SelectedValue.ToString();
-            List<string[]> formiObusheniya = (List<string[]>)FormaObucheniya.Tag;
-            Obrazovanie.Items.Clear();
-            for (int i = 0; i < formiObusheniya.Count; i++)
-            {
-                if (formiObusheniya[i][0] == forma)
-                    Obrazovanie.Items.Add(formiObusheniya[i][1]);
-            }
-            Obrazovanie.SelectedIndex = 0;
-        }
-        private void PlanPriemaADD_Finanse_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if ((string)Finanse.SelectedItem == "Хозрасчет")
-            {
-                kolvoCelevihMest.Tag = kolvoCelevihMest.Text;
-                kolvoCelevihMest.Text = "0";
-                kolvoCelevihMest.IsEnabled = false;
-            }
-            else
-            {
-                if (kolvoCelevihMest.Tag != null)
-                {
-                    kolvoCelevihMest.Text = kolvoCelevihMest.Tag.ToString();
-                }
-                kolvoCelevihMest.IsEnabled = true;
-            }
-        }
+        /// <summary>
+        /// Обработчик потери фокуса с текстового поля для установки значения 0 если оно пустое
+        /// </summary>
         private void PlanPrieaADD_kolvoCelevihMest_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
             if (textBox.Text == "")
                 textBox.Text = "0";
         }
+        /// <summary>
+        /// Обработчик закрытия формы
+        /// </summary>
         private void CloseButtonUp(object sender, MouseButtonEventArgs e)
         {
             Grid grid = (Grid)this.Parent;
             grid.Children.Remove(this);
         }
-
+        /// <summary>
+        /// Изменение поля кода специальности при выборе специальности
+        /// </summary>
         private void Spec_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             kod.Text = ((ComboBoxItem)Spec.SelectedItem).Tag.ToString();

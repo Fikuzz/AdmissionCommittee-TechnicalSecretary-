@@ -98,7 +98,7 @@
                     </Grid>
                     <!--#endregion-->
                     <!--#region Таблица-->
-                    <Grid Visibility="Hidden" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="{StaticResource MainBackGround}">
+                    <Grid Visibility="Visible" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="{StaticResource MainBackGround}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
                             <RowDefinition Height="76"/>
@@ -175,7 +175,7 @@
                                 <ComboBoxItem Content="Все"/>
                                 <ComboBoxItem Content="Целевой договор"/>
                             </ComboBox>
-                            <Button Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Построить рейтиг" Width="122" Margin="10,17" Click="Button_Click" />
+                            <Button Style="{DynamicResource ButtonStyleObshchiyRED}" Content="Построить рейтинг" Width="122" Margin="10,17" Click="Button_Click" />
                             <Border Width="40" CornerRadius="10" Margin="10,17">
                                 <Image Source="pack://application:,,,/Resources/printer.ico" Margin="3" MouseLeftButtonUp="PrintButton_Click" Tag="Print" Cursor="Hand"/>
                             </Border>
@@ -827,9 +827,9 @@
                         <RowDefinition Height="200*" MinHeight="260"/>
                         <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dgSpeciality" Grid.Row="1" Grid.Column="1" Style="{DynamicResource dgAbbiturients}">
+                    <DataGrid x:Name="dgSpeciality" Grid.Row="1" Grid.Column="1" Style="{DynamicResource dgAbbiturients}" HeadersVisibility="Column">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="50" Header="№" Binding="{Binding Num}"/>
+                            <DataGridTextColumn Width="50" Visibility="Hidden" Header="№" Binding="{Binding Num}"/>
                             <DataGridTextColumn Width="5*" Header="Наименование" Binding="{Binding Title}"/>
                             <DataGridTextColumn Width="3*" Header="Код специальности" Binding="{Binding Code}"/>
                             <DataGridTextColumn Width="3*" Header="Краткое наименование" Binding="{Binding ShortTitle}"/>

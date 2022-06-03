@@ -12,6 +12,9 @@ using System.Windows.Controls;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_
 {
+    /// <summary>
+    /// Файл для работы с базой данных
+    /// </summary>
     class DB
     {
         static public readonly string connectionString;
@@ -20,6 +23,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
         {
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
+        /// <summary>
+        /// Добавление статьи
+        /// </summary>
+        /// <param name="AbiturientID">ИД абитуриента</param>
+        /// <param name="ArticleName">название статьи</param>
         public static void InsertArticles(int AbiturientID, string ArticleName)
         {
             try
@@ -43,6 +51,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Статьи");
             }
         }
+        /// <summary>
+        /// Добавление контактных данных
+        /// </summary>
+        /// <param name="contactData">форма добавления контактных данных</param>
+        /// <param name="AbiturientID">ИД абитуриента</param>
         public static void InsertContactData(ContactData contactData, int AbiturientID)
         {
             try
@@ -62,6 +75,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Контактные данные");
             }
         }
+        /// <summary>
+        /// Добавление аттестата
+        /// </summary>
+        /// <param name="certificate">форма добавления аттестата</param>
+        /// <param name="AbiturientID">ИД абитуриента</param>
         public static void InsertCertificate(Certificate certificate, int AbiturientID)
         {
             try
@@ -105,6 +123,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Образование");
             }
         }
+        /// <summary>
+        /// Добавление сертификата ЦТ
+        /// </summary>
+        /// <param name="ctCertificate">форма добавления сертификата ЦТ</param>
+        /// <param name="AbiturientID">ИД абитуриента</param>
         public static void InsertCtCertificate(CtCertificate ctCertificate, int AbiturientID)
         {
             try
@@ -127,6 +150,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Сертификаты ЦТ");
             }
         }
+        /// <summary>
+        /// Добавление паспортных данных
+        /// </summary>
+        /// <param name="AbiturientID">ИД Абитуриента</param>
+        /// <param name="dateOfIssue">Дата выдачи</param>
+        /// <param name="dateOfBirth">Дата рождения</param>
+        /// <param name="series">Серия паспорта</param>
+        /// <param name="PasspornNum">Номер паспорта</param>
+        /// <param name="name">Кем выдан пасспорт</param>
+        /// <param name="identNum">Идентификационных номер</param>
         public static void InsertPasportData(int AbiturientID, string dateOfIssue, string dateOfBirth, string series, string PasspornNum, string name, string identNum)
         {
             try
@@ -150,6 +183,25 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Паспортные данные");
             }
         }
+        /// <summary>
+        /// Добавление основной информации об абитуриенте
+        /// </summary>
+        /// <param name="surename">Фамилия</param>
+        /// <param name="name">Имя</param>
+        /// <param name="otchestvo">Отчество</param>
+        /// <param name="shool">Школа</param>
+        /// <param name="graduationYear">Год окончания школы</param>
+        /// <param name="grajdanstvoRB">является ли гражданином РБ</param>
+        /// <param name="grajdanstvo">Гражданство</param>
+        /// <param name="obshejitie">Нужно ли общежитие</param>
+        /// <param name="planPriema">План приема</param>
+        /// <param name="workPlace">Место работы</param>
+        /// <param name="doljnost">Должность</param>
+        /// <param name="sirota">Является ли сиротой</param>
+        /// <param name="dogovor">Поступает ли по целевому договору</param>
+        /// <param name="user">Пользователь</param>
+        /// <param name="ExamList">Экзаменационных лист</param>
+        /// <returns>ИД Абитуриента</returns>
         public static int InsertAbiturientMainData(string surename, string name, string otchestvo, string shool, string graduationYear, bool grajdanstvoRB, string grajdanstvo, bool obshejitie, int planPriema, string workPlace, string doljnost, bool sirota, bool dogovor, int user, string ExamList)
         {
             int id = 0;
@@ -185,6 +237,24 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return id;
         }
+        /// <summary>
+        /// Редактирование основной информации об абитуриенте
+        /// </summary>
+        /// <param name="surename">Фамилия</param>
+        /// <param name="name">Имя</param>
+        /// <param name="otchestvo">Отчество</param>
+        /// <param name="shool">Школа</param>
+        /// <param name="graduationYear">Год окончания школы</param>
+        /// <param name="grajdanstvoRB">является ли гражданином РБ</param>
+        /// <param name="grajdanstvo">Гражданство</param>
+        /// <param name="obshejitie">Нужно ли общежитие</param>
+        /// <param name="planPriema">План приема</param>
+        /// <param name="workPlace">Место работы</param>
+        /// <param name="doljnost">Должность</param>
+        /// <param name="sirota">Является ли сиротой</param>
+        /// <param name="dogovor">Поступает ли по целевому договору</param>
+        /// <param name="redaktor">Пользователь</param>
+        /// <param name="ExamList">Экзаменационных лист</param>
         public static void UpdateAbiturientMainData(int AbiturientID, string surename, string name, string otchestvo, string shool, string graduationYear, bool grajdanstvoRB, string grajdanstvo, bool obshejitie, int planPriema, string workPlace, string doljnost, bool sirota, bool dogovor, int redaktor, string ExamList)
         {
             try
@@ -217,6 +287,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Основные данные");
             }
         }
+        /// <summary>
+        /// Удаление записей в таблице связанной с абитуриентом
+        /// </summary>
+        /// <param name="AbiturientID">ИД Абитуриента</param>
+        /// <param name="TableName">Имя таблицы</param>
         public static void DeleteAllAbiturientDataInTable(int AbiturientID, string TableName)
         {
             try
@@ -233,6 +308,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message);
             }
         }
+        /// <summary>
+        /// Обновление паспортных данных
+        /// </summary>
+        /// <param name="AbiturientID">ИД абитуриента</param>
+        /// <param name="dateOfIssue">Дата выдачи</param>
+        /// <param name="dateOfBirth">Дата рождения</param>
+        /// <param name="series">Серия паспорта</param>
+        /// <param name="PasspornNum">Номер паспорта</param>
+        /// <param name="name">Кем выданны документы</param>
+        /// <param name="identNum">Идентификационный номер</param>
         public static void UpdatePasportData(int AbiturientID, string dateOfIssue, string dateOfBirth, string series, string PasspornNum, string name, string identNum)
         {
             try
@@ -256,6 +341,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Паспортные данные");
             }
         }
+        /// <summary>
+        /// Получение списка спецальностей
+        /// </summary>
+        /// <param name="OnlyWithAdmissionsPlans">Только специальности где есть планы приема</param>
+        /// <returns>Список масивов типа (краткое наименование, наименование)</returns>
         public static List<string[]> Get_SpecialnostiName(bool OnlyWithAdmissionsPlans)
         {
             List<string[]> Result = new List<string[]>();
@@ -282,6 +372,17 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return Result;
         }
+        /// <summary>
+        /// Плоучение списка планаов приема
+        /// </summary>
+        /// <param name="specialost">Краткое наименование специальности</param>
+        /// <param name="budjet">Бюджет</param>
+        /// <param name="hozrash">Хлзрасчет</param>
+        /// <param name="bazovoe">Базовое</param>
+        /// <param name="srednee">среднее</param>
+        /// <param name="dnevnaya">Дневная</param>
+        /// <param name="zaochnaya">Заочная</param>
+        /// <returns>Список планов пиема</returns>
         public static List<PlanPriema> Get_PlaniPriema(string specialost, bool? budjet, bool? hozrash, bool? bazovoe, bool? srednee, bool? dnevnaya, bool? zaochnaya)
         {
             List<PlanPriema> AdmissionsPlans = new List<PlanPriema>();
@@ -328,6 +429,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return AdmissionsPlans;
         }
+        /// <summary>
+        /// Получение плана приема по ИД
+        /// </summary>
+        /// <param name="id">ИД плана приема</param>
+        /// <returns>План приема</returns>
         public static PlanPriema Get_PlanPriemaByID(int id)
         {
             PlanPriema planPriema = new PlanPriema();
@@ -369,6 +475,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return planPriema;
         }
+        /// <summary>
+        /// Получение статей абитуриента
+        /// </summary>
+        /// <param name="abiturientId">ИД абитуриента</param>
+        /// <returns>Статьи</returns>
         public static string Get_StatiAbiturienta(int abiturientId)
         {
             string statyi = "";
@@ -393,6 +504,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return statyi;
         }
+        /// <summary>
+        /// Получение буквы специальности
+        /// </summary>
+        /// <param name="specialityName">Краткое наименование специальности</param>
+        /// <returns>буква</returns>
         public static string Get_SpecialtyLetter(string specialityName)
         {
             string letter = "";
@@ -413,6 +529,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return letter;
         }
+        /// <summary>
+        /// Получение следующего номера экзаменационного листа
+        /// </summary>
+        /// <param name="AdmissionPlanID">Ид плана приема</param>
+        /// <returns>намер экзаменационного листа</returns>
         public static int Get_NextExamList(int AdmissionPlanID)
         {
             int value = 1;
@@ -438,6 +559,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return value;
         }
+        /// <summary>
+        /// Получение основных и пасспортных данных об абитуриенте
+        /// </summary>
+        /// <param name="AbiturientID">ИД абитуриента</param>
+        /// <returns>данные об абитуриенте</returns>
         public static Abiturient Get_AbiturientFullInfo(int AbiturientID)
         {
             Abiturient abiturient = new Abiturient();
@@ -483,6 +609,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return abiturient;
         }
+        /// <summary>
+        /// Получение специальностей
+        /// </summary>
+        /// <returns>список специальностей</returns>
         public static List<Speciality> GetSpecialityTable() 
         {
             List<Speciality> list = new List<Speciality>();
@@ -512,6 +642,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
             }
             return list;
         }
+        /// <summary>
+        /// Добавление специальности
+        /// </summary>
+        /// <param name="speciality">Специаьность</param>
         public static void InsertSpeciality(Speciality speciality)
         {
             try
@@ -532,6 +666,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Ошибка создания специальности");
             }
         }
+        /// <summary>
+        /// Обновление специальности
+        /// </summary>
+        /// <param name="speciality">Специаьность</param>
         public static void UpdateSpeciality(Speciality speciality)
         {
             try
@@ -553,6 +691,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 MessageBox.Show(ex.Message, "Ошибка редактирования специальности");
             }
         }
+        /// <summary>
+        /// Удаление специальности
+        /// </summary>
+        /// <param name="id">ИД специаьности</param>
         public static void DeleteSpeciality(int id)
         {
             try

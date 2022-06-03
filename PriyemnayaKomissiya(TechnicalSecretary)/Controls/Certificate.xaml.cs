@@ -19,17 +19,22 @@ using System.Windows.Shapes;
 namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 {
 	/// <summary>
-	/// Логика взаимодействия для Certificate.xaml
+	/// Логика взаимодействия для формы редактирования сертификата
 	/// </summary>
 	public partial class Certificate : UserControl, IDataForm
 	{
-		public List<TextBox> Marks = new List<TextBox>();
+		public List<TextBox> Marks = new List<TextBox>(); //список полей для отметок
 		private readonly string connectionString;
+		/// <summary>
+		/// конструктор для формы аттетата
+		/// </summary>
+		/// <param name="ButtonClose">Определяет будел ли видна кнопка закрытия формы</param>
+		/// <param name="Num">Номер аттестата</param>
 		public Certificate(Visibility ButtonClose, int Num)
 		{
 			InitializeComponent();
 			connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-			try
+			try //заполнение списка шкалы оценивания
 			{
 				string sql = "SELECT Наименование, КоличествоБаллов FROM Шкала";
 				SqlConnection connection = new SqlConnection(connectionString);
@@ -63,7 +68,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 
 			int MaxMark = (int)((ComboBoxItem)cbScaleType.SelectedItem).Tag;
 
-			for (int i = 0; i < Marks.Count; i++)
+			for (int i = 0; i < Marks.Count; i++) //блокирование неиспользуемых полей отметок
 			{
 				if (i >= MaxMark)
 				{
@@ -73,6 +78,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 				else
 				{
 					Marks[i].IsEnabled = true;
+					Marks[i].Text = "0";
 				}
 			}
 
@@ -87,7 +93,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 			};
 			this.BeginAnimation(UserControl.HeightProperty, animation);
 		}
-
+		/// <summary>
+		/// Обработчик кнопки закрытия формы
+		/// </summary>>
 		private void Button_CloseNote(object sender, RoutedEventArgs e)
 		{
 			DoubleAnimation animation = new DoubleAnimation
@@ -105,7 +113,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 			panel.Children.Remove(this);
 			panel.Tag = (int)panel.Tag - 1;
 		}
-
+		
 		public bool Validate()
 		{
 			bool result = true;
@@ -124,12 +132,17 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 
 			return result;
 		}
-
+		/// <summary>
+		/// Обработчик для снятия тега Error с поля
+		/// </summary>
 		private void ClearError(object sender, TextChangedEventArgs e)
 		{
 			PLib.ClearError(sender);
 		}
 
+		/// <summary>
+		/// Подсчет суммы отметок аттестата 
+		/// </summary>
 		private void TextBox_GetMarksSum(object sender, TextChangedEventArgs e)
 		{
 			if (Marks.Count == 0) return;
@@ -146,11 +159,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 			}
 			tblTotalMarks.Text = "Общее количество отметок: " + MarksCount;
 		}
+		/// <summary>
+		/// Обработчик для полей которые могут принимать тоько числа
+		/// </summary>
 		private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			e.Handled = !PLib.IsTextAllowed(e.Text);
 		}
-
+		/// <summary>
+		/// Обработчик изменения шкалы для блокиования неиспользуемых полей отметок
+		/// </summary>
 		private void ScaleType_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			ComboBoxItem boxItem = (ComboBoxItem)e.AddedItems[0];
@@ -171,10 +189,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 			}
 		}
 
+		/// <summary>
+		/// Обработчик запрещающий изменения элемента combobox колесиком мыши
+		/// </summary>
         private void cbScaleType_MouseWheel(object sender, MouseWheelEventArgs e)
         {
 			e.Handled = true;
         }
+		/// <summary>
+		/// Обработчик для выделения всего текста при выборе поля отметки
+		/// </summary>
 		private void TextBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			(sender as TextBox).SelectAll();

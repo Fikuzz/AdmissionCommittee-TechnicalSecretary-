@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_
 {
+    /// <summary>
+    /// Класс для настройки стиля кнопок плана приема
+    /// </summary>
     class ButtonAdmissionPlanThemeProperties
     {
         //Финансирование

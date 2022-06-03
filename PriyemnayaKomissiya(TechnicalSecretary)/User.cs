@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_
 {
+    /// <summary>
+    /// Класс для хранения информации о пользователе
+    /// </summary>
     class User
     {
         public int ID { get; set; }

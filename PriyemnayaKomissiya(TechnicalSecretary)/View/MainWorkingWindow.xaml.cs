@@ -17,19 +17,49 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 {
+    /// <summary>
+    /// Логика взаимодействия для основного рабочего окна
+    /// </summary>
     public partial class MainWorkingWindow : Window
     {
         private readonly string connectionString;
-
+        /// <summary>
+        /// Количество столбцов для кнопок плана приема
+        /// (для позиционирования кнопок под размер окна)
+        /// </summary>
         private int planPriemaColumn = 0;
+        /// <summary>
+        /// Текущий используемый план приема
+        /// </summary>
         private PlanPriema curentPlanPriema = null;
+        /// <summary>
+        /// ИД редактируемого абитуриента
+        /// </summary>
         private int AbiturientID = 0;
+        /// <summary>
+        /// Пользователь под которым осуществлен вход
+        /// </summary>
         private readonly User user = new User();
+        /// <summary>
+        /// Список абтуриентов для таблицы
+        /// </summary>
         private List<AbiturientDGItem> abiturients;
+        /// <summary>
+        /// Список кнопок плана приема
+        /// </summary>
         private readonly List<Button> planPriemaButtons = new List<Button>();
+        /// <summary>
+        /// Список планов приема для таблицы
+        /// </summary>
         private readonly List<PlanPriema> planPriemaDGsource = new List<PlanPriema>();
 
         #region Общее
+        /// <summary>
+        /// Конструктор для основной рабочей формы
+        /// </summary>
+        /// <param name="id">Ид пользователя</param>
+        /// <param name="login">Логин пользователя</param>
+        /// <param name="name">Имя пользователя</param>
         public MainWorkingWindow(int id, string login, string name)
         {
             InitializeComponent();
@@ -42,6 +72,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             ucSpeciality.EndEdit += Speciality_EndEdit;
             ucArticles.BlockCheckBox += BlockCheckBox;
         }
+        /// <summary>
+        /// Выход из формы
+        /// </summary>
         private void TextBlock_Exit(object sender, MouseButtonEventArgs e)
         {
             Autorization authorization = new Autorization();
@@ -50,7 +83,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             authorization.tbPassword.Focus();
             this.Close();
         }
-
+        /// <summary>
+        /// Завершение загрузки формы
+        /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             AddEditFormContacts.Tag = 0;
@@ -63,7 +98,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             UpdateSpeciality();
             //Заполнение специальностей
         }
-
+        /// <summary>
+        /// Обновление вкладок специальностей
+        /// </summary>
         private void UpdateSpeciality()
         {
             List<string[]> specialty = DB.Get_SpecialnostiName(false);
@@ -104,15 +141,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 PlaniPriemaLoad(((TabItem)TabControl.SelectedItem).Header.ToString());
             }
         }
-
-        private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            PlaniPriemaLoad(((TabItem)sender).Header.ToString());
-            PlanPriemaTable.Visibility = Visibility.Hidden;
-            GridInfo.Visibility = Visibility.Hidden;
-            addEditForm.Visibility = Visibility.Hidden;
-        }
-
+        /// <summary>
+        /// Обновление данных в таблице абитуриентов прие переходе на форму статистики подачи документов
+        /// </summary>
         private void TabItem_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if(tabWork.SelectedIndex == 1 &&  TabControl1.SelectedItem != null)
@@ -121,12 +152,28 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         #endregion
 
         #region Работа со сводными ведомостями
+        /// <summary>
+        /// Выбор специальности на форме  работы со сводными ведомостями
+        /// </summary>
+        private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PlaniPriemaLoad(((TabItem)sender).Header.ToString());
+            PlanPriemaTable.Visibility = Visibility.Hidden;
+            GridInfo.Visibility = Visibility.Hidden;
+            addEditForm.Visibility = Visibility.Hidden;
+        }
+        /// <summary>
+        /// обновление данных при переходе на вкладку Работа со сводными ведомостями
+        /// </summary>
         private void TabItem_IsVisibleChangedVedomosti(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (tabWork.SelectedIndex == 0 && TabControl.SelectedItem != null)
                 PlaniPriemaLoad(((TabItem)TabControl.SelectedItem).Header.ToString());
         }
             #region Выбор плана приема
+        /// <summary>
+        /// Обработчик нахотия на кнопку плана приема
+        /// </summary>
         private void PlanPriema_MouseDown(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -136,12 +183,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             AbiturientTableLoad(curentPlanPriema.Id);
             filterCB.SelectedIndex = 0;
         }
-
+        /// <summary>
+        /// изменение фильтра
+        /// </summary>
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
             PlaniPriemaLoad(((TabItem)TabControl.SelectedItem).Header.ToString());
         }
-
+        /// <summary>
+        /// обработчик изменения размера окна для изменения позиций кнопок плана приема
+        /// </summary>
         private void MainWorkingWindowForm_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (this.WindowState == WindowState.Maximized)
@@ -162,7 +213,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         }
         #endregion
-        #region Таблица данных
+            #region Таблица абитуриентов
+        /// <summary>
+        /// Выдача документов абитуриенту
+        /// </summary>
         private void Abiturient_IssueDocuments(object sender, RoutedEventArgs e)
         {
             if ((AbiturientDGItem)dataGridAbiturients.SelectedItem == null) return;
@@ -185,12 +239,17 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     MessageBox.Show(ex.Message, "Выдача документов");
                 }
             }
-        }//Выдать документы
+        }
+        /// <summary>
+        /// Открытие формы просмотра информации об абитуриенте
+        /// </summary>
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
             AbiturientInfoShow();
         }
-
+        /// <summary>
+        /// Открытие формы для Ррдактирования данных об абитуриенте
+        /// </summary>
         private void Image_MouseUp_1(object sender, MouseButtonEventArgs e)
         {
             ScrollAddMain.ScrollToHome();
@@ -416,12 +475,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }//сертификаты цт
             }
         } //нажатие кнопки редактирования
-
+        /// <summary>
+        /// Открытие контекстного меню в таблице абитуриентов
+        /// </summary>
         private void Image_MouseUp_2(object sender, MouseButtonEventArgs e)
         {
             ((Image)sender).ContextMenu.IsOpen = true;
         }
-
+        /// <summary>
+        /// Обработка нажатия клавиши Delete для удаления абитуриентов
+        /// </summary>
         private void Table_PressDelete(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
@@ -441,35 +504,26 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         delItemsName += $"И еще {dataGridAbiturients.SelectedItems.Count - 3} запись(-ей)";
                 }
 
-                if (MessageBox.Show($"Отметить выбранные записи как документы выданы?\n\n {delItemsName}", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show($"Удалить выбранные записи?\n\n {delItemsName}", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    try
+                    foreach (AbiturientDGItem abiturient in dataGridAbiturients.SelectedItems)
                     {
-                        foreach (AbiturientDGItem abiturient in dataGridAbiturients.SelectedItems)
-                        {
-                            SqlConnection connection = new SqlConnection(connectionString);
-                            SqlCommand command = new SqlCommand("Del_AbiturientMarks", connection)
-                            {
-                                CommandType = CommandType.StoredProcedure
-                            };
-                            command.Parameters.AddWithValue("@abiturient", abiturient.ID);
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            connection.Close();
-                        }
-                        AbiturientTableLoad(curentPlanPriema.Id);
+                        DB.DeleteAllAbiturientDataInTable(abiturient.ID, "Абитуриент");
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Выдача документов");
-                    }
+                    AbiturientTableLoad(curentPlanPriema.Id);
                 }
             }
         }
+        /// <summary>
+        /// Открытие информации об абитуриенте по двойному нажатию
+        /// </summary>
         private void DataGridAbiturients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             AbiturientInfoShow();
         }
+        /// <summary>
+        /// Изменение статуса абитуиента
+        /// </summary>
         private void Abiturient_SetStatus(object sender, RoutedEventArgs e)
         {
             if ((AbiturientDGItem)dataGridAbiturients.SelectedItem == null) return;
@@ -500,6 +554,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show(ex.Message, "Изменение статуса абитуриента");
             }
         }
+        /// <summary>
+        /// Удаление записи об абитуриенте
+        /// </summary>
         private void Abiturient_Delete(object sender, RoutedEventArgs e)
         {
             AbiturientDGItem abiturient = (AbiturientDGItem)dataGridAbiturients.SelectedItem;
@@ -511,7 +568,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 GridInfo.Visibility = Visibility.Hidden;
             }
         }
-
+        /// <summary>
+        /// Поиск абитуриентов
+        /// </summary>
         private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             List<AbiturientDGItem> newabiturients = new List<AbiturientDGItem>();
@@ -520,7 +579,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
             dataGridAbiturients.ItemsSource = newabiturients;
         }
-
+        /// <summary>
+        /// фильтр по целевому договору
+        /// </summary>
         private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             if (abiturients == null) return;
@@ -539,12 +600,17 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             TextBoxSearch_TextChanged(sender, null);
         }
-
+        /// <summary>
+        /// Закрытие формы таблицы абитуриентов
+        /// </summary>
         private void CloseButtonUp(object sender, MouseButtonEventArgs e)
         {
             Panel controlElement = (Panel)((Image)sender).Tag;
             controlElement.Visibility = Visibility.Hidden;
         }
+        /// <summary>
+        /// Сортировка абитуриентов по приоритету
+        /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -577,18 +643,30 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Открыие контекстного меню с отчетами
+        /// </summary>
         private void ExcelContextMenuOpen(object sender, MouseButtonEventArgs e)
         {
             ((Image)sender).ContextMenu.IsOpen = true;
         }
+        /// <summary>
+        /// Обработчик сортировки таблицы по одному из полей
+        /// </summary>
         private void DataGridAbiturients_Sorting(object sender, DataGridSortingEventArgs e)
         {
-            dataGridAbiturients.Tag = false;
+            dataGridAbiturients.Tag = false; //тег обозначает отсортирована ли таблица по приоритету
         }
+        /// <summary>
+        /// Нажатие кнопки печати
+        /// </summary>
         private void PrintButton_Click(object sender, MouseButtonEventArgs e)
         {
             ToExcelButton_Click(sender, e);
         }
+        /// <summary>
+        /// формирование отчета по текущему состоянию таблицы
+        /// </summary>
         private void ToExcelButton_Click(object sender, RoutedEventArgs e)
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -608,49 +686,61 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             Excel.Workbook workBook = ex.Workbooks.Open(path + fileName);
             ex.DisplayAlerts = false;
             Excel.Worksheet sheet = (Excel.Worksheet)ex.Worksheets.get_Item(1);
-            ex.Cells[3, 1] = $"по специальности {'"' + curentPlanPriema.NameSpec +'"'}";
-            ex.Cells[4, 1] = $"на {curentPlanPriema.NameForm.ToLower().Substring(0,curentPlanPriema.NameForm.Length-2) + "ом"} отделении ({curentPlanPriema.NameObrazovaie.ToLower()}) {curentPlanPriema.NameFinance.ToLower()}";
-            int reads = dataGridAbiturients.Items.Count;
-            for (int i = 0; i < dataGridAbiturients.Items.Count; i++)
+            try
             {
-                AbiturientDGItem abiturient = (AbiturientDGItem)dataGridAbiturients.Items[i];
-                if (abiturient.Hide == true) 
+                ex.Cells[3, 1] = $"по специальности {'"' + curentPlanPriema.NameSpec + '"'}";
+                ex.Cells[4, 1] = $"на {curentPlanPriema.NameForm.ToLower().Substring(0, curentPlanPriema.NameForm.Length - 2) + "ом"} отделении ({curentPlanPriema.NameObrazovaie.ToLower()}) {curentPlanPriema.NameFinance.ToLower()}";
+                int reads = dataGridAbiturients.Items.Count;
+                for (int i = 0; i < dataGridAbiturients.Items.Count; i++)
                 {
-                    reads = i;
-                    break;
-                }
-                ex.Cells[9 + i, 1] = i + 1;
-                ex.Cells[9 + i, 18] = Convert.ToBoolean(((CheckBox)dataGridAbiturients.Columns[23].GetCellContent(dataGridAbiturients.Items[i])).IsChecked) ? "+" : "0";
-                for (int j = 2; j < 22; j++)
-                {
-                    if (dataGridAbiturients.Columns[j].Visibility == Visibility.Visible)
+                    AbiturientDGItem abiturient = (AbiturientDGItem)dataGridAbiturients.Items[i];
+                    if (abiturient.Hide == true)
                     {
-                        ex.Cells[9 + i, j] = dataGridAbiturients.Columns[j].GetCellContent(dataGridAbiturients.Items[i]).GetValue(TextBlock.TextProperty);
+                        reads = i;
+                        break;
                     }
-                }
-                ex.Cells[9+i,17] = dataGridAbiturients.Columns[22].GetCellContent(dataGridAbiturients.Items[i]).GetValue(TextBlock.TextProperty);
-                if (abiturient.DifferentAttestat == true)
-                {
-                    Excel.Range range = ex.Cells[9 + i, 17];
-                    range.Font.Bold = true;
-                }
+                    ex.Cells[9 + i, 1] = i + 1;
+                    ex.Cells[9 + i, 2] = abiturient.FIO;
+                    ex.Cells[9 + i, 3] = abiturient.Shool;
+                    ex.Cells[9 + i, 4] = abiturient.Year;
+                    ex.Cells[9 + i, 5] = abiturient.Lgoti;
+                    ex.Cells[9 + i, 6] = abiturient.Stati;
+                    for (int j = 0; j < abiturient.Marks.Length && j < 10; j++)
+                    {
+                        ex.Cells[9 + i, 7 + j] = abiturient.Marks[j];
+                    }
+                    ex.Cells[9 + i, 17] = abiturient.MarkDecAvg;
+                    ex.Cells[9 + i, 18] = abiturient.DocumentiVidani ? "+" : "0";
+                    if (abiturient.DifferentAttestat == true) //Если у абитуриента 2 или более аттестата с разными шкалами
+                    {
+                        Excel.Range range = ex.Cells[9 + i, 17];
+                        range.Font.Bold = true; //Выделение среднего балла жирным
+                    }
 
+                }
+                ex.Range["A10", "R" + (reads + 8)].Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+                ex.Interactive = true;
+                if (((FrameworkElement)sender).Tag != null && ((FrameworkElement)sender).Tag.ToString() == "Print") //Если обработчик был вызван из кнопки печати
+                {
+                    bool userDidntCancel =
+                ex.Dialogs[Excel.XlBuiltInDialog.xlDialogPrint].Show(
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing); //Открытие формы печати
+                }
             }
-            ex.Range["A10","R"+(reads+8)].Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
-            ex.Interactive = true;
-            if (((FrameworkElement)sender).Tag != null && ((FrameworkElement)sender).Tag.ToString() == "Print")
+            catch
             {
-                bool userDidntCancel =
-            ex.Dialogs[Excel.XlBuiltInDialog.xlDialogPrint].Show(
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                MessageBox.Show("Ошибка формированя отчета");
+                ex.Interactive = true;
             }
         }
-
+        /// <summary>
+        /// Отчет для исполкома
+        /// </summary>
         private void OtchetToExcel_Click(object sender, RoutedEventArgs e)
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -670,41 +760,51 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             Excel.Workbook workBook = ex.Workbooks.Open(path + fileName);
             ex.DisplayAlerts = false;
             Excel.Worksheet sheet = (Excel.Worksheet)ex.Worksheets.get_Item(1);
-            string[] dataFormiObucheniya = LabelFormaObrazovaniya.Text.ToString().Split('.');
-
-            ex.Cells[4, 1] = $"Специальность (направление специальности, специализация) {curentPlanPriema.CodeSpec} {curentPlanPriema.NameSpec}";
-            ex.Cells[5, 1] = $"Форма получения образования: {curentPlanPriema.NameForm.ToLower()} ({curentPlanPriema.NameFinance.ToLower()})";
-            ex.Cells[6, 1] = curentPlanPriema.NameObrazovaie;
-            ex.Cells[13, 3] = DateTime.Now.ToString("dd.MM.yyyy");
-            int offset = 0;
-            bool writeline = false;
-            for(int i = 0; i < abiturients.Count; i++)
+            try
             {
-                if (abiturients[i].DocumentiVidani)
-                {
-                    offset++;
-                    continue;
-                }
-                ex.Cells[9 + i - offset, 1] = i + 1 - offset;
-                ex.Cells[9 + i - offset, 2] = abiturients[i].ExamNum;
-                ex.Cells[9 + i - offset, 3] = abiturients[i].FIO;
-                ex.Cells[9 + i - offset, 6] = abiturients[i].MarkDecAvg;
-                ex.Cells[9 + i - offset, 7] = abiturients[i].MarkDecAvg;
-                ex.Cells[9 + i - offset, 9] = abiturients[i].Lgoti;
-                ex.Cells[9 + i - offset, 10] = abiturients[i].Status == "Зачислен" ? "зачислен" : "не зачислен";
-                Excel.Range cellRange = (Excel.Range)ex.Cells[10 + i - offset, 1];
-                Excel.Range rowRange = cellRange.EntireRow;
-                rowRange.Insert(Excel.XlInsertShiftDirection.xlShiftDown, false);
-                ex.Range[$"A{9 + i - offset}", $"J{9 + i - offset}"].Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
-                if(Convert.ToBoolean(dataGridAbiturients.Tag) == true && abiturients[i].Status != "Зачислен" && !writeline)
-                {
-                    ex.Range[$"A{9 + i - offset}", $"J{9 + i - offset}"].Cells.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
-                    writeline = true;
-                }
-            }
-            ex.Interactive = true;
-        }
+                string[] dataFormiObucheniya = LabelFormaObrazovaniya.Text.ToString().Split('.');
 
+                ex.Cells[4, 1] = $"Специальность (направление специальности, специализация) {curentPlanPriema.CodeSpec} {curentPlanPriema.NameSpec}";
+                ex.Cells[5, 1] = $"Форма получения образования: {curentPlanPriema.NameForm.ToLower()} ({curentPlanPriema.NameFinance.ToLower()})";
+                ex.Cells[6, 1] = curentPlanPriema.NameObrazovaie;
+                ex.Cells[13, 3] = DateTime.Now.ToString("dd.MM.yyyy");
+                int offset = 0;
+                bool writeline = false;
+                for (int i = 0; i < abiturients.Count; i++)
+                {
+                    if (abiturients[i].DocumentiVidani)
+                    {
+                        offset++;
+                        continue;
+                    }
+                    ex.Cells[9 + i - offset, 1] = i + 1 - offset;
+                    ex.Cells[9 + i - offset, 2] = abiturients[i].ExamNum;
+                    ex.Cells[9 + i - offset, 3] = abiturients[i].FIO;
+                    ex.Cells[9 + i - offset, 6] = abiturients[i].MarkDecAvg;
+                    ex.Cells[9 + i - offset, 7] = abiturients[i].MarkDecAvg;
+                    ex.Cells[9 + i - offset, 9] = abiturients[i].Lgoti;
+                    ex.Cells[9 + i - offset, 10] = abiturients[i].Status == "Зачислен" ? "зачислен" : "не зачислен";
+                    Excel.Range cellRange = (Excel.Range)ex.Cells[10 + i - offset, 1];
+                    Excel.Range rowRange = cellRange.EntireRow;
+                    rowRange.Insert(Excel.XlInsertShiftDirection.xlShiftDown, false);
+                    ex.Range[$"A{9 + i - offset}", $"J{9 + i - offset}"].Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+                    if (!writeline && Convert.ToBoolean(dataGridAbiturients.Tag) == true && abiturients[i].Status != "Зачислен")
+                    {
+                        ex.Range[$"A{9 + i - offset}", $"J{9 + i - offset}"].Cells.Borders.Item[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlMedium;
+                        writeline = true;
+                    }
+                }
+                ex.Interactive = true;
+            }
+            catch (Exception exept)
+            {
+                MessageBox.Show(exept.Message, "Ошибка формированя отчета");
+                ex.Interactive = true;
+            }
+        }
+        /// <summary>
+        /// Формирование файла для импорта в AD
+        /// </summary>
         private void ImportToAD(object sender, RoutedEventArgs e)
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -763,18 +863,25 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         #endregion
             #region Просмотр информации
-        //TODO: добавить номер экзаменационного листа
+        /// <summary>
+        /// вызод из формы просмотра
+        /// </summary>
         private void Image_BackToAbiturients(object sender, MouseButtonEventArgs e)
         {
             GridInfo.Visibility = Visibility.Hidden;
             AbiturientTableLoad(curentPlanPriema.Id);
         }
-
+        /// <summary>
+        /// Редактирование аттестата
+        /// </summary>
         private void Image_AtestatRedakt(object sender, MouseButtonEventArgs e)
         {
             Image_MouseUp_1(sender, e);
             TabControlAddEditForm.SelectedIndex = 2;
         }
+        /// <summary>
+        /// Удаление аттестата
+        /// </summary>
         private void MenuItem_DeleteAtestat(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Удалить атестат?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -789,7 +896,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     connection.Close();
                 }
                 catch (Exception) { }
-                try
+                try //Обновление аттестатов битуриента
                 {
                     SqlConnection connection = new SqlConnection(connectionString);
                     SqlCommand command = new SqlCommand("Get_AbiturientaAttestat", connection)
@@ -826,19 +933,25 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
-
+        /// <summary>
+        /// Редактирование ЦТ
+        /// </summary>
         private void Image_CTRedakt(object sender, MouseButtonEventArgs e)
         {
             Image_MouseUp_1(sender, e);
             TabControlAddEditForm.SelectedIndex = 3;
         }
-
+        /// <summary>
+        /// Редактирование контактных данных
+        /// </summary>
         private void Image_KontaktsRedakt(object sender, MouseButtonEventArgs e)
         {
             Image_MouseUp_1(sender, e);
             TabControlAddEditForm.SelectedIndex = 1;
         }
-
+        /// <summary>
+        /// Удаление контакта
+        /// </summary>
         private void MenuItem_DeleteContact(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Удалить контакт?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -875,6 +988,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
+        /// <summary>
+        /// Удаление ЦТ
+        /// </summary>
         private void MenuItem_DeleteCT(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Удалить сертификат ЦТ?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -914,6 +1030,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         #endregion
             #region редактирование записи
+        /// <summary>
+        /// Обработчик для установки первой буквы заглавной
+        /// </summary>
         private void InUpperLetter(object sender, TextCompositionEventArgs e)
         {
             TextBox textBox = ((TextBox)sender);
@@ -924,6 +1043,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 e.Handled = true;
             }
         }
+        /// <summary>
+        /// Установка гражданства на белорусское при активации checkBox
+        /// </summary>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (((CheckBox)sender).IsChecked == true)
@@ -931,6 +1053,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 AddFormGrajdanstvo.Text = "Белорусское";
             }
         }
+        /// <summary>
+        /// Активация CheckBox При вводе гражданства "Белорусское"
+        /// </summary>
         private void AddFormGrajdanstvo_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (((TextBox)sender).Text != "")
@@ -942,6 +1067,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             else
                 AddFormChekBoxGrajdanstvo.IsChecked = false;
         }
+        /// <summary>
+        /// Проверка корректности ввода даты рождения
+        /// </summary>
         private void DateOfBirth_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (DateTime.TryParse(((Xceed.Wpf.Toolkit.MaskedTextBox)sender).Text, out _))
@@ -951,19 +1079,27 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             else
                 ((Xceed.Wpf.Toolkit.MaskedTextBox)sender).Tag = "Error";
         }
-
+        /// <summary>
+        /// добавление нового контакта
+        /// </summary>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             ContactData contact = new ContactData(Visibility.Visible, (int)AddEditFormContacts.Tag + 1);
             AddEditFormContacts.Children.Insert((int)AddEditFormContacts.Tag, contact);
             AddEditFormContacts.Tag = (int)AddEditFormContacts.Tag + 1;
-        }//добавление нового контакта
+        }
+        /// <summary>
+        /// Добавление нового аттестата
+        /// </summary>
         private void Button_NewAtestat(object sender, RoutedEventArgs e)
         {
             Certificate certificate = new Certificate(Visibility.Visible, (int)addEdifFormAtestati.Tag + 1);
             addEdifFormAtestati.Children.Insert((int)addEdifFormAtestati.Tag, certificate);
             addEdifFormAtestati.Tag = (int)addEdifFormAtestati.Tag + 1;
         }
+        /// <summary>
+        /// Проверка ввода и идентификационный номер только цифр и латинских букв 
+        /// </summary>
         private void Tb_IdentNuber_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[0-9a-zA-Z]+");
@@ -972,7 +1108,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             ttpIdentNum.IsOpen = !isMatch;
             e.Handled = !isMatch;
         }
-
+        /// <summary>
+        /// Проверка ввода и идентификационный номер только латинских букв 
+        /// </summary>
         private void Tb_SeriyaPasporta_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[a-zA-Z]+$");
@@ -981,6 +1119,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             ttpSerya.IsOpen = !isMatch;
             e.Handled = !isMatch;
         }
+        /// <summary>
+        /// Установка заглавных букв в серии аттестата 
+        /// </summary>
         private void PassportSeriya_TextInput(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -988,26 +1129,34 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             tb.Text = tb.Text.ToUpper();
             tb.SelectionStart = selStart;
         }
+        /// <summary>
+        /// Проверка ввода только цифр
+        /// </summary>
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !PLib.IsTextAllowed(e.Text);
         }
+        /// <summary>
+        /// Добавление нового сертификата ЦТ
+        /// </summary>
         private void ButtonNewSertificatCT(object sender, RoutedEventArgs e)
         {
             CtCertificate ct = new CtCertificate((int)addEdifFormCT.Tag + 1);
             addEdifFormCT.Children.Insert((int)addEdifFormCT.Tag, ct);
             addEdifFormCT.Tag = (int)addEdifFormCT.Tag + 1;
         }
+        /// <summary>
+        /// Переход на прдыдущую  вкладку
+        /// </summary>
         private void Button_PrewPage(object sender, RoutedEventArgs e)
         {
             TabControlAddEditForm.SelectedIndex -= 1;
             if (((TabItem)TabControlAddEditForm.SelectedItem).IsEnabled == false)
                 TabControlAddEditForm.SelectedIndex--;
         }
-        private void Button_CloseNote(object sender, RoutedEventArgs e)
-        {
-            ((StackPanel)((Grid)((Button)sender).Parent).Parent).Visibility = Visibility.Collapsed;
-        }
+        /// <summary>
+        /// Переход на 2 этап
+        /// </summary>
         private void Button_NextStep_1(object sender, RoutedEventArgs e)
         {
             if (Correct_1())
@@ -1021,6 +1170,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 ScrollAddMain.ScrollToVerticalOffset(0);
             }
         }
+        /// <summary>
+        /// Переход на 3 этап
+        /// </summary>
         private void Button_NextStep_2(object sender, RoutedEventArgs e)
         {
             if (PLib.FormIsCorrect<ContactData>(AddEditFormContacts))
@@ -1030,6 +1182,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
 
         }
+        /// <summary>
+        /// Переход на 4 этап
+        /// </summary>
         private void Button_NextStep_3(object sender, RoutedEventArgs e)
         {
             if ((PLib.FormIsCorrect<Certificate>(addEdifFormAtestati)))
@@ -1040,6 +1195,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                     TabControlAddEditForm.SelectedIndex++;
             }
         }
+        /// <summary>
+        /// Переход на 5 этап
+        /// </summary>
         private void Button_NextStep_4(object sender, RoutedEventArgs e)
         {
             if (PLib.FormIsCorrect<CtCertificate>(addEdifFormCT))
@@ -1048,7 +1206,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 TabControlAddEditForm.SelectedIndex++;
             }
         }
-        //завершение редактирования
+        /// <summary>
+        /// завершение редактирования
+        /// </summary>
         private void Button_EditEnd(object sender, RoutedEventArgs e)
         {
             if (!InputIsCorrect())
@@ -1116,6 +1276,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             AbiturientTableLoad(curentPlanPriema.Id);
             addEditForm.Visibility = Visibility.Hidden;
         }
+        /// <summary>
+        /// Блокирование льготы Сирота
+        /// </summary>
         private void BlockCheckBox(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
@@ -1130,6 +1293,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 addEditForm_CheckBox_DetiSiroti.IsEnabled = true;
             }
         }
+        /// <summary>
+        /// Блокирование статьи Сирота
+        /// </summary>
         private void BlockCheckBox2(object sender, RoutedEventArgs e)
         {
             foreach(CheckBox checkBox in ucArticles.checkBoxes)
@@ -1149,11 +1315,25 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
+        /// <summary>
+        /// Закрытие формы редактирование/добавления
+        /// </summary>
+        private void Image_MouseUp_3(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = MessageBox.Show("Данные не будут сохранены!", "Закрыт форму?", MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                addEditForm.Visibility = Visibility.Hidden;
+            }
+        }
         #region заполнение ComboBoks для формы редактирования
+        /// <summary>
+        /// Изменение специальности
+        /// </summary>
         private void AddEditFormspecialnost_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (addEditFormspecialnost.SelectedItem == null) return;
-            try
+            try //заполнение списка форм обучения
             {
                 string sql1 = $"SELECT DISTINCT ФормаОбучения.Наименование FROM ПланПриема JOIN Специальность ON(ПланПриема.IDСпециальности = Специальность.IDСпециальность) JOIN ФормаОбучения ON (ПланПриема.IDФормаОбучения = ФормаОбучения.IDФормаОбучения)  WHERE Специальность.Наименование LIKE N'{((ComboBox)sender).SelectedItem}'";
 
@@ -1175,10 +1355,13 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show(ex.Message);
             }
         }
+        /// <summary>
+        /// Изменение формы обучения
+        /// </summary>
         private void AddEditFormobushenie_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (addEditFormobushenie.SelectedItem == null) return;
-            try
+            try //Заполнение списка фнанирования
             {
                 string sql1 = $"SELECT DISTINCT Финансирование.Наименование FROM ПланПриема JOIN Специальность ON(ПланПриема.IDСпециальности = Специальность.IDСпециальность) JOIN ФормаОбучения ON (ПланПриема.IDФормаОбучения = ФормаОбучения.IDФормаОбучения) JOIN Финансирование ON (ПланПриема.IDФинансирования = Финансирование.IDФинансирования) WHERE Специальность.Наименование LIKE N'{addEditFormspecialnost.SelectedItem}' AND ФормаОбучения.Наименование LIKE N'{addEditFormobushenie.SelectedItem}'";
 
@@ -1210,10 +1393,13 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 AddEditWork.Visibility = Visibility.Visible;
             }
         }
+        /// <summary>
+        /// Изменение финансирования
+        /// </summary>
         private void AddEditFormFinansirovanie_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (addEditFormFinansirovanie.SelectedItem == null) return;
-            try
+            try //заполнение формы обучения
             {
                 string sql1 = $"SELECT DISTINCT ФормаОбучения.Образование FROM ПланПриема JOIN Специальность ON(ПланПриема.IDСпециальности = Специальность.IDСпециальность) JOIN ФормаОбучения ON (ПланПриема.IDФормаОбучения = ФормаОбучения.IDФормаОбучения) JOIN Финансирование ON (ПланПриема.IDФинансирования = Финансирование.IDФинансирования) WHERE Специальность.Наименование LIKE N'{addEditFormspecialnost.SelectedItem}' AND ФормаОбучения.Наименование LIKE N'{addEditFormobushenie.SelectedItem}' AND Финансирование.Наименование LIKE N'{addEditFormFinansirovanie.SelectedItem}'";
 
@@ -1234,7 +1420,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 MessageBox.Show(ex.Message, "Заполнение списка форм образования");
             }
-            try
+            try //получение плана приема из выбранных данных
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 SqlCommand command = new SqlCommand("Get_PlanPriemaID", connection)
@@ -1259,7 +1445,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 MessageBox.Show(ex.Message, "Получение плана приема");
             }
-            try
+            try // блокирование формы сертификатов ЦТ
             {
                 SqlConnection connection = new SqlConnection(connectionString);
                 SqlCommand command = new SqlCommand($"SELECT ЦТ FROM ПланПриема WHERE IDПланПриема = {curentPlanPriema.Id}", connection);
@@ -1275,8 +1461,36 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show(ex.Message, "Активация формы сертификатов ЦТ");
             }
         }
+        /// <summary>
+        /// Изменение формы обучения
+        /// </summary>
         private void AddEditFormobrazovanie_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (addEditFormobrazovanie.SelectedItem == null) return;
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand("Get_PlanPriemaID", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@speciality", addEditFormspecialnost.SelectedItem);
+                command.Parameters.AddWithValue("@formOfEducation", addEditFormobushenie.SelectedItem);
+                command.Parameters.AddWithValue("@financing", addEditFormFinansirovanie.SelectedItem);
+                command.Parameters.AddWithValue("@education", addEditFormobrazovanie.SelectedItem);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    curentPlanPriema = DB.Get_PlanPriemaByID(reader.GetInt32(0));
+                }
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Получение плана приема");
+            }
         }
             #endregion
         private void MaskedTB_IsComplited(object sender, TextChangedEventArgs e)
@@ -1320,29 +1534,42 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         #endregion
         #endregion
         #region Настройка контрольных цифр приема
+        /// <summary>
+        /// загрузка планов приема при выборе специальости
+        /// </summary>
         private void TabItem1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             AddAdmissionPlan.Children.Clear();
             PlanPriemaTableLoad(((TabItem)sender).Header.ToString());
+            labelSpec.Content = (sender as TabItem).Tag;
         }
-
+        /// <summary>
+        /// открытие формы добавление плана приема
+        /// </summary>
         private void Button_AddPlanPriema(object sender, RoutedEventArgs e)
         {
             AddAdissionPlanControl addAdissionPlan = new AddAdissionPlanControl(((TabItem)TabControl1.SelectedItem).Tag.ToString());
             addAdissionPlan.CloseControl += CloseAdmissionControl;   
             AddAdmissionPlan.Children.Add(addAdissionPlan);
         }
+        /// <summary>
+        /// Обработка закытия формы добавления/редктирования плана приема
+        /// </summary>
         private void CloseAdmissionControl(object sender, RoutedEventArgs e)
         {
             PlanPriemaTableLoad(((TabItem)TabControl1.SelectedItem).Header.ToString());
         }
-
+        /// <summary>
+        /// Открытие формы редактирования плана приема
+        /// </summary>
         private void ImagecCick_UpdatePlanPriema(object sender, MouseButtonEventArgs e)
         {
             AddAdissionPlanControl addAdissionPlan = new AddAdissionPlanControl((PlanPriema)dataGridPlani.SelectedItem);
             AddAdmissionPlan.Children.Add(addAdissionPlan);
         }
-
+        /// <summary>
+        /// Удаление плана приема
+        /// </summary>
         private void ImagecCick_DeletePlanPriema(object sender, MouseButtonEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Удалить план приема?", "Удаление", MessageBoxButton.OKCancel);
@@ -1374,6 +1601,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
+        /// <summary>
+        /// Открытие таблицы плана приема по двойному нажатию
+        /// </summary>
         private void DataGridPlani_OpenPlanPriema(object sender, MouseButtonEventArgs e)
         {
             if (dataGridPlani.SelectedItem == null) return;
@@ -1384,6 +1614,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         }
         #endregion Настройка контрольных цифр приема
         #region Статистика подача документов
+        /// <summary>
+        /// Обработчик открытия формы статистики подачи документов для обновления данных
+        /// </summary>
         private void OpenStats(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (tabWork.SelectedIndex == 2 && TabControl2.SelectedItem != null)
@@ -1391,11 +1624,16 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 StatsLoad(((TabItem)TabControl2.SelectedItem).Header.ToString());
             }
         }
+        /// <summary>
+        /// Обновление данных при воборе специальности
+        /// </summary>
         private void TabItem2_MouseDown(object sender, MouseButtonEventArgs e)
         {
             StatsLoad(((TabItem)sender).Header.ToString());
         }
-
+        /// <summary>
+        /// Проверка на ввод только значений с плавующей запятой
+        /// </summary>
         private void TbMaskFloat(object sender, TextCompositionEventArgs e)
         {
             TextBox textbox = (TextBox)sender;
@@ -1403,8 +1641,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             text = text.Insert(textbox.SelectionStart, e.Text);
             e.Handled = !Double.TryParse(text, out _);
         }
-
-
+        /// <summary>
+        /// Маска ввода для значений с плавующей запятой
+        /// </summary>
         private void TbMaskFloat_TextInput(object sender, TextChangedEventArgs e)
         {
             TextBox textbox = (TextBox)sender;
@@ -1432,7 +1671,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 textbox.SelectionLength = 1;
             }
         }
-
+        /// <summary>
+        /// Формирование отчета по подаче документов
+        /// </summary>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             double startValue = Convert.ToDouble(tbStartValue.Text);
@@ -1497,7 +1738,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 ex.Cells[i, 6] = stats[i - 5].EntrantOutOfCompetition;
 
                 SqlConnection connection = new SqlConnection(connectionString);
-                try
+                try //Получение количества абитуриентов с средним баллом в заданном диапазоне
                 {
                     connection.Open();
                     for (int j = 7; j <= cellIndex; j++)
@@ -1542,7 +1783,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             ex.Interactive = true;
 
         }
-
+        /// <summary>
+        /// Открытие плана приема двойным щелчком по элементу таблицы
+        /// </summary>
         private void DataGridStats_OpenPlanPriema(object sender, MouseButtonEventArgs e)
         {
             if (DGStats.SelectedItem == null) return;
@@ -1552,9 +1795,70 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             tabWork.SelectedIndex = 0;
         }
         #endregion
-
+        #region перечень специальностей
+        /// <summary>
+        /// Обновление данных прие переходе на форму
+        /// </summary>
+        private void TabItemClick_LoadSpecialityTable(object sender, MouseButtonEventArgs e)
+        {
+            dgSpeciality.ItemsSource = DB.GetSpecialityTable();
+        }
+        /// <summary>
+        /// редактирование Специальности
+        /// </summary>
+        private void MouseUp_SpecialityEdit(object sender, MouseButtonEventArgs e)
+        {
+            if (dgSpeciality.SelectedItem == null) return;
+            ucSpeciality.Edit((Speciality)dgSpeciality.SelectedItem);
+            dgSpeciality.IsEnabled = false;
+        }
+        /// <summary>
+        /// Удаление специальности
+        /// </summary>
+        private void MouseUp_SpecialityDelete(object sender, MouseButtonEventArgs e)
+        {
+            if (dgSpeciality.SelectedItem == null) return;
+            MessageBoxResult result = MessageBox.Show($"Удалить выбранную специальность\n{((Speciality)dgSpeciality.SelectedItem).Title}", "Удаление", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand($"Select IDПланПриема FROM ПланПриема where IDСпециальности = {(dgSpeciality.SelectedItem as Speciality).Num}", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = MessageBox.Show("Существуют планы приема с выбранной специальностью которые также будут удалены\nПродолжить?", "Удаление", MessageBoxButton.YesNo);
+                    if (result != MessageBoxResult.Yes)
+                    {
+                        connection.Close();
+                        return;
+                    }
+                }
+                connection.Close();
+                DB.DeleteSpeciality(((Speciality)dgSpeciality.SelectedItem).Num);
+                dgSpeciality.ItemsSource = DB.GetSpecialityTable();
+                UpdateSpeciality();
+            }
+        }
+        /// <summary>
+        /// Обработчик завершения редактирования и добавления
+        /// </summary>
+        private void Speciality_EndEdit(object sender, RoutedEventArgs e)
+        {
+            dgSpeciality.IsEnabled = true;
+            dgSpeciality.ItemsSource = DB.GetSpecialityTable();
+            if (((Button)sender).Name == "btnSave")
+            {
+                UpdateSpeciality();
+            }
+        }
+        #endregion
         #region Методы
-        private void ButtonPos(int col) //изменение позиций кнопок под размер экрана
+        /// <summary>
+        /// Изменение позиций кнопок под размер окна
+        /// </summary>
+        /// <param name="col">количество столбцов</param>
+        private void ButtonPos(int col)
         {
             if (planPriemaColumn == col) return;
 
@@ -1584,6 +1888,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
             planPriemaColumn = col;
         }
+        /// <summary>
+        /// Загрузка данных о статистике подачи документов
+        /// </summary>
+        /// <param name="specialnost">Краткое наименование специальности</param>
         private void StatsLoad(string specialnost)
         {
             List<DocSubmissionStat> list = new List<DocSubmissionStat>();
@@ -1643,6 +1951,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show(ex.Message, "Получение количества абитуриентов для статистики");
             }
         }
+        /// <summary>
+        /// Загрузка данных о планах приема
+        /// </summary>
+        /// <param name="specialnost">Краткое наименование специальности</param>
         private void PlanPriemaTableLoad(string specialnost)
         {
             try
@@ -1685,6 +1997,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
             }
         }
+        /// <summary>
+        /// Загрузка кнопок планов приема
+        /// </summary>
+        /// <param name="specialost">Краткое наименование специальности</param>
         private void PlaniPriemaLoad(string specialost)
         {
             Brush[] colors = { 
@@ -1720,13 +2036,31 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             planPriemaColumn = 0;
             MainWorkingWindowForm_SizeChanged(null, null);
         }
+        /// <summary>
+        /// Очистка тега Error при изменении текста
+        /// </summary>
         private void ClearError(object sender, TextChangedEventArgs e)
         {
             PLib.ClearError(sender);
         }
+        /// <summary>
+        /// Загрузка таблицы абитуриентов
+        /// </summary>
+        /// <param name="PlanPriemaID">ИД плана приема</param>
         private void AbiturientTableLoad(int PlanPriemaID)
         {
             curentPlanPriema = DB.Get_PlanPriemaByID(PlanPriemaID);
+            if ((TabControl.SelectedItem as TabItem).Header.ToString() != curentPlanPriema.NameSpec || (TabControl.SelectedItem as TabItem).Tag.ToString() != curentPlanPriema.NameSpec)
+            {
+                foreach (TabItem tabItem in TabControl.Items)
+                {
+                    if (tabItem.Header.ToString() == curentPlanPriema.NameSpec || tabItem.Tag.ToString() == curentPlanPriema.NameSpec)
+                    {
+                        TabControl.SelectedItem = tabItem;
+                        break;
+                    }
+                }
+            }
             SqlConnection connection = new SqlConnection(connectionString);
             abiturients = new List<AbiturientDGItem>();
             try
@@ -1762,7 +2096,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
                     abiturients.Add(abiturient);
                 }
-
             }
             catch (Exception ex)
             {
@@ -1817,6 +2150,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
             }
         }
+        /// <summary>
+        /// Открытие формы просмитра информации для выделенного абитуриента
+        /// </summary>
         private void AbiturientInfoShow()
         {
             if ((AbiturientDGItem)dataGridAbiturients.SelectedItem == null) return;
@@ -1947,8 +2283,11 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 MessageBox.Show(ex.Message, "Заполнение таблицы контактных данных абитуиента");
             }
-        } //открытие информации об абитуриенте
-
+        } 
+        /// <summary>
+        /// Проверка корректности ввода всех полей при добавлении/редактировании
+        /// </summary>
+        /// <returns>Все ли данные корректны</returns>
         private bool InputIsCorrect()
         {
             //проверка заполнения паспортных данных
@@ -1978,7 +2317,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             return true;
             //проверка на корректность ввода оценок
         }
-
+        /// <summary>
+        /// запись экзаменационного листа
+        /// </summary>
         private void SetExamList()
         {
             if (addEditFormobrazovanie.SelectedItem == null || EditEndButton.Visibility == Visibility.Visible) return;
@@ -2003,7 +2344,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 MessageBox.Show(ex.Message, "Номер экзаменационного листа");
             }
         }
-
+        /// <summary>
+        /// Проверка корректности первого этапа
+        /// </summary>
+        /// <returns>все ли ванные корректны</returns>
         private bool Correct_1()
         {
             bool correct = true;
@@ -2030,62 +2374,5 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             return correct;
         }
         #endregion
-
-        private void TabItemClick_LoadSpecialityTable(object sender, MouseButtonEventArgs e)
-        {
-            dgSpeciality.ItemsSource = DB.GetSpecialityTable();
-        }
-
-        private void MouseUp_SpecialityEdit(object sender, MouseButtonEventArgs e)
-        {
-            if (dgSpeciality.SelectedItem == null) return;
-            ucSpeciality.Edit((Speciality)dgSpeciality.SelectedItem);
-            dgSpeciality.IsEnabled = false;
-        }
-
-        private void MouseUp_SpecialityDelete(object sender, MouseButtonEventArgs e)
-        {
-            if (dgSpeciality.SelectedItem == null) return;
-            MessageBoxResult result = MessageBox.Show($"Удалить выбранную специальность\n{((Speciality)dgSpeciality.SelectedItem).Title}", "Удаление", MessageBoxButton.YesNo);
-            if(result == MessageBoxResult.Yes)
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand($"Select IDПланПриема FROM ПланПриема where IDСпециальности = {(dgSpeciality.SelectedItem as Speciality).Num}", connection);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    result = MessageBox.Show("Существуют планы приема с выбранной специальностью которые также будут удалены\nПродолжить?","Удаление", MessageBoxButton.YesNo);
-                    if(result != MessageBoxResult.Yes)
-                    {
-                        connection.Close();
-                        return;
-                    }
-                }
-                connection.Close();
-                DB.DeleteSpeciality(((Speciality)dgSpeciality.SelectedItem).Num);
-                dgSpeciality.ItemsSource = DB.GetSpecialityTable();
-                UpdateSpeciality();
-            }
-        }
-
-        private void Speciality_EndEdit(object sender, RoutedEventArgs e)
-        {
-            dgSpeciality.IsEnabled = true;
-            dgSpeciality.ItemsSource = DB.GetSpecialityTable();
-            if (((Button)sender).Name == "btnSave")
-            {
-                UpdateSpeciality();
-            }
-        }
-
-        private void Image_MouseUp_3(object sender, MouseButtonEventArgs e)
-        {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Данные не будут сохранены!", "Закрыт форму?", MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                addEditForm.Visibility = Visibility.Hidden;
-            }
-        }
     }
 }

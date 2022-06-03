@@ -11,25 +11,30 @@ using System.DirectoryServices.AccountManagement;
 namespace PriyemnayaKomissiya_TechnicalSecretary_
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для формы авторизации
     /// </summary>
     public partial class Autorization : Window
     {
         private readonly string connectionString;
-        private readonly string groupName = "grp_priem";
+        private readonly string groupName = "grp_priem"; //Название группы имеющей доступ к программе
+        /// <summary>
+        /// Конструктор по умолчанию для формы авторизации
+        /// </summary>
         public Autorization()
         {
             InitializeComponent();
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
-
+        /// <summary>
+        /// Обработчик кнопки входа
+        /// </summary>
         private void BtnSignIn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 SqlConnection connection = new SqlConnection(connectionString);
 
-                if (tbPassword.Password == "priemadmin")
+                if (tbPassword.Password == "priemadmin") //проверка входа под локальным пользователем
                 {
                     string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}' AND IDроли = 4";
 
@@ -48,7 +53,6 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
                 if (tbLogin.Text != "")
                 {
-
                     UserPrincipal user = UserPrincipal.FindByIdentity(yourDomain, tbLogin.Text);
 
                     using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "college.local", "DC=college,DC=local", tbLogin.Text, tbPassword.Password))
@@ -57,7 +61,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                         {
                             PrincipalSearchResult<Principal> groups = user.GetGroups();
                             bool grpCorrect = false;
-                            foreach (GroupPrincipal g in groups)
+                            foreach (GroupPrincipal g in groups) //поиск есть ли группа groupName
                             {
                                 if (g.Name == groupName)
                                 {
@@ -77,13 +81,13 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                             SqlCommand command = new SqlCommand(hasUser, connection);
                             connection.Open();
                             SqlDataReader reader = command.ExecuteReader();
-                            if (reader.Read())
+                            if (reader.Read()) //если в базе есть введенный пользователь
                             {
                                 View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(Convert.ToInt32(reader[0]), tbLogin.Text, user.DisplayName);
                                 mainWorkingWindow.Show();
                                 Close();
                             }
-                            else
+                            else //Если вход осуществляеться впервые ты пользователь заносится в базу даных
                             {
                                 reader.Close();
                                 command = new SqlCommand("Add_User", connection)
@@ -115,6 +119,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 return;
             }
         }
+ 
         private void TbPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox pb = sender as PasswordBox;
