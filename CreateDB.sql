@@ -1,84 +1,6 @@
-USE [master]
+USE [Имя БД]
 GO
-/****** Object:  Database [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ]    Script Date: 01.06.2022 8:08:49 ******/
-CREATE DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ', FILENAME = N'F:\MS SQL SERVER\Data\РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ_log', FILENAME = N'F:\MS SQL SERVER\Data\РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET COMPATIBILITY_LEVEL = 140
-GO
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET ANSI_NULL_DEFAULT OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET ANSI_NULLS OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET ANSI_PADDING OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET ANSI_WARNINGS OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET ARITHABORT OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET AUTO_CLOSE OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET AUTO_SHRINK OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET AUTO_UPDATE_STATISTICS ON 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET CURSOR_DEFAULT  GLOBAL 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET NUMERIC_ROUNDABORT OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET QUOTED_IDENTIFIER OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET RECURSIVE_TRIGGERS OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET  DISABLE_BROKER 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET TRUSTWORTHY OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET PARAMETERIZATION SIMPLE 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET HONOR_BROKER_PRIORITY OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET RECOVERY SIMPLE 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET  MULTI_USER 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET PAGE_VERIFY CHECKSUM  
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET DB_CHAINING OFF 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET DELAYED_DURABILITY = DISABLED 
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET QUERY_STORE = OFF
-GO
-USE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ]
-GO
-/****** Object:  User [fik]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  User [fik]    Script Date: 14.06.2022 9:39:37 ******/
 CREATE USER [fik] FOR LOGIN [COLLEGE\fik] WITH DEFAULT_SCHEMA=[db_owner]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [fik]
@@ -87,7 +9,7 @@ ALTER ROLE [db_datareader] ADD MEMBER [fik]
 GO
 ALTER ROLE [db_datawriter] ADD MEMBER [fik]
 GO
-/****** Object:  UserDefinedFunction [dbo].[GetMarkCount]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  UserDefinedFunction [dbo].[GetMarkCount]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,15 +22,15 @@ AS
 BEGIN
 	DECLARE @MarkCount int;
 	SELECT @MarkCount = 
-	(SELECT SUM(РљРѕР»РёС‡РµСЃС‚РІРѕ)
-                               FROM            РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° INNER JOIN
-                                                         РђС‚РµСЃС‚Р°С‚ ON РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° = РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р°
-                               WHERE        (@idAbiturient = IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) AND (Р‘Р°Р»Р» = @Mark)
-                               GROUP BY Р‘Р°Р»Р»)
+	(SELECT SUM(Количество)
+                               FROM            ОценкиАтестата INNER JOIN
+                                                         Атестат ON Атестат.IDАтестата = ОценкиАтестата.IDАтестата
+                               WHERE        (@idAbiturient = IDАбитуриента) AND (Балл = @Mark)
+                               GROUP BY Балл)
 	RETURN @MarkCount
 END
 GO
-/****** Object:  UserDefinedFunction [dbo].[GetNum]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  UserDefinedFunction [dbo].[GetNum]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,89 +44,89 @@ begin
         patindex('%[^0-9.]%', right(@st, 1 + len(@st) - patindex('%[0-9.]%', @st))) - 1)
 end
 GO
-/****** Object:  Table [dbo].[РђС‚РµСЃС‚Р°С‚]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Атестат]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РђС‚РµСЃС‚Р°С‚](
-	[IDРђС‚РµСЃС‚Р°С‚Р°] [int] IDENTITY(1,1) NOT NULL,
-	[IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°] [int] NOT NULL,
-	[IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹] [int] NOT NULL,
-	[РЎРµСЂРёСЏРђС‚РµСЃС‚Р°С‚Р°] [nvarchar](50) NULL,
-	[РЎСЂРµРґРЅРёР№Р‘Р°Р»Р»] [float] NOT NULL,
-	[Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°] [float] NOT NULL,
- CONSTRAINT [PK__РђС‚РµСЃС‚Р°С‚__7B32B3EB2167DC4B] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Атестат](
+	[IDАтестата] [int] IDENTITY(1,1) NOT NULL,
+	[IDАбитуриента] [int] NOT NULL,
+	[IDШкалыСтраны] [int] NOT NULL,
+	[СерияАтестата] [nvarchar](50) NULL,
+	[СреднийБалл] [float] NOT NULL,
+	[ДесятибальнаяСистема] [float] NOT NULL,
+ CONSTRAINT [PK__Атестат__7B32B3EB2167DC4B] PRIMARY KEY CLUSTERED 
 (
-	[IDРђС‚РµСЃС‚Р°С‚Р°] ASC
+	[IDАтестата] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РЁРєР°Р»Р°]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Шкала]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РЁРєР°Р»Р°](
-	[IDРЁРєР°Р»С‹] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](25) NOT NULL,
-	[РљРѕР»РёС‡РµСЃС‚РІРѕР‘Р°Р»Р»РѕРІ] [int] NOT NULL,
- CONSTRAINT [PK__РЁРєР°Р»Р°__A0AAEA358404A57D] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Шкала](
+	[IDШкалы] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](25) NOT NULL,
+	[КоличествоБаллов] [int] NOT NULL,
+ CONSTRAINT [PK__Шкала__A0AAEA358404A57D] PRIMARY KEY CLUSTERED 
 (
-	[IDРЁРєР°Р»С‹] ASC
+	[IDШкалы] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[ШкалаСтраны]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹](
-	[IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹] [int] IDENTITY(1,1) NOT NULL,
-	[IDРЁРєР°Р»С‹] [int] NOT NULL,
-	[IDРЎС‚СЂР°РЅС‹РћР±СѓС‡РµРЅРёСЏ] [int] NOT NULL,
+CREATE TABLE [dbo].[ШкалаСтраны](
+	[IDШкалыСтраны] [int] IDENTITY(1,1) NOT NULL,
+	[IDШкалы] [int] NOT NULL,
+	[IDСтраныОбучения] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹] ASC
+	[IDШкалыСтраны] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Абитуриент]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚](
-	[IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°] [int] IDENTITY(1,1) NOT NULL,
-	[Р¤Р°РјРёР»РёСЏ] [nvarchar](20) NOT NULL,
-	[РРјСЏ] [nvarchar](20) NOT NULL,
-	[РћС‚С‡РµСЃС‚РІРѕ] [nvarchar](20) NULL,
-	[РЁРєРѕР»Р°] [nvarchar](50) NOT NULL,
-	[Р­РєР·Р°РјРµРЅР°С†РёРѕРЅРЅС‹Р№Р›РёСЃС‚] [nvarchar](10) NULL,
-	[Р“РѕРґРћРєРѕРЅС‡Р°РЅРёСЏРЁРєРѕР»С‹] [int] NOT NULL,
-	[Р“СЂР°Р¶РґР°РЅРёРЅР Р‘] [bit] NULL,
-	[Р“СЂР°Р¶РґР°РЅСЃС‚РІРѕ] [nvarchar](30) NULL,
-	[РћР±С‰РµР¶РёС‚РёРµ] [bit] NULL,
-	[Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ] [int] NOT NULL,
-	[IDРџР»Р°РЅР°РџСЂРёРµРјР°] [int] NOT NULL,
-	[РњРµСЃС‚РѕР Р°Р±РѕС‚С‹] [nvarchar](60) NULL,
-	[Р”РѕР»Р¶РЅРѕСЃС‚СЊ] [nvarchar](40) NULL,
-	[РЎРёСЂРѕС‚Р°] [bit] NULL,
-	[Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ] [bit] NULL,
-	[РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ] [bit] NULL,
-	[IDР’Р»Р°РґРµР»СЊС†Р°] [int] NOT NULL,
-	[IDР РµРґР°РєС‚РѕСЂР°] [int] NULL,
-	[РЈРґР°Р»РµРЅРѕ] [bit] NULL,
-	[Р”Р°С‚Р°РЎРѕР·РґР°РЅРёСЏ] [datetime] NULL,
-	[Р”Р°С‚Р°Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ] [datetime] NULL,
- CONSTRAINT [PK__РђР±РёС‚СѓСЂРёРµ__998FBBCDBBD36977] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Абитуриент](
+	[IDАбитуриента] [int] IDENTITY(1,1) NOT NULL,
+	[Фамилия] [nvarchar](20) NOT NULL,
+	[Имя] [nvarchar](20) NOT NULL,
+	[Отчество] [nvarchar](20) NULL,
+	[Школа] [nvarchar](50) NOT NULL,
+	[ЭкзаменационныйЛист] [nvarchar](10) NULL,
+	[ГодОкончанияШколы] [int] NOT NULL,
+	[ГражданинРБ] [bit] NULL,
+	[Гражданство] [nvarchar](30) NULL,
+	[Общежитие] [bit] NULL,
+	[ГодПоступления] [int] NOT NULL,
+	[IDПланаПриема] [int] NOT NULL,
+	[МестоРаботы] [nvarchar](60) NULL,
+	[Должность] [nvarchar](40) NULL,
+	[Сирота] [bit] NULL,
+	[ЦелевойДоговор] [bit] NULL,
+	[АбитуриентЗачислен] [bit] NULL,
+	[IDВладельца] [int] NOT NULL,
+	[IDРедактора] [int] NULL,
+	[Удалено] [bit] NULL,
+	[ДатаСоздания] [datetime] NULL,
+	[ДатаРедактирования] [datetime] NULL,
+ CONSTRAINT [PK__Абитурие__998FBBCDBBD36977] PRIMARY KEY CLUSTERED 
 (
-	[IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°] ASC
+	[IDАбитуриента] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[GetAbiturientData]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  View [dbo].[GetAbiturientData]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -212,58 +134,58 @@ GO
 /*SELECT * FROM GetAbiturientData*/
 CREATE VIEW [dbo].[GetAbiturientData]
 AS
-SELECT        dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р¤Р°РјРёР»РёСЏ + ' ' + dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РРјСЏ + ' ' + dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РћС‚С‡РµСЃС‚РІРѕ AS Р¤РРћ, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РЁРєРѕР»Р°, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р“РѕРґРћРєРѕРЅС‡Р°РЅРёСЏРЁРєРѕР»С‹, 
-                         dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 1) AS Mark1, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 2) AS Mark2, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 3) 
-                         AS Mark3, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 4) AS Mark4, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 5) AS Mark5, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 6) AS Mark6, 
-                         dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 7) AS Mark7, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 8) AS Mark8, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 9) AS Mark9, 
-                         dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 10) AS Mark10, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 11) AS Mark11, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 12) AS Mark12, 
-                         dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 13) AS Mark13, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 14) AS Mark14, dbo.GetMarkCount(dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, 15) AS Mark15, 
-                         ROUND(SUM(dbo.РђС‚РµСЃС‚Р°С‚.РЎСЂРµРґРЅРёР№Р‘Р°Р»Р») / COUNT(*), 2) AS РЎСЂРµРґРЅРёР№Р‘Р°Р»Р», dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р­РєР·Р°РјРµРЅР°С†РёРѕРЅРЅС‹Р№Р›РёСЃС‚, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РЈРґР°Р»РµРЅРѕ, ROUND(SUM(dbo.РђС‚РµСЃС‚Р°С‚.Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°) / COUNT(*), 2) 
-                         AS РЎСЂРµРґРЅРёР№Р‘Р°Р»Р»Р’Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕР№РЎРёСЃС‚РµРјРµ, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РЎРёСЂРѕС‚Р°, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ,
-                             (SELECT        РљРѕР»РёС‡РµСЃС‚РІРѕР‘Р°Р»Р»РѕРІ
-                               FROM            dbo.РЁРєР°Р»Р°
-                               WHERE        (IDРЁРєР°Р»С‹ =
-                                                             (SELECT        IDРЁРєР°Р»С‹
-                                                               FROM            dbo.РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹
-                                                               WHERE        (IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹ = dbo.РђС‚РµСЃС‚Р°С‚.IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹)))) AS [Р Р°Р·РјРµСЂ С€РєР°Р»С‹]
-FROM            dbo.РђР±РёС‚СѓСЂРёРµРЅС‚ LEFT OUTER JOIN
-                         dbo.РђС‚РµСЃС‚Р°С‚ ON dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = dbo.РђС‚РµСЃС‚Р°С‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°
-GROUP BY dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р¤Р°РјРёР»РёСЏ, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РРјСЏ, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РћС‚С‡РµСЃС‚РІРѕ, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РЁРєРѕР»Р°, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р“РѕРґРћРєРѕРЅС‡Р°РЅРёСЏРЁРєРѕР»С‹, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ, 
-                         dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р­РєР·Р°РјРµРЅР°С†РёРѕРЅРЅС‹Р№Р›РёСЃС‚, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РЈРґР°Р»РµРЅРѕ, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.РЎРёСЂРѕС‚Р°, dbo.РђР±РёС‚СѓСЂРёРµРЅС‚.Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ, dbo.РђС‚РµСЃС‚Р°С‚.IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹
+SELECT        dbo.Абитуриент.IDАбитуриента, dbo.Абитуриент.Фамилия + ' ' + dbo.Абитуриент.Имя + ' ' + dbo.Абитуриент.Отчество AS ФИО, dbo.Абитуриент.Школа, dbo.Абитуриент.ГодОкончанияШколы, 
+                         dbo.Абитуриент.АбитуриентЗачислен, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 1) AS Mark1, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 2) AS Mark2, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 3) 
+                         AS Mark3, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 4) AS Mark4, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 5) AS Mark5, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 6) AS Mark6, 
+                         dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 7) AS Mark7, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 8) AS Mark8, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 9) AS Mark9, 
+                         dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 10) AS Mark10, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 11) AS Mark11, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 12) AS Mark12, 
+                         dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 13) AS Mark13, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 14) AS Mark14, dbo.GetMarkCount(dbo.Абитуриент.IDАбитуриента, 15) AS Mark15, 
+                         ROUND(SUM(dbo.Атестат.СреднийБалл) / COUNT(*), 2) AS СреднийБалл, dbo.Абитуриент.ЭкзаменационныйЛист, dbo.Абитуриент.Удалено, ROUND(SUM(dbo.Атестат.ДесятибальнаяСистема) / COUNT(*), 2) 
+                         AS СреднийБаллВДесятибальнойСистеме, dbo.Абитуриент.Сирота, dbo.Абитуриент.ЦелевойДоговор,
+                             (SELECT        КоличествоБаллов
+                               FROM            dbo.Шкала
+                               WHERE        (IDШкалы =
+                                                             (SELECT        IDШкалы
+                                                               FROM            dbo.ШкалаСтраны
+                                                               WHERE        (IDШкалыСтраны = dbo.Атестат.IDШкалыСтраны)))) AS [Размер шкалы]
+FROM            dbo.Абитуриент LEFT OUTER JOIN
+                         dbo.Атестат ON dbo.Абитуриент.IDАбитуриента = dbo.Атестат.IDАбитуриента
+GROUP BY dbo.Абитуриент.IDАбитуриента, dbo.Абитуриент.Фамилия, dbo.Абитуриент.Имя, dbo.Абитуриент.Отчество, dbo.Абитуриент.Школа, dbo.Абитуриент.ГодОкончанияШколы, dbo.Абитуриент.АбитуриентЗачислен, 
+                         dbo.Абитуриент.ЭкзаменационныйЛист, dbo.Абитуриент.Удалено, dbo.Абитуриент.Сирота, dbo.Абитуриент.ЦелевойДоговор, dbo.Атестат.IDШкалыСтраны
 GO
-/****** Object:  Table [dbo].[РЎС‚Р°С‚СЊРё]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Статьи]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РЎС‚Р°С‚СЊРё](
-	[IDРЎС‚Р°С‚СЊРё] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](20) NOT NULL,
-	[РџСЂРёРѕСЂРёС‚РµС‚] [int] NOT NULL,
-	[РџРѕР»РЅРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](50) NOT NULL,
-	[РџСЂРёРјРµС‡Р°РЅРёРµ] [nvarchar](40) NULL,
- CONSTRAINT [PK__РЎС‚Р°С‚СЊРё__039CE28169CFC07B] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Статьи](
+	[IDСтатьи] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](20) NOT NULL,
+	[Приоритет] [int] NOT NULL,
+	[ПолноеНаименование] [nvarchar](50) NOT NULL,
+	[Примечание] [nvarchar](40) NULL,
+ CONSTRAINT [PK__Статьи__039CE28169CFC07B] PRIMARY KEY CLUSTERED 
 (
-	[IDРЎС‚Р°С‚СЊРё] ASC
+	[IDСтатьи] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[СтатьиАбитуриента]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°](
-	[IDРЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°] [int] IDENTITY(1,1) NOT NULL,
-	[IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°] [int] NOT NULL,
-	[IDРЎС‚Р°С‚СЊРё] [int] NOT NULL,
+CREATE TABLE [dbo].[СтатьиАбитуриента](
+	[IDСтатьиАбитуриента] [int] IDENTITY(1,1) NOT NULL,
+	[IDАбитуриента] [int] NOT NULL,
+	[IDСтатьи] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDРЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°] ASC
+	[IDСтатьиАбитуриента] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  UserDefinedFunction [dbo].[AbiturientPriority]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  UserDefinedFunction [dbo].[AbiturientPriority]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -272,360 +194,360 @@ CREATE FUNCTION [dbo].[AbiturientPriority](@noteCount INT)
 RETURNS TABLE
 AS
 RETURN
-	SELECT TOP (@noteCount) Р¤Р°РјРёР»РёСЏ, РРјСЏ, РћС‚С‡РµСЃС‚РІРѕ, РЎРёСЂРѕС‚Р°, Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ,
-		(SELECT CASE WHEN MIN(РџСЂРёРѕСЂРёС‚РµС‚) IS NULL THEN 10 ELSE MIN(РџСЂРёРѕСЂРёС‚РµС‚) END 
-		FROM РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р° JOIN РЎС‚Р°С‚СЊРё ON (РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРЎС‚Р°С‚СЊРё = РЎС‚Р°С‚СЊРё.IDРЎС‚Р°С‚СЊРё) 
-		WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) AS РџСЂРёРѕСЂРёС‚РµС‚РђР±РёС‚СѓСЂРёРµРЅС‚Р°,
-		(SELECT ROUND(MAX(Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°),2) FROM РђС‚РµСЃС‚Р°С‚ WHERE РђС‚РµСЃС‚Р°С‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) AS [РЎСЂРµРґРЅРёР№ Р±Р°Р»Р»]
-	FROM РђР±РёС‚СѓСЂРёРµРЅС‚
-	ORDER BY РЎРёСЂРѕС‚Р° DESC, РџСЂРёРѕСЂРёС‚РµС‚РђР±РёС‚СѓСЂРёРµРЅС‚Р°, [РЎСЂРµРґРЅРёР№ Р±Р°Р»Р»] DESC
+	SELECT TOP (@noteCount) Фамилия, Имя, Отчество, Сирота, ЦелевойДоговор,
+		(SELECT CASE WHEN MIN(Приоритет) IS NULL THEN 10 ELSE MIN(Приоритет) END 
+		FROM СтатьиАбитуриента JOIN Статьи ON (СтатьиАбитуриента.IDСтатьи = Статьи.IDСтатьи) 
+		WHERE Абитуриент.IDАбитуриента = СтатьиАбитуриента.IDАбитуриента) AS ПриоритетАбитуриента,
+		(SELECT ROUND(MAX(ДесятибальнаяСистема),2) FROM Атестат WHERE Атестат.IDАбитуриента = Абитуриент.IDАбитуриента) AS [Средний балл]
+	FROM Абитуриент
+	ORDER BY Сирота DESC, ПриоритетАбитуриента, [Средний балл] DESC
 GO
-/****** Object:  Table [dbo].[РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[КонтактныеДанные]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ](
-	[IDРљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ] [int] IDENTITY(1,1) NOT NULL,
-	[IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°] [int] NOT NULL,
-	[РЎРІРµРґРµРЅРёСЏ] [nvarchar](70) NOT NULL,
-	[IDРўРёРїРљРѕРЅС‚Р°РєС‚Р°] [int] NOT NULL,
- CONSTRAINT [PK__РљРѕРЅС‚Р°РєС‚РЅ__985028F09B245D35] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[КонтактныеДанные](
+	[IDКонтактныеДанные] [int] IDENTITY(1,1) NOT NULL,
+	[IDАбитуриента] [int] NOT NULL,
+	[Сведения] [nvarchar](70) NOT NULL,
+	[IDТипКонтакта] [int] NOT NULL,
+ CONSTRAINT [PK__Контактн__985028F09B245D35] PRIMARY KEY CLUSTERED 
 (
-	[IDРљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ] ASC
+	[IDКонтактныеДанные] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РќР°СЃС‚СЂРѕР№РєРё]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Настройки]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РќР°СЃС‚СЂРѕР№РєРё](
-	[IDРќР°СЃС‚СЂРѕР№РєРё] [int] IDENTITY(1,1) NOT NULL,
-	[Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ] [int] NOT NULL,
+CREATE TABLE [dbo].[Настройки](
+	[IDНастройки] [int] IDENTITY(1,1) NOT NULL,
+	[ГодПоступления] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDРќР°СЃС‚СЂРѕР№РєРё] ASC
+	[IDНастройки] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[ОценкиАтестата]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°](
-	[IDРћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°] [int] IDENTITY(1,1) NOT NULL,
-	[Р‘Р°Р»Р»] [int] NOT NULL,
-	[РљРѕР»РёС‡РµСЃС‚РІРѕ] [int] NOT NULL,
-	[IDРђС‚РµСЃС‚Р°С‚Р°] [int] NOT NULL,
- CONSTRAINT [PK__РћС†РµРЅРєРёРђС‚__DFFC47AD44A93D7B] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[ОценкиАтестата](
+	[IDОценкиАтестата] [int] IDENTITY(1,1) NOT NULL,
+	[Балл] [int] NOT NULL,
+	[Количество] [int] NOT NULL,
+	[IDАтестата] [int] NOT NULL,
+ CONSTRAINT [PK__ОценкиАт__DFFC47AD44A93D7B] PRIMARY KEY CLUSTERED 
 (
-	[IDРћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°] ASC
+	[IDОценкиАтестата] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[ПаспортныеДанные]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ](
-	[IDРџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ] [int] IDENTITY(1,1) NOT NULL,
-	[IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°] [int] NOT NULL,
-	[Р”Р°С‚Р°Р РѕР¶РґРµРЅРёСЏ] [date] NOT NULL,
-	[РЎРµСЂРёСЏ] [nvarchar](15) NULL,
-	[РќРѕРјРµСЂРџР°СЃРїРѕСЂС‚Р°] [nvarchar](15) NULL,
-	[Р”Р°С‚Р°Р’С‹РґР°С‡Рё] [date] NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµРћСЂРіР°РЅР°] [nvarchar](50) NULL,
-	[РРґРµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹Р№РќРѕРјРµСЂ] [nvarchar](30) NULL,
+CREATE TABLE [dbo].[ПаспортныеДанные](
+	[IDПаспортныеДанные] [int] IDENTITY(1,1) NOT NULL,
+	[IDАбитуриента] [int] NOT NULL,
+	[ДатаРождения] [date] NOT NULL,
+	[Серия] [nvarchar](15) NULL,
+	[НомерПаспорта] [nvarchar](15) NULL,
+	[ДатаВыдачи] [date] NULL,
+	[НаименованиеОргана] [nvarchar](50) NULL,
+	[ИдентификационныйНомер] [nvarchar](30) NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDРџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ] ASC
+	[IDПаспортныеДанные] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РџРµСЂРµРІРѕРґ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Перевод]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РџРµСЂРµРІРѕРґ](
-	[IDРџРµСЂРµРІРѕРґР°] [int] IDENTITY(1,1) NOT NULL,
-	[IDРЁРєР°Р»С‹] [int] NOT NULL,
-	[Р—РЅР°С‡РµРЅРёРµ] [float] NOT NULL,
-	[Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕРµР—РЅР°С‡РµРЅРёРµ] [float] NOT NULL,
- CONSTRAINT [PK__РџРµСЂРµРІРѕРґ__E0371C5E79140FCB] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Перевод](
+	[IDПеревода] [int] IDENTITY(1,1) NOT NULL,
+	[IDШкалы] [int] NOT NULL,
+	[Значение] [float] NOT NULL,
+	[ДесятибальноеЗначение] [float] NOT NULL,
+ CONSTRAINT [PK__Перевод__E0371C5E79140FCB] PRIMARY KEY CLUSTERED 
 (
-	[IDРџРµСЂРµРІРѕРґР°] ASC
+	[IDПеревода] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РџР»Р°РЅРџСЂРёРµРјР°]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[ПланПриема]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РџР»Р°РЅРџСЂРёРµРјР°](
-	[IDРџР»Р°РЅРџСЂРёРµРјР°] [int] IDENTITY(1,1) NOT NULL,
-	[Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ] [varchar](4) NOT NULL,
-	[IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё] [int] NOT NULL,
-	[IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ] [int] NOT NULL,
-	[IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ] [int] NOT NULL,
-	[РљРѕР»РёС‡РµСЃС‚РІРѕ] [int] NOT NULL,
-	[РљРѕР»РёС‡РµСЃС‚РІРѕР¦РµР»РµРІС‹С…РњРµСЃС‚] [int] NOT NULL,
-	[Р¦Рў] [bit] NOT NULL,
- CONSTRAINT [PK__РџР»Р°РЅРџСЂРёРµ__2595E66AC64EC603] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[ПланПриема](
+	[IDПланПриема] [int] IDENTITY(1,1) NOT NULL,
+	[ГодПоступления] [varchar](4) NOT NULL,
+	[IDСпециальности] [int] NOT NULL,
+	[IDФормаОбучения] [int] NOT NULL,
+	[IDФинансирования] [int] NOT NULL,
+	[Количество] [int] NOT NULL,
+	[КоличествоЦелевыхМест] [int] NOT NULL,
+	[ЦТ] [bit] NOT NULL,
+ CONSTRAINT [PK__ПланПрие__2595E66AC64EC603] PRIMARY KEY CLUSTERED 
 (
-	[IDРџР»Р°РЅРџСЂРёРµРјР°] ASC
+	[IDПланПриема] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Пользователь]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ](
-	[IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ] [int] IDENTITY(1,1) NOT NULL,
-	[Р›РѕРіРёРЅ] [nvarchar](10) NOT NULL,
-	[Р¤РРћ] [nvarchar](50) NOT NULL,
-	[IDР РѕР»Рё] [int] NOT NULL,
+CREATE TABLE [dbo].[Пользователь](
+	[IDПользователя] [int] IDENTITY(1,1) NOT NULL,
+	[Логин] [nvarchar](10) NOT NULL,
+	[ФИО] [nvarchar](50) NOT NULL,
+	[IDРоли] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ] ASC
+	[IDПользователя] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Р РѕР»СЊ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Роль]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Р РѕР»СЊ](
-	[IDР РѕР»Рё] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](20) NOT NULL,
+CREATE TABLE [dbo].[Роль](
+	[IDРоли] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](20) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDР РѕР»Рё] ASC
+	[IDРоли] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РЎРµСЂС‚РёС„РёРєР°С‚Р¦Рў]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[СертификатЦТ]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РЎРµСЂС‚РёС„РёРєР°С‚Р¦Рў](
-	[IDРЎРµСЂС‚РёС„РёРєР°С‚Р°Р¦Рў] [int] IDENTITY(1,1) NOT NULL,
-	[IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°] [int] NOT NULL,
-	[Р”РёСЃС†РёРїР»РёРЅР°] [nvarchar](20) NULL,
-	[Р‘Р°Р»Р»] [int] NOT NULL,
-	[Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕРµР—РЅР°С‡РµРЅРёРµ] [float] NOT NULL,
-	[Р“РѕРґРџСЂРѕС…РѕР¶РґРµРЅРёСЏ] [int] NULL,
-	[РќРѕРјРµСЂРЎРµСЂРёРё] [nvarchar](50) NULL,
- CONSTRAINT [PK__РЎРµСЂС‚РёС„РёРє__CD497088FCC4CBC1] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[СертификатЦТ](
+	[IDСертификатаЦТ] [int] IDENTITY(1,1) NOT NULL,
+	[IDАбитуриента] [int] NOT NULL,
+	[Дисциплина] [nvarchar](20) NULL,
+	[Балл] [int] NOT NULL,
+	[ДесятибальноеЗначение] [float] NOT NULL,
+	[ГодПрохождения] [int] NULL,
+	[НомерСерии] [nvarchar](50) NULL,
+ CONSTRAINT [PK__Сертифик__CD497088FCC4CBC1] PRIMARY KEY CLUSTERED 
 (
-	[IDРЎРµСЂС‚РёС„РёРєР°С‚Р°Р¦Рў] ASC
+	[IDСертификатаЦТ] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Специальность]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ](
-	[IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](50) NOT NULL,
-	[Р‘СѓРєРІР°] [char](1) NOT NULL,
-	[РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](20) NULL,
-	[РљРѕРґ] [nvarchar](13) NULL,
- CONSTRAINT [PK__РЎРїРµС†РёР°Р»СЊ__67713123C471BC0F] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Специальность](
+	[IDСпециальность] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](50) NOT NULL,
+	[Буква] [char](1) NOT NULL,
+	[КраткоеНаименование] [nvarchar](20) NULL,
+	[Код] [nvarchar](20) NULL,
+ CONSTRAINT [PK__Специаль__67713123C471BC0F] PRIMARY KEY CLUSTERED 
 (
-	[IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ] ASC
+	[IDСпециальность] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РЎС‚СЂР°РЅР°РћР±СѓС‡РµРЅРёСЏ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[СтранаОбучения]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РЎС‚СЂР°РЅР°РћР±СѓС‡РµРЅРёСЏ](
-	[IDРЎС‚СЂР°РЅС‹РћР±СѓС‡РµРЅРёСЏ] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](40) NOT NULL,
+CREATE TABLE [dbo].[СтранаОбучения](
+	[IDСтраныОбучения] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](40) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDРЎС‚СЂР°РЅС‹РћР±СѓС‡РµРЅРёСЏ] ASC
+	[IDСтраныОбучения] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[РўРёРїРљРѕРЅС‚Р°РєС‚Р°]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[ТипКонтакта]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[РўРёРїРљРѕРЅС‚Р°РєС‚Р°](
-	[IDРўРёРїРљРѕРЅС‚Р°РєС‚Р°] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](20) NOT NULL,
+CREATE TABLE [dbo].[ТипКонтакта](
+	[IDТипКонтакта] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](20) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDРўРёРїРљРѕРЅС‚Р°РєС‚Р°] ASC
+	[IDТипКонтакта] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[Финансирование]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ](
-	[IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](20) NOT NULL,
+CREATE TABLE [dbo].[Финансирование](
+	[IDФинансирования] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](20) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ] ASC
+	[IDФинансирования] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  Table [dbo].[ФормаОбучения]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ](
-	[IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ] [int] IDENTITY(1,1) NOT NULL,
-	[РќР°РёРјРµРЅРѕРІР°РЅРёРµ] [nvarchar](20) NOT NULL,
-	[РћР±СЂР°Р·РѕРІР°РЅРёРµ] [nvarchar](40) NOT NULL,
- CONSTRAINT [PK__Р¤РѕСЂРјР°РћР±Сѓ__7BE297F5ABAB32BF] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[ФормаОбучения](
+	[IDФормаОбучения] [int] IDENTITY(1,1) NOT NULL,
+	[Наименование] [nvarchar](20) NOT NULL,
+	[Образование] [nvarchar](40) NOT NULL,
+ CONSTRAINT [PK__ФормаОбу__7BE297F5ABAB32BF] PRIMARY KEY CLUSTERED 
 (
-	[IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ] ASC
+	[IDФормаОбучения] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ADD  CONSTRAINT [DF_РђР±РёС‚СѓСЂРёРµРЅС‚_РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ]  DEFAULT ((0)) FOR [РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ]
+ALTER TABLE [dbo].[Абитуриент] ADD  CONSTRAINT [DF_Абитуриент_АбитуриентЗачислен]  DEFAULT ((0)) FOR [АбитуриентЗачислен]
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ADD  CONSTRAINT [DF_РђР±РёС‚СѓСЂРёРµРЅС‚_РЈРґР°Р»РµРЅРѕ]  DEFAULT ((0)) FOR [РЈРґР°Р»РµРЅРѕ]
+ALTER TABLE [dbo].[Абитуриент] ADD  CONSTRAINT [DF_Абитуриент_Удалено]  DEFAULT ((0)) FOR [Удалено]
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ADD  CONSTRAINT [DF_РђР±РёС‚СѓСЂРёРµРЅС‚_Р”Р°С‚Р°РЎРѕР·РґР°РЅРёСЏ]  DEFAULT (getdate()) FOR [Р”Р°С‚Р°РЎРѕР·РґР°РЅРёСЏ]
+ALTER TABLE [dbo].[Абитуриент] ADD  CONSTRAINT [DF_Абитуриент_ДатаСоздания]  DEFAULT (getdate()) FOR [ДатаСоздания]
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚]  WITH CHECK ADD  CONSTRAINT [FK__РђР±РёС‚СѓСЂРёРµРЅ__IDР’Р»Р°__05D8E0BE] FOREIGN KEY([IDР’Р»Р°РґРµР»СЊС†Р°])
-REFERENCES [dbo].[РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ] ([IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ])
+ALTER TABLE [dbo].[Абитуриент]  WITH CHECK ADD  CONSTRAINT [FK__Абитуриен__IDВла__05D8E0BE] FOREIGN KEY([IDВладельца])
+REFERENCES [dbo].[Пользователь] ([IDПользователя])
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] CHECK CONSTRAINT [FK__РђР±РёС‚СѓСЂРёРµРЅ__IDР’Р»Р°__05D8E0BE]
+ALTER TABLE [dbo].[Абитуриент] CHECK CONSTRAINT [FK__Абитуриен__IDВла__05D8E0BE]
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚]  WITH CHECK ADD  CONSTRAINT [FK__РђР±РёС‚СѓСЂРёРµРЅ__IDРџР»Р°__04E4BC85] FOREIGN KEY([IDРџР»Р°РЅР°РџСЂРёРµРјР°])
-REFERENCES [dbo].[РџР»Р°РЅРџСЂРёРµРјР°] ([IDРџР»Р°РЅРџСЂРёРµРјР°])
+ALTER TABLE [dbo].[Абитуриент]  WITH CHECK ADD  CONSTRAINT [FK__Абитуриен__IDПла__04E4BC85] FOREIGN KEY([IDПланаПриема])
+REFERENCES [dbo].[ПланПриема] ([IDПланПриема])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] CHECK CONSTRAINT [FK__РђР±РёС‚СѓСЂРёРµРЅ__IDРџР»Р°__04E4BC85]
+ALTER TABLE [dbo].[Абитуриент] CHECK CONSTRAINT [FK__Абитуриен__IDПла__04E4BC85]
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚]  WITH CHECK ADD  CONSTRAINT [FK__РђР±РёС‚СѓСЂРёРµРЅ__IDР РµРґ__06CD04F7] FOREIGN KEY([IDР РµРґР°РєС‚РѕСЂР°])
-REFERENCES [dbo].[РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ] ([IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ])
+ALTER TABLE [dbo].[Абитуриент]  WITH CHECK ADD  CONSTRAINT [FK__Абитуриен__IDРед__06CD04F7] FOREIGN KEY([IDРедактора])
+REFERENCES [dbo].[Пользователь] ([IDПользователя])
 ON UPDATE CASCADE
 GO
-ALTER TABLE [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] CHECK CONSTRAINT [FK__РђР±РёС‚СѓСЂРёРµРЅ__IDР РµРґ__06CD04F7]
+ALTER TABLE [dbo].[Абитуриент] CHECK CONSTRAINT [FK__Абитуриен__IDРед__06CD04F7]
 GO
-ALTER TABLE [dbo].[РђС‚РµСЃС‚Р°С‚]  WITH CHECK ADD  CONSTRAINT [FK__РђС‚РµСЃС‚Р°С‚__IDРђР±РёС‚Сѓ__65370702] FOREIGN KEY([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
-REFERENCES [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
-ON UPDATE CASCADE
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[РђС‚РµСЃС‚Р°С‚] CHECK CONSTRAINT [FK__РђС‚РµСЃС‚Р°С‚__IDРђР±РёС‚Сѓ__65370702]
-GO
-ALTER TABLE [dbo].[РђС‚РµСЃС‚Р°С‚]  WITH CHECK ADD  CONSTRAINT [FK__РђС‚РµСЃС‚Р°С‚__IDРЁРєР°Р»С‹__662B2B3B] FOREIGN KEY([IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹])
-REFERENCES [dbo].[РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹] ([IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹])
-GO
-ALTER TABLE [dbo].[РђС‚РµСЃС‚Р°С‚] CHECK CONSTRAINT [FK__РђС‚РµСЃС‚Р°С‚__IDРЁРєР°Р»С‹__662B2B3B]
-GO
-ALTER TABLE [dbo].[РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ]  WITH CHECK ADD  CONSTRAINT [FK__РљРѕРЅС‚Р°РєС‚РЅС‹__IDРђР±Рё__56E8E7AB] FOREIGN KEY([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
-REFERENCES [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
+ALTER TABLE [dbo].[Атестат]  WITH CHECK ADD  CONSTRAINT [FK__Атестат__IDАбиту__65370702] FOREIGN KEY([IDАбитуриента])
+REFERENCES [dbo].[Абитуриент] ([IDАбитуриента])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ] CHECK CONSTRAINT [FK__РљРѕРЅС‚Р°РєС‚РЅС‹__IDРђР±Рё__56E8E7AB]
+ALTER TABLE [dbo].[Атестат] CHECK CONSTRAINT [FK__Атестат__IDАбиту__65370702]
 GO
-ALTER TABLE [dbo].[РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ]  WITH CHECK ADD  CONSTRAINT [FK__РљРѕРЅС‚Р°РєС‚РЅС‹__IDРўРёРї__57DD0BE4] FOREIGN KEY([IDРўРёРїРљРѕРЅС‚Р°РєС‚Р°])
-REFERENCES [dbo].[РўРёРїРљРѕРЅС‚Р°РєС‚Р°] ([IDРўРёРїРљРѕРЅС‚Р°РєС‚Р°])
+ALTER TABLE [dbo].[Атестат]  WITH CHECK ADD  CONSTRAINT [FK__Атестат__IDШкалы__662B2B3B] FOREIGN KEY([IDШкалыСтраны])
+REFERENCES [dbo].[ШкалаСтраны] ([IDШкалыСтраны])
 GO
-ALTER TABLE [dbo].[РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ] CHECK CONSTRAINT [FK__РљРѕРЅС‚Р°РєС‚РЅС‹__IDРўРёРї__57DD0BE4]
+ALTER TABLE [dbo].[Атестат] CHECK CONSTRAINT [FK__Атестат__IDШкалы__662B2B3B]
 GO
-ALTER TABLE [dbo].[РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°]  WITH CHECK ADD  CONSTRAINT [FK__РћС†РµРЅРєРёРђС‚Рµ__IDРђС‚Рµ__690797E6] FOREIGN KEY([IDРђС‚РµСЃС‚Р°С‚Р°])
-REFERENCES [dbo].[РђС‚РµСЃС‚Р°С‚] ([IDРђС‚РµСЃС‚Р°С‚Р°])
+ALTER TABLE [dbo].[КонтактныеДанные]  WITH CHECK ADD  CONSTRAINT [FK__Контактны__IDАби__56E8E7AB] FOREIGN KEY([IDАбитуриента])
+REFERENCES [dbo].[Абитуриент] ([IDАбитуриента])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°] CHECK CONSTRAINT [FK__РћС†РµРЅРєРёРђС‚Рµ__IDРђС‚Рµ__690797E6]
+ALTER TABLE [dbo].[КонтактныеДанные] CHECK CONSTRAINT [FK__Контактны__IDАби__56E8E7AB]
 GO
-ALTER TABLE [dbo].[РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ]  WITH CHECK ADD  CONSTRAINT [FK__РџР°СЃРїРѕСЂС‚РЅС‹__IDРђР±Рё__5224328E] FOREIGN KEY([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
-REFERENCES [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
+ALTER TABLE [dbo].[КонтактныеДанные]  WITH CHECK ADD  CONSTRAINT [FK__Контактны__IDТип__57DD0BE4] FOREIGN KEY([IDТипКонтакта])
+REFERENCES [dbo].[ТипКонтакта] ([IDТипКонтакта])
+GO
+ALTER TABLE [dbo].[КонтактныеДанные] CHECK CONSTRAINT [FK__Контактны__IDТип__57DD0BE4]
+GO
+ALTER TABLE [dbo].[ОценкиАтестата]  WITH CHECK ADD  CONSTRAINT [FK__ОценкиАте__IDАте__690797E6] FOREIGN KEY([IDАтестата])
+REFERENCES [dbo].[Атестат] ([IDАтестата])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ] CHECK CONSTRAINT [FK__РџР°СЃРїРѕСЂС‚РЅС‹__IDРђР±Рё__5224328E]
+ALTER TABLE [dbo].[ОценкиАтестата] CHECK CONSTRAINT [FK__ОценкиАте__IDАте__690797E6]
 GO
-ALTER TABLE [dbo].[РџРµСЂРµРІРѕРґ]  WITH CHECK ADD  CONSTRAINT [FK__РџРµСЂРµРІРѕРґ__IDРЁРєР°Р»С‹__5CA1C101] FOREIGN KEY([IDРЁРєР°Р»С‹])
-REFERENCES [dbo].[РЁРєР°Р»Р°] ([IDРЁРєР°Р»С‹])
-GO
-ALTER TABLE [dbo].[РџРµСЂРµРІРѕРґ] CHECK CONSTRAINT [FK__РџРµСЂРµРІРѕРґ__IDРЁРєР°Р»С‹__5CA1C101]
-GO
-ALTER TABLE [dbo].[РџР»Р°РЅРџСЂРёРµРјР°]  WITH CHECK ADD  CONSTRAINT [FK__РџР»Р°РЅРџСЂРёРµРј__IDРЎРїРµ__787EE5A0] FOREIGN KEY([IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё])
-REFERENCES [dbo].[РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ] ([IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ])
+ALTER TABLE [dbo].[ПаспортныеДанные]  WITH CHECK ADD  CONSTRAINT [FK__Паспортны__IDАби__5224328E] FOREIGN KEY([IDАбитуриента])
+REFERENCES [dbo].[Абитуриент] ([IDАбитуриента])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РџР»Р°РЅРџСЂРёРµРјР°] CHECK CONSTRAINT [FK__РџР»Р°РЅРџСЂРёРµРј__IDРЎРїРµ__787EE5A0]
+ALTER TABLE [dbo].[ПаспортныеДанные] CHECK CONSTRAINT [FK__Паспортны__IDАби__5224328E]
 GO
-ALTER TABLE [dbo].[РџР»Р°РЅРџСЂРёРµРјР°]  WITH CHECK ADD  CONSTRAINT [FK__РџР»Р°РЅРџСЂРёРµРј__IDР¤РёРЅ__7A672E12] FOREIGN KEY([IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ])
-REFERENCES [dbo].[Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ] ([IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ])
+ALTER TABLE [dbo].[Перевод]  WITH CHECK ADD  CONSTRAINT [FK__Перевод__IDШкалы__5CA1C101] FOREIGN KEY([IDШкалы])
+REFERENCES [dbo].[Шкала] ([IDШкалы])
 GO
-ALTER TABLE [dbo].[РџР»Р°РЅРџСЂРёРµРјР°] CHECK CONSTRAINT [FK__РџР»Р°РЅРџСЂРёРµРј__IDР¤РёРЅ__7A672E12]
+ALTER TABLE [dbo].[Перевод] CHECK CONSTRAINT [FK__Перевод__IDШкалы__5CA1C101]
 GO
-ALTER TABLE [dbo].[РџР»Р°РЅРџСЂРёРµРјР°]  WITH CHECK ADD  CONSTRAINT [FK__РџР»Р°РЅРџСЂРёРµРј__IDР¤РѕСЂ__797309D9] FOREIGN KEY([IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ])
-REFERENCES [dbo].[Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ] ([IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ])
+ALTER TABLE [dbo].[ПланПриема]  WITH CHECK ADD  CONSTRAINT [FK__ПланПрием__IDСпе__787EE5A0] FOREIGN KEY([IDСпециальности])
+REFERENCES [dbo].[Специальность] ([IDСпециальность])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РџР»Р°РЅРџСЂРёРµРјР°] CHECK CONSTRAINT [FK__РџР»Р°РЅРџСЂРёРµРј__IDР¤РѕСЂ__797309D9]
+ALTER TABLE [dbo].[ПланПриема] CHECK CONSTRAINT [FK__ПланПрием__IDСпе__787EE5A0]
 GO
-ALTER TABLE [dbo].[РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ]  WITH CHECK ADD  CONSTRAINT [FK__РџРѕР»СЊР·РѕРІР°С‚__IDР РѕР»__02084FDA] FOREIGN KEY([IDР РѕР»Рё])
-REFERENCES [dbo].[Р РѕР»СЊ] ([IDР РѕР»Рё])
+ALTER TABLE [dbo].[ПланПриема]  WITH CHECK ADD  CONSTRAINT [FK__ПланПрием__IDФин__7A672E12] FOREIGN KEY([IDФинансирования])
+REFERENCES [dbo].[Финансирование] ([IDФинансирования])
+GO
+ALTER TABLE [dbo].[ПланПриема] CHECK CONSTRAINT [FK__ПланПрием__IDФин__7A672E12]
+GO
+ALTER TABLE [dbo].[ПланПриема]  WITH CHECK ADD  CONSTRAINT [FK__ПланПрием__IDФор__797309D9] FOREIGN KEY([IDФормаОбучения])
+REFERENCES [dbo].[ФормаОбучения] ([IDФормаОбучения])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ] CHECK CONSTRAINT [FK__РџРѕР»СЊР·РѕРІР°С‚__IDР РѕР»__02084FDA]
+ALTER TABLE [dbo].[ПланПриема] CHECK CONSTRAINT [FK__ПланПрием__IDФор__797309D9]
 GO
-ALTER TABLE [dbo].[РЎРµСЂС‚РёС„РёРєР°С‚Р¦Рў]  WITH CHECK ADD  CONSTRAINT [FK__РЎРµСЂС‚РёС„РёРєР°__IDРђР±Рё__4F47C5E3] FOREIGN KEY([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
-REFERENCES [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
+ALTER TABLE [dbo].[Пользователь]  WITH CHECK ADD  CONSTRAINT [FK__Пользоват__IDРол__02084FDA] FOREIGN KEY([IDРоли])
+REFERENCES [dbo].[Роль] ([IDРоли])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РЎРµСЂС‚РёС„РёРєР°С‚Р¦Рў] CHECK CONSTRAINT [FK__РЎРµСЂС‚РёС„РёРєР°__IDРђР±Рё__4F47C5E3]
+ALTER TABLE [dbo].[Пользователь] CHECK CONSTRAINT [FK__Пользоват__IDРол__02084FDA]
 GO
-ALTER TABLE [dbo].[РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°]  WITH CHECK ADD  CONSTRAINT [FK__РЎС‚Р°С‚СЊРёРђР±Рё__IDРђР±Рё__1BC821DD] FOREIGN KEY([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
-REFERENCES [dbo].[РђР±РёС‚СѓСЂРёРµРЅС‚] ([IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°])
+ALTER TABLE [dbo].[СертификатЦТ]  WITH CHECK ADD  CONSTRAINT [FK__Сертифика__IDАби__4F47C5E3] FOREIGN KEY([IDАбитуриента])
+REFERENCES [dbo].[Абитуриент] ([IDАбитуриента])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°] CHECK CONSTRAINT [FK__РЎС‚Р°С‚СЊРёРђР±Рё__IDРђР±Рё__1BC821DD]
+ALTER TABLE [dbo].[СертификатЦТ] CHECK CONSTRAINT [FK__Сертифика__IDАби__4F47C5E3]
 GO
-ALTER TABLE [dbo].[РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°]  WITH CHECK ADD  CONSTRAINT [FK__РЎС‚Р°С‚СЊРёРђР±Рё__IDРЎС‚Р°__1CBC4616] FOREIGN KEY([IDРЎС‚Р°С‚СЊРё])
-REFERENCES [dbo].[РЎС‚Р°С‚СЊРё] ([IDРЎС‚Р°С‚СЊРё])
+ALTER TABLE [dbo].[СтатьиАбитуриента]  WITH CHECK ADD  CONSTRAINT [FK__СтатьиАби__IDАби__1BC821DD] FOREIGN KEY([IDАбитуриента])
+REFERENCES [dbo].[Абитуриент] ([IDАбитуриента])
+ON UPDATE CASCADE
+ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°] CHECK CONSTRAINT [FK__РЎС‚Р°С‚СЊРёРђР±Рё__IDРЎС‚Р°__1CBC4616]
+ALTER TABLE [dbo].[СтатьиАбитуриента] CHECK CONSTRAINT [FK__СтатьиАби__IDАби__1BC821DD]
 GO
-ALTER TABLE [dbo].[РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹]  WITH CHECK ADD FOREIGN KEY([IDРЎС‚СЂР°РЅС‹РћР±СѓС‡РµРЅРёСЏ])
-REFERENCES [dbo].[РЎС‚СЂР°РЅР°РћР±СѓС‡РµРЅРёСЏ] ([IDРЎС‚СЂР°РЅС‹РћР±СѓС‡РµРЅРёСЏ])
+ALTER TABLE [dbo].[СтатьиАбитуриента]  WITH CHECK ADD  CONSTRAINT [FK__СтатьиАби__IDСта__1CBC4616] FOREIGN KEY([IDСтатьи])
+REFERENCES [dbo].[Статьи] ([IDСтатьи])
 GO
-ALTER TABLE [dbo].[РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹]  WITH CHECK ADD  CONSTRAINT [FK__РЁРєР°Р»Р°РЎС‚СЂР°__IDРЁРєР°__6166761E] FOREIGN KEY([IDРЁРєР°Р»С‹])
-REFERENCES [dbo].[РЁРєР°Р»Р°] ([IDРЁРєР°Р»С‹])
+ALTER TABLE [dbo].[СтатьиАбитуриента] CHECK CONSTRAINT [FK__СтатьиАби__IDСта__1CBC4616]
 GO
-ALTER TABLE [dbo].[РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹] CHECK CONSTRAINT [FK__РЁРєР°Р»Р°РЎС‚СЂР°__IDРЁРєР°__6166761E]
+ALTER TABLE [dbo].[ШкалаСтраны]  WITH CHECK ADD FOREIGN KEY([IDСтраныОбучения])
+REFERENCES [dbo].[СтранаОбучения] ([IDСтраныОбучения])
 GO
-/****** Object:  StoredProcedure [dbo].[AbiturientsPriority]    Script Date: 01.06.2022 8:08:50 ******/
+ALTER TABLE [dbo].[ШкалаСтраны]  WITH CHECK ADD  CONSTRAINT [FK__ШкалаСтра__IDШка__6166761E] FOREIGN KEY([IDШкалы])
+REFERENCES [dbo].[Шкала] ([IDШкалы])
+GO
+ALTER TABLE [dbo].[ШкалаСтраны] CHECK CONSTRAINT [FK__ШкалаСтра__IDШка__6166761E]
+GO
+/****** Object:  StoredProcedure [dbo].[AbiturientsPriority]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -634,17 +556,17 @@ CREATE PROC [dbo].[AbiturientsPriority]
 @ID INT
 AS
 BEGIN
-	SELECT IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, Р¤Р°РјРёР»РёСЏ, РРјСЏ, РћС‚С‡РµСЃС‚РІРѕ, РЎРёСЂРѕС‚Р°, Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ,
-		(SELECT CASE WHEN MIN(РџСЂРёРѕСЂРёС‚РµС‚) IS NULL THEN 10 ELSE MIN(РџСЂРёРѕСЂРёС‚РµС‚) END 
-		FROM РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р° JOIN РЎС‚Р°С‚СЊРё ON (РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРЎС‚Р°С‚СЊРё = РЎС‚Р°С‚СЊРё.IDРЎС‚Р°С‚СЊРё) 
-		WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) AS РџСЂРёРѕСЂРёС‚РµС‚РђР±РёС‚СѓСЂРёРµРЅС‚Р°,
-		(SELECT ROUND(MAX(Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°),2) FROM РђС‚РµСЃС‚Р°С‚ WHERE РђС‚РµСЃС‚Р°С‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) AS [РЎСЂРµРґРЅРёР№ Р±Р°Р»Р»], РЈРґР°Р»РµРЅРѕ
-	FROM РђР±РёС‚СѓСЂРёРµРЅС‚
-	WHERE IDРџР»Р°РЅР°РџСЂРёРµРјР° = @ID
-	ORDER BY РЈРґР°Р»РµРЅРѕ, РЎРёСЂРѕС‚Р° DESC, Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ DESC, [РЎСЂРµРґРЅРёР№ Р±Р°Р»Р»] DESC, РџСЂРёРѕСЂРёС‚РµС‚РђР±РёС‚СѓСЂРёРµРЅС‚Р°
+	SELECT IDАбитуриента, Фамилия, Имя, Отчество, Сирота, ЦелевойДоговор,
+		(SELECT CASE WHEN MIN(Приоритет) IS NULL THEN 10 ELSE MIN(Приоритет) END 
+		FROM СтатьиАбитуриента JOIN Статьи ON (СтатьиАбитуриента.IDСтатьи = Статьи.IDСтатьи) 
+		WHERE Абитуриент.IDАбитуриента = СтатьиАбитуриента.IDАбитуриента) AS ПриоритетАбитуриента,
+		(SELECT ROUND(MAX(ДесятибальнаяСистема),2) FROM Атестат WHERE Атестат.IDАбитуриента = Абитуриент.IDАбитуриента) AS [Средний балл], Удалено
+	FROM Абитуриент
+	WHERE IDПланаПриема = @ID
+	ORDER BY Удалено, Сирота DESC, ЦелевойДоговор DESC, [Средний балл] DESC, ПриоритетАбитуриента
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Abiturient]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Abiturient]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -667,14 +589,14 @@ CREATE PROC [dbo].[Add_Abiturient]
 @ExamList varchar(10)
 AS
 BEGIN
-	INSERT INTO РђР±РёС‚СѓСЂРёРµРЅС‚(Р¤Р°РјРёР»РёСЏ, РРјСЏ, РћС‚С‡РµСЃС‚РІРѕ, РЁРєРѕР»Р°, Р“РѕРґРћРєРѕРЅС‡Р°РЅРёСЏРЁРєРѕР»С‹, Р“СЂР°Р¶РґР°РЅРёРЅР Р‘, Р“СЂР°Р¶РґР°РЅСЃС‚РІРѕ, 
-						   РћР±С‰РµР¶РёС‚РёРµ, Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ, IDРџР»Р°РЅР°РџСЂРёРµРјР°, РњРµСЃС‚РѕР Р°Р±РѕС‚С‹, Р”РѕР»Р¶РЅРѕСЃС‚СЊ, РЎРёСЂРѕС‚Р°, 
-						   Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ, РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ, IDР’Р»Р°РґРµР»СЊС†Р°, РЈРґР°Р»РµРЅРѕ, Р”Р°С‚Р°РЎРѕР·РґР°РЅРёСЏ, Р­РєР·Р°РјРµРЅР°С†РёРѕРЅРЅС‹Р№Р›РёСЃС‚) 
-	OUTPUT inserted.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° 
+	INSERT INTO Абитуриент(Фамилия, Имя, Отчество, Школа, ГодОкончанияШколы, ГражданинРБ, Гражданство, 
+						   Общежитие, ГодПоступления, IDПланаПриема, МестоРаботы, Должность, Сирота, 
+						   ЦелевойДоговор, АбитуриентЗачислен, IDВладельца, Удалено, ДатаСоздания, ЭкзаменационныйЛист) 
+	OUTPUT inserted.IDАбитуриента 
 	VALUES(@surename, @name, @otchestvo, @shool, @graduationYear, @grajdanstvoRB, @grajdanstvo, @obshejitie, YEAR(GETDATE()), @planPriema, @workPlace, @doljnost, @sirota, @dogovor, 0, @user, 0,  GETDATE(), @ExamList)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Atestat]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Atestat]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -686,19 +608,19 @@ CREATE PROC [dbo].[Add_Atestat]
 @avgMarks float
 AS
 BEGIN
-IF (SELECT Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕРµР—РЅР°С‡РµРЅРёРµ FROM РџРµСЂРµРІРѕРґ WHERE IDРЁРєР°Р»С‹ = (SELECT IDРЁРєР°Р»С‹ FROM РЁРєР°Р»Р° WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @scaleName) AND Р—РЅР°С‡РµРЅРёРµ = ROUND(@avgMarks,1)) IS NOT NULL
-	INSERT INTO РђС‚РµСЃС‚Р°С‚ (IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹, РЎРµСЂРёСЏРђС‚РµСЃС‚Р°С‚Р°, РЎСЂРµРґРЅРёР№Р‘Р°Р»Р», Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°) 
-		OUTPUT inserted.IDРђС‚РµСЃС‚Р°С‚Р° 
-		VALUES(@abiturient,(SELECT IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹ FROM РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹ JOIN РЁРєР°Р»Р° ON (РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹.IDРЁРєР°Р»С‹ = РЁРєР°Р»Р°.IDРЁРєР°Р»С‹) WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ LIKE @scaleName), @attestatSeries,
-		ROUND(@avgMarks,2),(SELECT Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕРµР—РЅР°С‡РµРЅРёРµ FROM РџРµСЂРµРІРѕРґ WHERE IDРЁРєР°Р»С‹ = (SELECT IDРЁРєР°Р»С‹ FROM РЁРєР°Р»Р° WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @scaleName) AND Р—РЅР°С‡РµРЅРёРµ = ROUND(@avgMarks,1)))
+IF (SELECT ДесятибальноеЗначение FROM Перевод WHERE IDШкалы = (SELECT IDШкалы FROM Шкала WHERE Наименование = @scaleName) AND Значение = ROUND(@avgMarks,1)) IS NOT NULL
+	INSERT INTO Атестат (IDАбитуриента, IDШкалыСтраны, СерияАтестата, СреднийБалл, ДесятибальнаяСистема) 
+		OUTPUT inserted.IDАтестата 
+		VALUES(@abiturient,(SELECT IDШкалыСтраны FROM ШкалаСтраны JOIN Шкала ON (ШкалаСтраны.IDШкалы = Шкала.IDШкалы) WHERE Наименование LIKE @scaleName), @attestatSeries,
+		ROUND(@avgMarks,2),(SELECT ДесятибальноеЗначение FROM Перевод WHERE IDШкалы = (SELECT IDШкалы FROM Шкала WHERE Наименование = @scaleName) AND Значение = ROUND(@avgMarks,1)))
 ELSE
-	INSERT INTO РђС‚РµСЃС‚Р°С‚ (IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹, РЎРµСЂРёСЏРђС‚РµСЃС‚Р°С‚Р°, РЎСЂРµРґРЅРёР№Р‘Р°Р»Р», Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°) 
-		OUTPUT inserted.IDРђС‚РµСЃС‚Р°С‚Р° 
-		VALUES(@abiturient,(SELECT IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹ FROM РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹ JOIN РЁРєР°Р»Р° ON (РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹.IDРЁРєР°Р»С‹ = РЁРєР°Р»Р°.IDРЁРєР°Р»С‹) WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ LIKE @scaleName), @attestatSeries,
+	INSERT INTO Атестат (IDАбитуриента, IDШкалыСтраны, СерияАтестата, СреднийБалл, ДесятибальнаяСистема) 
+		OUTPUT inserted.IDАтестата 
+		VALUES(@abiturient,(SELECT IDШкалыСтраны FROM ШкалаСтраны JOIN Шкала ON (ШкалаСтраны.IDШкалы = Шкала.IDШкалы) WHERE Наименование LIKE @scaleName), @attestatSeries,
 		ROUND(@avgMarks,2),@avgMarks)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_ContctData]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_ContctData]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -709,12 +631,12 @@ CREATE PROC [dbo].[Add_ContctData]
 @contactType nvarchar(50)
 AS
 BEGIN
-INSERT INTO РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ(IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, РЎРІРµРґРµРЅРёСЏ, IDРўРёРїРљРѕРЅС‚Р°РєС‚Р°) 
+INSERT INTO КонтактныеДанные(IDАбитуриента, Сведения, IDТипКонтакта) 
 	VALUES(@abiturient,@svedeniya,
-			(SELECT IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° FROM РўРёРїРљРѕРЅС‚Р°РєС‚Р° WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @contactType))
+			(SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = @contactType))
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Mark]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Mark]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -725,10 +647,10 @@ CREATE PROC [dbo].[Add_Mark]
 @colvo int
 AS
 BEGIN
-	INSERT INTO РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° (Р‘Р°Р»Р», РљРѕР»РёС‡РµСЃС‚РІРѕ, IDРђС‚РµСЃС‚Р°С‚Р°) VALUES (@mark,@colvo,@attestat)
+	INSERT INTO ОценкиАтестата (Балл, Количество, IDАтестата) VALUES (@mark,@colvo,@attestat)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_PassportData]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_PassportData]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -743,11 +665,11 @@ CREATE PROC [dbo].[Add_PassportData]
 @identNum nvarchar(30)
 AS
 BEGIN
-	INSERT INTO РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ (IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°,Р”Р°С‚Р°Р’С‹РґР°С‡Рё,Р”Р°С‚Р°Р РѕР¶РґРµРЅРёСЏ,РЎРµСЂРёСЏ,РќРѕРјРµСЂРџР°СЃРїРѕСЂС‚Р°,РќР°РёРјРµРЅРѕРІР°РЅРёРµРћСЂРіР°РЅР°,РРґРµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹Р№РќРѕРјРµСЂ) 
+	INSERT INTO ПаспортныеДанные (IDАбитуриента,ДатаВыдачи,ДатаРождения,Серия,НомерПаспорта,НаименованиеОргана,ИдентификационныйНомер) 
 	VALUES(@abiturient,@dateIssue,@dateOfBirth,@series,@PasspornNum,@name,@identNum)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_PlanPriema]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_PlanPriema]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -763,18 +685,18 @@ CREATE PROC [dbo].[Add_PlanPriema]
 @CT bit
 AS
 BEGIN
-	INSERT INTO РџР»Р°РЅРџСЂРёРµРјР°(Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ, IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё, IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ, IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ, РљРѕР»РёС‡РµСЃС‚РІРѕ, РљРѕР»РёС‡РµСЃС‚РІРѕР¦РµР»РµРІС‹С…РњРµСЃС‚, Р¦Рў) VALUES(
+	INSERT INTO ПланПриема(ГодПоступления, IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ЦТ) VALUES(
 		@year,
-		(SELECT IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @spec),
-		(SELECT IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ FROM Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @form AND РћР±СЂР°Р·РѕРІР°РЅРёРµ = @obr),
-		(SELECT IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ FROM Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @fin),
+		(SELECT IDСпециальность FROM Специальность WHERE Наименование = @spec),
+		(SELECT IDФормаОбучения FROM ФормаОбучения WHERE Наименование = @form AND Образование = @obr),
+		(SELECT IDФинансирования FROM Финансирование WHERE Наименование = @fin),
 		@kolva,
 		@kolvaCel,
 		@CT
 	)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Sertificat]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Sertificat]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -788,11 +710,11 @@ CREATE PROC [dbo].[Add_Sertificat]
 @serialNum nvarchar(20)
 AS
 BEGIN
-	INSERT INTO РЎРµСЂС‚РёС„РёРєР°С‚Р¦Рў (IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°, Р”РёСЃС†РёРїР»РёРЅР°, Р‘Р°Р»Р», Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕРµР—РЅР°С‡РµРЅРёРµ, Р“РѕРґРџСЂРѕС…РѕР¶РґРµРЅРёСЏ, РќРѕРјРµСЂРЎРµСЂРёРё) 
+	INSERT INTO СертификатЦТ (IDАбитуриента, Дисциплина, Балл, ДесятибальноеЗначение, ГодПрохождения, НомерСерии) 
 	VALUES(@sertificat,@disciplin,@mark,@decMark,@year,@serialNum)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_Stati]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_Stati]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -802,10 +724,10 @@ CREATE PROC [dbo].[Add_Stati]
 @statya int
 AS
 BEGIN
-	INSERT INTO РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°(IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°,IDРЎС‚Р°С‚СЊРё) VALUES(@abiturient,@statya)
+	INSERT INTO СтатьиАбитуриента(IDАбитуриента,IDСтатьи) VALUES(@abiturient,@statya)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Add_User]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Add_User]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -816,12 +738,12 @@ CREATE PROC [dbo].[Add_User]
 @role nvarchar(50)
 AS
 BEGIN
-INSERT INTO РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ(Р›РѕРіРёРЅ, Р¤РРћ, IDР РѕР»Рё) 
-		OUTPUT inserted.IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-		VALUES (@login, @fio, (SElECT IDР РѕР»Рё FROM Р РѕР»СЊ WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @role))
+INSERT INTO Пользователь(Логин, ФИО, IDРоли) 
+		OUTPUT inserted.IDПользователя
+		VALUES (@login, @fio, (SElECT IDРоли FROM Роль WHERE Наименование = @role))
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Del_AbiturientMarks]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Del_AbiturientMarks]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -831,15 +753,15 @@ CREATE PROC [dbo].[Del_AbiturientMarks]
 AS
 BEGIN
 	DECLARE @lastID int = 0;
-	select @lastID = MAX(IDРћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°) FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°;
-	DELETE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE (IDРђС‚РµСЃС‚Р°С‚Р° = ALL(SELECT IDРђС‚РµСЃС‚Р°С‚Р° FROM РђС‚РµСЃС‚Р°С‚ WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient))
-	UPDATE РђР±РёС‚СѓСЂРёРµРЅС‚ SET РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ = 0,
-						  РЈРґР°Р»РµРЅРѕ = 1
-					WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient;
-	DBCC CHECKIDENT (РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°, RESEED, @lastID);
+	select @lastID = MAX(IDОценкиАтестата) FROM ОценкиАтестата;
+	DELETE ОценкиАтестата WHERE (IDАтестата = ALL(SELECT IDАтестата FROM Атестат WHERE IDАбитуриента = @abiturient))
+	UPDATE Абитуриент SET АбитуриентЗачислен = 0,
+						  Удалено = 1
+					WHERE IDАбитуриента = @abiturient;
+	DBCC CHECKIDENT (ОценкиАтестата, RESEED, @lastID);
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaAttestat]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaAttestat]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -848,27 +770,27 @@ CREATE PROC [dbo].[Get_AbiturientaAttestat]
 @abiturient int
 AS
 BEGIN
-	SELECT IDРђС‚РµСЃС‚Р°С‚Р°, РЎРµСЂРёСЏРђС‚РµСЃС‚Р°С‚Р° as Num,
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 1) as [n1],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 2) as [n2],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 3) as [n3],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 4) as [n4],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 5) as [n5],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 6) as [n6],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 7) as [n7],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 8) as [n8],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 9) as [n9],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 10) as [n10],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 11) as [n11],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 12) as [n12],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 13) as [n13],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 14) as [n14],
-	(SELECT РљРѕР»РёС‡РµСЃС‚РІРѕ FROM РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р° WHERE РћС†РµРЅРєРёРђС‚РµСЃС‚Р°С‚Р°.IDРђС‚РµСЃС‚Р°С‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђС‚РµСЃС‚Р°С‚Р° AND Р±Р°Р»Р» = 15) as [n15],
-	(SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РЁРєР°Р»Р° WHERE РЁРєР°Р»Р°.IDРЁРєР°Р»С‹ = (SELECT РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹.IDРЁРєР°Р»С‹ FROM РЁРєР°Р»Р°РЎС‚СЂР°РЅС‹ WHERE РђС‚РµСЃС‚Р°С‚.IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹ = IDРЁРєР°Р»С‹РЎС‚СЂР°РЅС‹)) as [Scale], 
-	ROUND (РЎСЂРµРґРЅРёР№Р‘Р°Р»Р», 2, 1) as РЎСЂРµРґРЅРёР№Р‘Р°Р»Р»,ROUND (Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°, 2, 1) as Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР° FROM РђС‚РµСЃС‚Р°С‚ WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	SELECT IDАтестата, СерияАтестата as Num,
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 1) as [n1],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 2) as [n2],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 3) as [n3],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 4) as [n4],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 5) as [n5],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 6) as [n6],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 7) as [n7],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 8) as [n8],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 9) as [n9],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 10) as [n10],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 11) as [n11],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 12) as [n12],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 13) as [n13],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 14) as [n14],
+	(SELECT Количество FROM ОценкиАтестата WHERE ОценкиАтестата.IDАтестата = Атестат.IDАтестата AND балл = 15) as [n15],
+	(SELECT Наименование FROM Шкала WHERE Шкала.IDШкалы = (SELECT ШкалаСтраны.IDШкалы FROM ШкалаСтраны WHERE Атестат.IDШкалыСтраны = IDШкалыСтраны)) as [Scale], 
+	ROUND (СреднийБалл, 2, 1) as СреднийБалл,ROUND (ДесятибальнаяСистема, 2, 1) as ДесятибальнаяСистема FROM Атестат WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaFullInfo]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaFullInfo]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -877,12 +799,12 @@ CREATE PROC [dbo].[Get_AbiturientaFullInfo]
 @abiturient int
 AS
 BEGIN
-	SELECT Р¤Р°РјРёР»РёСЏ + ' ' + РРјСЏ + ' ' + РћС‚С‡РµСЃС‚РІРѕ, РЁРєРѕР»Р°, Р“РѕРґРћРєРѕРЅС‡Р°РЅРёСЏРЁРєРѕР»С‹, Р”Р°С‚Р°Р РѕР¶РґРµРЅРёСЏ, Р”Р°С‚Р°Р’С‹РґР°С‡Рё, РЎРµСЂРёСЏ, РќРѕРјРµСЂРџР°СЃРїРѕСЂС‚Р°,РќР°РёРјРµРЅРѕРІР°РЅРёРµРћСЂРіР°РЅР°,РРґРµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹Р№РќРѕРјРµСЂ, Р“СЂР°Р¶РґР°РЅСЃС‚РІРѕ, РњРµСЃС‚РѕР Р°Р±РѕС‚С‹, Р”РѕР»Р¶РЅРѕСЃС‚СЊ, (SELECT Р¤РРћ FROM РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ WHERE IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ = IDР’Р»Р°РґРµР»СЊС†Р°), (SELECT Р¤РРћ FROM РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ WHERE IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ = IDР РµРґР°РєС‚РѕСЂР°), Р”Р°С‚Р°РЎРѕР·РґР°РЅРёСЏ, Р”Р°С‚Р°Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ, РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ, РЈРґР°Р»РµРЅРѕ
-	FROM РђР±РёС‚СѓСЂРёРµРЅС‚ LEFT JOIN РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ ON (РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) 
-	WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	SELECT Фамилия + ' ' + Имя + ' ' + Отчество, Школа, ГодОкончанияШколы, ДатаРождения, ДатаВыдачи, Серия, НомерПаспорта,НаименованиеОргана,ИдентификационныйНомер, Гражданство, МестоРаботы, Должность, (SELECT ФИО FROM Пользователь WHERE IDПользователя = IDВладельца), (SELECT ФИО FROM Пользователь WHERE IDПользователя = IDРедактора), ДатаСоздания, ДатаРедактирования, АбитуриентЗачислен, Удалено
+	FROM Абитуриент LEFT JOIN ПаспортныеДанные ON (Абитуриент.IDАбитуриента = ПаспортныеДанные.IDАбитуриента) 
+	WHERE Абитуриент.IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaKontakti]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaKontakti]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -891,12 +813,12 @@ CREATE PROC [dbo].[Get_AbiturientaKontakti]
 @abiturient int
 AS
 BEGIN
-	SELECT IDРљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ, ROW_NUMbER() OVER(ORDER BY IDРљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ) as Num, (SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РўРёРїРљРѕРЅС‚Р°РєС‚Р° WHERE РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° = РўРёРїРљРѕРЅС‚Р°РєС‚Р°.IDРўРёРїРљРѕРЅС‚Р°РєС‚Р°) as [РўРёРїРљРѕРЅС‚Р°РєС‚Р°], РЎРІРµРґРµРЅРёСЏ 
-	FROM  РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ 
-	WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	SELECT IDКонтактныеДанные, ROW_NUMbER() OVER(ORDER BY IDКонтактныеДанные) as Num, (SELECT Наименование FROM ТипКонтакта WHERE КонтактныеДанные.IDТипКонтакта = ТипКонтакта.IDТипКонтакта) as [ТипКонтакта], Сведения 
+	FROM  КонтактныеДанные 
+	WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientaSertificati]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientaSertificati]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -905,12 +827,12 @@ CREATE PROC [dbo].[Get_AbiturientaSertificati]
 @abiturient int
 AS
 BEGIN
-	SELECT IDРЎРµСЂС‚РёС„РёРєР°С‚Р°Р¦Рў, РќРѕРјРµСЂРЎРµСЂРёРё as num, Р”РёСЃС†РёРїР»РёРЅР°, Р“РѕРґРџСЂРѕС…РѕР¶РґРµРЅРёСЏ, Р‘Р°Р»Р», Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕРµР—РЅР°С‡РµРЅРёРµ 
-	FROM РЎРµСЂС‚РёС„РёРєР°С‚Р¦Рў 
-	WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	SELECT IDСертификатаЦТ, НомерСерии as num, Дисциплина, ГодПрохождения, Балл, ДесятибальноеЗначение 
+	FROM СертификатЦТ 
+	WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientList]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientList]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -919,13 +841,13 @@ CREATE PROC [dbo].[Get_AbiturientList]
 @PlanPriema int
 AS
 BEGIN
-SELECT РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°,  РђР±РёС‚СѓСЂРёРµРЅС‚.Р¤Р°РјРёР»РёСЏ + ' ' + РђР±РёС‚СѓСЂРёРµРЅС‚.РРјСЏ +' '+РђР±РёС‚СѓСЂРёРµРЅС‚.РћС‚С‡РµСЃС‚РІРѕ AS Р¤РРћ,
-РђР±РёС‚СѓСЂРёРµРЅС‚.РЎРёСЂРѕС‚Р°, РђР±РёС‚СѓСЂРёРµРЅС‚.Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ, РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ.Р¤РРћ AS Р’Р»Р°РґРµР»РµС†, Р”Р°С‚Р°РЎРѕР·РґР°РЅРёСЏ, РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ, РЈРґР°Р»РµРЅРѕ 
-	FROM РђР±РёС‚СѓСЂРёРµРЅС‚ LEFT JOIN РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ ON(РђР±РёС‚СѓСЂРёРµРЅС‚.IDР’Р»Р°РґРµР»СЊС†Р° = РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ.IDРџРѕР»СЊР·РѕРІР°С‚РµР»СЏ) 
-	WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРџР»Р°РЅР°РџСЂРёРµРјР° = @PlanPriema
+SELECT Абитуриент.IDАбитуриента,  Абитуриент.Фамилия + ' ' + Абитуриент.Имя +' '+Абитуриент.Отчество AS ФИО,
+Абитуриент.Сирота, Абитуриент.ЦелевойДоговор, Пользователь.ФИО AS Владелец, ДатаСоздания, АбитуриентЗачислен, Удалено 
+	FROM Абитуриент LEFT JOIN Пользователь ON(Абитуриент.IDВладельца = Пользователь.IDПользователя) 
+	WHERE Абитуриент.IDПланаПриема = @PlanPriema
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientMainInfo]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientMainInfo]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -934,12 +856,12 @@ CREATE PROC [dbo].[Get_AbiturientMainInfo]
 @abiturient int
 AS
 BEGIN
-	SELECT Р¤Р°РјРёР»РёСЏ, РРјСЏ, РћС‚С‡РµСЃС‚РІРѕ, РЁРєРѕР»Р°, Р“РѕРґРћРєРѕРЅС‡Р°РЅРёСЏРЁРєРѕР»С‹, Р”Р°С‚Р°Р РѕР¶РґРµРЅРёСЏ, Р”Р°С‚Р°Р’С‹РґР°С‡Рё, РЎРµСЂРёСЏ, РќРѕРјРµСЂРџР°СЃРїРѕСЂС‚Р°,РќР°РёРјРµРЅРѕРІР°РЅРёРµРћСЂРіР°РЅР°,РРґРµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹Р№РќРѕРјРµСЂ, Р“СЂР°Р¶РґР°РЅСЃС‚РІРѕ, РњРµСЃС‚РѕР Р°Р±РѕС‚С‹, Р”РѕР»Р¶РЅРѕСЃС‚СЊ, РћР±С‰РµР¶РёС‚РёРµ, РЎРёСЂРѕС‚Р°, Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ, Р­РєР·Р°РјРµРЅР°С†РёРѕРЅРЅС‹Р№Р›РёСЃС‚ 
-	FROM РђР±РёС‚СѓСЂРёРµРЅС‚ LEFT JOIN РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ ON (РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) 
-	WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	SELECT Фамилия, Имя, Отчество, Школа, ГодОкончанияШколы, ДатаРождения, ДатаВыдачи, Серия, НомерПаспорта,НаименованиеОргана,ИдентификационныйНомер, Гражданство, МестоРаботы, Должность, Общежитие, Сирота, ЦелевойДоговор, ЭкзаменационныйЛист 
+	FROM Абитуриент LEFT JOIN ПаспортныеДанные ON (Абитуриент.IDАбитуриента = ПаспортныеДанные.IDАбитуриента) 
+	WHERE Абитуриент.IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_AbiturientPriority]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_AbiturientPriority]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -947,16 +869,16 @@ GO
 CREATE PROC [dbo].[Get_AbiturientPriority]
 AS
 BEGIN
-	SELECT Р¤Р°РјРёР»РёСЏ, РРјСЏ, РћС‚С‡РµСЃС‚РІРѕ, РЎРёСЂРѕС‚Р°, Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ,
-		(SELECT CASE WHEN MIN(РџСЂРёРѕСЂРёС‚РµС‚) IS NULL THEN 10 ELSE MIN(РџСЂРёРѕСЂРёС‚РµС‚) END 
-		FROM РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р° JOIN РЎС‚Р°С‚СЊРё ON (РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРЎС‚Р°С‚СЊРё = РЎС‚Р°С‚СЊРё.IDРЎС‚Р°С‚СЊРё) 
-		WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) AS РџСЂРёРѕСЂРёС‚РµС‚РђР±РёС‚СѓСЂРёРµРЅС‚Р°,
-		(SELECT ROUND(MAX(Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°),2) FROM РђС‚РµСЃС‚Р°С‚ WHERE РђС‚РµСЃС‚Р°С‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°) AS [РЎСЂРµРґРЅРёР№ Р±Р°Р»Р»]
-	FROM РђР±РёС‚СѓСЂРёРµРЅС‚
-	ORDER BY РџСЂРёРѕСЂРёС‚РµС‚РђР±РёС‚СѓСЂРёРµРЅС‚Р°, [РЎСЂРµРґРЅРёР№ Р±Р°Р»Р»] DESC
+	SELECT Фамилия, Имя, Отчество, Сирота, ЦелевойДоговор,
+		(SELECT CASE WHEN MIN(Приоритет) IS NULL THEN 10 ELSE MIN(Приоритет) END 
+		FROM СтатьиАбитуриента JOIN Статьи ON (СтатьиАбитуриента.IDСтатьи = Статьи.IDСтатьи) 
+		WHERE Абитуриент.IDАбитуриента = СтатьиАбитуриента.IDАбитуриента) AS ПриоритетАбитуриента,
+		(SELECT ROUND(MAX(ДесятибальнаяСистема),2) FROM Атестат WHERE Атестат.IDАбитуриента = Абитуриент.IDАбитуриента) AS [Средний балл]
+	FROM Абитуриент
+	ORDER BY ПриоритетАбитуриента, [Средний балл] DESC
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_MarkConvert]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_MarkConvert]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -966,10 +888,10 @@ CREATE PROC [dbo].[Get_MarkConvert]
 @mark int
 AS
 BEGIN
-	SELECT Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅРѕРµР—РЅР°С‡РµРЅРёРµ FROM РџРµСЂРµРІРѕРґ WHERE IDРЁРєР°Р»С‹ = (SELECT IDРЁРєР°Р»С‹ FROM РЁРєР°Р»Р° WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @scaleName) AND Р—РЅР°С‡РµРЅРёРµ = @mark
+	SELECT ДесятибальноеЗначение FROM Перевод WHERE IDШкалы = (SELECT IDШкалы FROM Шкала WHERE Наименование = @scaleName) AND Значение = @mark
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlaniPriema]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlaniPriema]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -981,30 +903,30 @@ CREATE PROC [dbo].[Get_PlaniPriema]
 @dnevnaya varchar(50), @zaochnaya varchar(50)
 AS
 BEGIN
-SELECT Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ,  --0
-		РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ, --1 
-		Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ, --2
-		Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ, --3
-		РћР±СЂР°Р·РѕРІР°РЅРёРµ, --4
-		РџР»Р°РЅРџСЂРёРµРјР°.IDРџР»Р°РЅРџСЂРёРµРјР°, --5 
-		(SELECT COUNT(*)FROM РђР±РёС‚СѓСЂРёРµРЅС‚ WHERE IDРџР»Р°РЅР°РџСЂРёРµРјР° = РџР»Р°РЅРџСЂРёРµРјР°.IDРџР»Р°РЅРџСЂРёРµРјР°),-- 6
-		РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.РљРѕРґ, --7
-		РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ, -- 8
-		Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ, --7
-		РљРѕР»РёС‡РµСЃС‚РІРѕ,--10
-		РљРѕР»РёС‡РµСЃС‚РІРѕР¦РµР»РµРІС‹С…РњРµСЃС‚, --11
-		Р¦Рў, -- 12
-		Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ -- 13
-	FROM РџР»Р°РЅРџСЂРёРµРјР° JOIN РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ ON(РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё = РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ) 
-		JOIN Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ ON(РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ) 
-		JOIN Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ ON(РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ = Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ) 
-	WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ = @specialost
-		AND (Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ like @budjet OR Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ like @hozrash)
-		AND (РћР±СЂР°Р·РѕРІР°РЅРёРµ like @bazovoe OR РћР±СЂР°Р·РѕРІР°РЅРёРµ like @srednee) 
-		AND (Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ like @dnevnaya OR Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ like @zaochnaya)
+SELECT ГодПоступления,  --0
+		Специальность.Наименование, --1 
+		Финансирование.Наименование, --2
+		ФормаОбучения.Наименование, --3
+		Образование, --4
+		ПланПриема.IDПланПриема, --5 
+		(SELECT COUNT(*)FROM Абитуриент WHERE IDПланаПриема = ПланПриема.IDПланПриема),-- 6
+		Специальность.Код, --7
+		Специальность.IDСпециальность, -- 8
+		Финансирование.IDФинансирования, --7
+		Количество,--10
+		КоличествоЦелевыхМест, --11
+		ЦТ, -- 12
+		ФормаОбучения.IDФормаОбучения -- 13
+	FROM ПланПриема JOIN Специальность ON(ПланПриема.IDСпециальности = Специальность.IDСпециальность) 
+		JOIN Финансирование ON(ПланПриема.IDФинансирования = Финансирование.IDФинансирования) 
+		JOIN ФормаОбучения ON(ПланПриема.IDФормаОбучения = ФормаОбучения.IDФормаОбучения) 
+	WHERE Специальность.КраткоеНаименование = @specialost
+		AND (Финансирование.Наименование like @budjet OR Финансирование.Наименование like @hozrash)
+		AND (Образование like @bazovoe OR Образование like @srednee) 
+		AND (ФормаОбучения.Наименование like @dnevnaya OR ФормаОбучения.Наименование like @zaochnaya)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaByID]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaByID]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1013,16 +935,16 @@ CREATE proc [dbo].[Get_PlanPrieaByID]
 @id int
 AS
 BEGIN
-SELECT IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё, IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ, IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ, РљРѕР»РёС‡РµСЃС‚РІРѕ, РљРѕР»РёС‡РµСЃС‚РІРѕР¦РµР»РµРІС‹С…РњРµСЃС‚, Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ,
-	(SELECT РљРѕРґ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё), 
-	(SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё), 
-	(SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ WHERE Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ), 
-	(SELECT РћР±СЂР°Р·РѕРІР°РЅРёРµ FROM Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ WHERE Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ),
-	(SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ WHERE Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ), Р¦Рў 
-FROM РџР»Р°РЅРџСЂРёРµРјР° WHERE IDРџР»Р°РЅРџСЂРёРµРјР° = @id
+SELECT IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ГодПоступления,
+	(SELECT Код FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
+	(SELECT Наименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
+	(SELECT Наименование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения), 
+	(SELECT Образование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения),
+	(SELECT Наименование FROM Финансирование WHERE Финансирование.IDФинансирования = ПланПриема.IDФинансирования), ЦТ 
+FROM ПланПриема WHERE IDПланПриема = @id
 End
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaBySpeciality]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlanPrieaBySpeciality]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1031,16 +953,16 @@ CREATE proc [dbo].[Get_PlanPrieaBySpeciality]
 @spec nvarchar(50)
 AS
 BEGIN
-SELECT IDРџР»Р°РЅРџСЂРёРµРјР°, IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё, IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ, IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ, РљРѕР»РёС‡РµСЃС‚РІРѕ, РљРѕР»РёС‡РµСЃС‚РІРѕР¦РµР»РµРІС‹С…РњРµСЃС‚, Р“РѕРґРџРѕСЃС‚СѓРїР»РµРЅРёСЏ,
-	(SELECT РљРѕРґ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё), 
-	(SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё), 
-	(SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ WHERE Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ), 
-	(SELECT РћР±СЂР°Р·РѕРІР°РЅРёРµ FROM Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ WHERE Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ),
-	(SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ WHERE Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ), Р¦Рў 
-FROM РџР»Р°РЅРџСЂРёРµРјР° WHERE (SELECT РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё) = @spec
+SELECT IDПланПриема, IDСпециальности, IDФормаОбучения, IDФинансирования, Количество, КоличествоЦелевыхМест, ГодПоступления,
+	(SELECT Код FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
+	(SELECT Наименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности), 
+	(SELECT Наименование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения), 
+	(SELECT Образование FROM ФормаОбучения WHERE ФормаОбучения.IDФормаОбучения = ПланПриема.IDФормаОбучения),
+	(SELECT Наименование FROM Финансирование WHERE Финансирование.IDФинансирования = ПланПриема.IDФинансирования), ЦТ 
+FROM ПланПриема WHERE (SELECT КраткоеНаименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности) = @spec
 End
 GO
-/****** Object:  StoredProcedure [dbo].[Get_PlanPriemaID]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_PlanPriemaID]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1052,16 +974,16 @@ CREATE PROC [dbo].[Get_PlanPriemaID]
 @education varchar(50)
 AS
 BEGIN
-	SELECT IDРџР»Р°РЅРџСЂРёРµРјР° FROM РџР»Р°РЅРџСЂРёРµРјР° JOIN РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ ON(РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё = РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ) 
-										JOIN Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ ON (РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ = Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ) 
-										JOIN Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ ON (РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ) 
-	WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ LIKE @speciality AND 
-		  Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ LIKE @formOfEducation AND 
-		  Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.РќР°РёРјРµРЅРѕРІР°РЅРёРµ LIKE @financing AND 
-		  Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ.РћР±СЂР°Р·РѕРІР°РЅРёРµ LIKE @education
+	SELECT IDПланПриема FROM ПланПриема JOIN Специальность ON(ПланПриема.IDСпециальности = Специальность.IDСпециальность) 
+										JOIN ФормаОбучения ON (ПланПриема.IDФормаОбучения = ФормаОбучения.IDФормаОбучения) 
+										JOIN Финансирование ON (ПланПриема.IDФинансирования = Финансирование.IDФинансирования) 
+	WHERE (Специальность.КраткоеНаименование LIKE @speciality OR Специальность.Наименование LIKE @speciality) AND 
+		  ФормаОбучения.Наименование LIKE @formOfEducation AND 
+		  Финансирование.Наименование LIKE @financing AND 
+		  ФормаОбучения.Образование LIKE @education
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_SpecialnostiName]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_SpecialnostiName]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1070,10 +992,10 @@ CREATE PROC [dbo].[Get_SpecialnostiName]
 @useFilter bit
 AS
 BEGIN
-	SELECT РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ, РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = ANY (SELECT IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё FROM РџР»Р°РЅРџСЂРёРµРјР°) OR @useFilter = 0
+	SELECT КраткоеНаименование, Наименование FROM Специальность WHERE IDСпециальность = ANY (SELECT IDСпециальности FROM ПланПриема) OR @useFilter = 0
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Get_StatiAbiturienta]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Get_StatiAbiturienta]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1082,10 +1004,10 @@ CREATE PROC [dbo].[Get_StatiAbiturienta]
 @abiturient int
 AS
 BEGIN
-	SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РЎС‚Р°С‚СЊРё JOIN РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р° ON (РЎС‚Р°С‚СЊРё.IDРЎС‚Р°С‚СЊРё = РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРЎС‚Р°С‚СЊРё) WHERE РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	SELECT Наименование FROM Статьи JOIN СтатьиАбитуриента ON (Статьи.IDСтатьи = СтатьиАбитуриента.IDСтатьи) WHERE СтатьиАбитуриента.IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetAbiturientCountForStats]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[GetAbiturientCountForStats]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1096,16 +1018,16 @@ CREATE PROC [dbo].[GetAbiturientCountForStats]
 @maxMark float
 AS
 BEGIN
-	SELECT ROUND(AVG(Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°),1)
-		FROM РђР±РёС‚СѓСЂРёРµРЅС‚ JOIN РђС‚РµСЃС‚Р°С‚ ON (РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђС‚РµСЃС‚Р°С‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°)
-		WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРџР»Р°РЅР°РџСЂРёРµРјР° = @IDPlanPriema 
-			and РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° != all(SELECT IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° FROM РђР±РёС‚СѓСЂРёРµРЅС‚ WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРџР»Р°РЅР°РџСЂРёРµРјР° = @IDPlanPriema AND РђР±РёС‚СѓСЂРёРµРЅС‚.Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ = 1)
-			and РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° != all((SELECT IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° FROM РђР±РёС‚СѓСЂРёРµРЅС‚ WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРџР»Р°РЅР°РџСЂРёРµРјР° = @IDPlanPriema AND (РђР±РёС‚СѓСЂРёРµРЅС‚.РЎРёСЂРѕС‚Р° = 1 OR (SELECT MIN(РџСЂРёРѕСЂРёС‚РµС‚) FROM РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р° JOIN РЎС‚Р°С‚СЊРё ON (РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРЎС‚Р°С‚СЊРё = РЎС‚Р°С‚СЊРё.IDРЎС‚Р°С‚СЊРё) WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°)= 0)))
-		GROUP BY РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°
-		HAVING ROUND(AVG(Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°),1) >= @minMark AND ROUND(AVG(Р”РµСЃСЏС‚РёР±Р°Р»СЊРЅР°СЏРЎРёСЃС‚РµРјР°),1) <= @maxMark
+	SELECT ROUND(AVG(ДесятибальнаяСистема),1)
+		FROM Абитуриент JOIN Атестат ON (Абитуриент.IDАбитуриента = Атестат.IDАбитуриента)
+		WHERE Абитуриент.IDПланаПриема = @IDPlanPriema 
+			and Абитуриент.IDАбитуриента != all(SELECT IDАбитуриента FROM Абитуриент WHERE Абитуриент.IDПланаПриема = @IDPlanPriema AND Абитуриент.ЦелевойДоговор = 1)
+			and Абитуриент.IDАбитуриента != all((SELECT IDАбитуриента FROM Абитуриент WHERE Абитуриент.IDПланаПриема = @IDPlanPriema AND (Абитуриент.Сирота = 1 OR (SELECT MIN(Приоритет) FROM СтатьиАбитуриента JOIN Статьи ON (СтатьиАбитуриента.IDСтатьи = Статьи.IDСтатьи) WHERE Абитуриент.IDАбитуриента = IDАбитуриента)= 0)))
+		GROUP BY Абитуриент.IDАбитуриента
+		HAVING ROUND(AVG(ДесятибальнаяСистема),1) >= @minMark AND ROUND(AVG(ДесятибальнаяСистема),1) <= @maxMark
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetStats]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[GetStats]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1114,18 +1036,18 @@ CREATE PROC [dbo].[GetStats]
 @spec varchar(50)
 AS
 BEGIN
-SELECT РџР»Р°РЅРџСЂРёРµРјР°.IDРџР»Р°РЅРџСЂРёРµРјР°,
-	   CASE WHEN (SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ WHERE Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ) = 'Р‘СЋРґР¶РµС‚' THEN РљРѕР»РёС‡РµСЃС‚РІРѕ ELSE 0 END AS Р’СЃРµРіРѕ,
-	   CASE WHEN (SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ WHERE Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ) = 'Р‘СЋРґР¶РµС‚' THEN РљРѕР»РёС‡РµСЃС‚РІРѕР¦РµР»РµРІС‹С…РњРµСЃС‚ ELSE 0 END AS [РІ С‚РѕРј С‡РёСЃР»Рµ РЅР° СѓСЃР»РѕРІРёСЏС… С†РµР»РµРІРѕР№ РїРѕРґРіРѕС‚РѕРІРєРё],
-	   CASE WHEN (SELECT РќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ WHERE Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = РџР»Р°РЅРџСЂРёРµРјР°.IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ) = 'Р‘СЋРґР¶РµС‚' THEN 0 ELSE РљРѕР»РёС‡РµСЃС‚РІРѕ END [РЅР° СѓСЃР»РѕРІРёСЏС… РѕРїР»Р°С‚С‹],
-	   (SELECT COUNT(*) FROM РђР±РёС‚СѓСЂРёРµРЅС‚ WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРџР»Р°РЅР°РџСЂРёРµРјР° = РџР»Р°РЅРџСЂРёРµРјР°.IDРџР»Р°РЅРџСЂРёРµРјР°),
-	   (SELECT COUNT(*) FROM РђР±РёС‚СѓСЂРёРµРЅС‚ WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРџР»Р°РЅР°РџСЂРёРµРјР° = РџР»Р°РЅРџСЂРёРµРјР°.IDРџР»Р°РЅРџСЂРёРµРјР° AND РђР±РёС‚СѓСЂРёРµРЅС‚.Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ = 1),
-	   (SELECT COUNT(*) FROM РђР±РёС‚СѓСЂРёРµРЅС‚ WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРџР»Р°РЅР°РџСЂРёРµРјР° = РџР»Р°РЅРџСЂРёРµРјР°.IDРџР»Р°РЅРџСЂРёРµРјР° AND (РђР±РёС‚СѓСЂРёРµРЅС‚.РЎРёСЂРѕС‚Р° = 1 OR (SELECT MIN(РџСЂРёРѕСЂРёС‚РµС‚) FROM РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р° JOIN РЎС‚Р°С‚СЊРё ON (РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р°.IDРЎС‚Р°С‚СЊРё = РЎС‚Р°С‚СЊРё.IDРЎС‚Р°С‚СЊРё) WHERE РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°)= 0))
-FROM РџР»Р°РЅРџСЂРёРµРјР°
-WHERE @spec = (SELECT РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = РџР»Р°РЅРџСЂРёРµРјР°.IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё)
+SELECT ПланПриема.IDПланПриема,
+	   CASE WHEN (SELECT Наименование FROM Финансирование WHERE Финансирование.IDФинансирования = ПланПриема.IDФинансирования) = 'Бюджет' THEN Количество ELSE 0 END AS Всего,
+	   CASE WHEN (SELECT Наименование FROM Финансирование WHERE Финансирование.IDФинансирования = ПланПриема.IDФинансирования) = 'Бюджет' THEN КоличествоЦелевыхМест ELSE 0 END AS [в том числе на условиях целевой подготовки],
+	   CASE WHEN (SELECT Наименование FROM Финансирование WHERE Финансирование.IDФинансирования = ПланПриема.IDФинансирования) = 'Бюджет' THEN 0 ELSE Количество END [на условиях оплаты],
+	   (SELECT COUNT(*) FROM Абитуриент WHERE Абитуриент.IDПланаПриема = ПланПриема.IDПланПриема),
+	   (SELECT COUNT(*) FROM Абитуриент WHERE Абитуриент.IDПланаПриема = ПланПриема.IDПланПриема AND Абитуриент.ЦелевойДоговор = 1),
+	   (SELECT COUNT(*) FROM Абитуриент WHERE Абитуриент.IDПланаПриема = ПланПриема.IDПланПриема AND (Абитуриент.Сирота = 1 OR (SELECT MIN(Приоритет) FROM СтатьиАбитуриента JOIN Статьи ON (СтатьиАбитуриента.IDСтатьи = Статьи.IDСтатьи) WHERE Абитуриент.IDАбитуриента = IDАбитуриента)= 0))
+FROM ПланПриема
+WHERE @spec = (SELECT КраткоеНаименование FROM Специальность WHERE Специальность.IDСпециальность = ПланПриема.IDСпециальности)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[HasStatya]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[HasStatya]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1135,10 +1057,10 @@ CREATE PROC [dbo].[HasStatya]
 @statya nvarchar(50)
 AS
 BEGIN
-SELECT * FROM РЎС‚Р°С‚СЊРёРђР±РёС‚СѓСЂРёРµРЅС‚Р° WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient AND IDРЎС‚Р°С‚СЊРё = (SELECT IDРЎС‚Р°С‚СЊРё FROM РЎС‚Р°С‚СЊРё WHERE РџРѕР»РЅРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ = @statya)
+SELECT * FROM СтатьиАбитуриента WHERE IDАбитуриента = @abiturient AND IDСтатьи = (SELECT IDСтатьи FROM Статьи WHERE ПолноеНаименование = @statya)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ImportAD]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[ImportAD]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1147,19 +1069,19 @@ CREATE PROC [dbo].[ImportAD]
 @id int
 as
 begin
-SELECT Р¤Р°РјРёР»РёСЏ, РРјСЏ, РћС‚С‡РµСЃС‚РІРѕ, 
-		(SELECT TOP(1) РЎРІРµРґРµРЅРёСЏ FROM РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ WHERE IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° = (SELECT IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° FROM РўРёРїРљРѕРЅС‚Р°РєС‚Р° WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = 'Р”РѕРјР°С€РЅРёР№ С‚РµР»РµС„РѕРЅ' AND РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°)),
-		(SELECT TOP(1) РЎРІРµРґРµРЅРёСЏ FROM РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ WHERE IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° = (SELECT IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° FROM РўРёРїРљРѕРЅС‚Р°РєС‚Р° WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = 'РњРѕР±РёР»СЊРЅС‹Р№ С‚РµР»РµС„РѕРЅ' AND РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°)),
-		(SELECT TOP(1) РЎРІРµРґРµРЅРёСЏ FROM РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ WHERE IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° = (SELECT IDРўРёРїРљРѕРЅС‚Р°РєС‚Р° FROM РўРёРїРљРѕРЅС‚Р°РєС‚Р° WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = 'Р”РѕРјР°С€РЅРёР№ Р°РґСЂРµСЃ' AND РљРѕРЅС‚Р°РєС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°)),
-		(SELECT Р”Р°С‚Р°Р РѕР¶РґРµРЅРёСЏ FROM РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ WHERE РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°),
-		(SELECT РЎРµСЂРёСЏ FROM РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ WHERE РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°),
-		(SELECT РќРѕРјРµСЂРџР°СЃРїРѕСЂС‚Р° FROM РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ WHERE РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°),
-		(SELECT РРґРµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹Р№РќРѕРјРµСЂ FROM РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ WHERE РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = РђР±РёС‚СѓСЂРёРµРЅС‚.IDРђР±РёС‚СѓСЂРёРµРЅС‚Р°)
-	FROM РђР±РёС‚СѓСЂРёРµРЅС‚
-	where IDРџР»Р°РЅР°РџСЂРёРµРјР° = @id AND РђР±РёС‚СѓСЂРёРµРЅС‚Р—Р°С‡РёСЃР»РµРЅ = 1
+SELECT Фамилия, Имя, Отчество, 
+		(SELECT TOP(1) Сведения FROM КонтактныеДанные WHERE IDТипКонтакта = (SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = 'Домашний телефон' AND КонтактныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)),
+		(SELECT TOP(1) Сведения FROM КонтактныеДанные WHERE IDТипКонтакта = (SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = 'Мобильный телефон' AND КонтактныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)),
+		(SELECT TOP(1) Сведения FROM КонтактныеДанные WHERE IDТипКонтакта = (SELECT IDТипКонтакта FROM ТипКонтакта WHERE Наименование = 'Домашний адрес' AND КонтактныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)),
+		(SELECT ДатаРождения FROM ПаспортныеДанные WHERE ПаспортныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента),
+		(SELECT Серия FROM ПаспортныеДанные WHERE ПаспортныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента),
+		(SELECT НомерПаспорта FROM ПаспортныеДанные WHERE ПаспортныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента),
+		(SELECT ИдентификационныйНомер FROM ПаспортныеДанные WHERE ПаспортныеДанные.IDАбитуриента = Абитуриент.IDАбитуриента)
+	FROM Абитуриент
+	where IDПланаПриема = @id AND АбитуриентЗачислен = 1
 end
 GO
-/****** Object:  StoredProcedure [dbo].[InsertSpeciality]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[InsertSpeciality]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1171,11 +1093,11 @@ CREATE PROC [dbo].[InsertSpeciality]
 @Code nvarchar(13)
 AS
 BEGIN
-INSERT INTO РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ (РќР°РёРјРµРЅРѕРІР°РЅРёРµ, РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ, Р‘СѓРєРІР°, РљРѕРґ)
+INSERT INTO Специальность (Наименование, КраткоеНаименование, Буква, Код)
 VALUES (@Title, @ShortTitle, @Letter, @Code)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[NextExamList]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[NextExamList]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1184,12 +1106,12 @@ CREATE PROC [dbo].[NextExamList]
 @id int
 AS
 BEGIN
-SELECT MAX([dbo].[GetNum](Р­РєР·Р°РјРµРЅР°С†РёРѕРЅРЅС‹Р№Р›РёСЃС‚ + 'aaa')) + 1
-from РђР±РёС‚СѓСЂРёРµРЅС‚
-where IDРџР»Р°РЅР°РџСЂРёРµРјР° = @id
+SELECT MAX([dbo].[GetNum](ЭкзаменационныйЛист + 'aaa')) + 1
+from Абитуриент
+where IDПланаПриема = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Update_MainData]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Update_MainData]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1213,26 +1135,26 @@ CREATE PROC [dbo].[Update_MainData]
 @ExamList varchar(10)
 AS
 BEGIN
-	UPDATE РђР±РёС‚СѓСЂРёРµРЅС‚ SET Р¤Р°РјРёР»РёСЏ = @surename,
-						  РРјСЏ = @name,
-						  РћС‚С‡РµСЃС‚РІРѕ = @otchestvo,
-						  РЁРєРѕР»Р° = @shool,
-						  Р“РѕРґРћРєРѕРЅС‡Р°РЅРёСЏРЁРєРѕР»С‹ = @graduationYear,
-						  Р“СЂР°Р¶РґР°РЅРёРЅР Р‘ = @grajdaninRB,
-						  Р“СЂР°Р¶РґР°РЅСЃС‚РІРѕ = @grajdanstvo,
-						  РћР±С‰РµР¶РёС‚РёРµ = @obshejitie, 
-						  IDРџР»Р°РЅР°РџСЂРёРµРјР° = @planPriema,
-						  РњРµСЃС‚РѕР Р°Р±РѕС‚С‹ = @workPlase,
-						  Р”РѕР»Р¶РЅРѕСЃС‚СЊ = @doljnost,
-						  РЎРёСЂРѕС‚Р° = @sirota,
-						  Р¦РµР»РµРІРѕР№Р”РѕРіРѕРІРѕСЂ = @dogovor,
-						  IDР РµРґР°РєС‚РѕСЂР° = @redaktor,
-						  Р”Р°С‚Р°Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ = GETDATE(),
-						  Р­РєР·Р°РјРµРЅР°С†РёРѕРЅРЅС‹Р№Р›РёСЃС‚ = @ExamList
-					WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	UPDATE Абитуриент SET Фамилия = @surename,
+						  Имя = @name,
+						  Отчество = @otchestvo,
+						  Школа = @shool,
+						  ГодОкончанияШколы = @graduationYear,
+						  ГражданинРБ = @grajdaninRB,
+						  Гражданство = @grajdanstvo,
+						  Общежитие = @obshejitie, 
+						  IDПланаПриема = @planPriema,
+						  МестоРаботы = @workPlase,
+						  Должность = @doljnost,
+						  Сирота = @sirota,
+						  ЦелевойДоговор = @dogovor,
+						  IDРедактора = @redaktor,
+						  ДатаРедактирования = GETDATE(),
+						  ЭкзаменационныйЛист = @ExamList
+					WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Update_PasportData]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Update_PasportData]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1247,17 +1169,17 @@ CREATE PROC [dbo].[Update_PasportData]
 @abiturient int
 AS
 BEGIN
-	UPDATE РџР°СЃРїРѕСЂС‚РЅС‹РµР”Р°РЅРЅС‹Рµ SET 
-				Р”Р°С‚Р°Р’С‹РґР°С‡Рё = @dateVidachi,
-				Р”Р°С‚Р°Р РѕР¶РґРµРЅРёСЏ = @dateOfBirth,
-				РЎРµСЂРёСЏ = @seriya,
-				РќРѕРјРµСЂРџР°СЃРїРѕСЂС‚Р° = @pasportNum,
-				РќР°РёРјРµРЅРѕРІР°РЅРёРµРћСЂРіР°РЅР° = @vidan,
-				РРґРµРЅС‚РёС„РёРєР°С†РёРѕРЅРЅС‹Р№РќРѕРјРµСЂ = @identNum 
-		WHERE IDРђР±РёС‚СѓСЂРёРµРЅС‚Р° = @abiturient
+	UPDATE ПаспортныеДанные SET 
+				ДатаВыдачи = @dateVidachi,
+				ДатаРождения = @dateOfBirth,
+				Серия = @seriya,
+				НомерПаспорта = @pasportNum,
+				НаименованиеОргана = @vidan,
+				ИдентификационныйНомер = @identNum 
+		WHERE IDАбитуриента = @abiturient
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Update_PlanPriema]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[Update_PlanPriema]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1273,18 +1195,18 @@ CREATE PROC [dbo].[Update_PlanPriema]
 @CT bit
 AS
 BEGIN
-UPDATE РџР»Р°РЅРџСЂРёРµРјР° 
-	SET IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚Рё = (SELECT IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ FROM РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @spec),
-		IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ = (SELECT IDР¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ FROM Р¤РѕСЂРјР°РћР±СѓС‡РµРЅРёСЏ WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @form AND РћР±СЂР°Р·РѕРІР°РЅРёРµ = @obr),
-		IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ = (SELECT IDР¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёСЏ FROM Р¤РёРЅР°РЅСЃРёСЂРѕРІР°РЅРёРµ WHERE РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @fin),
-		РљРѕР»РёС‡РµСЃС‚РІРѕ = @kolva,
-		РљРѕР»РёС‡РµСЃС‚РІРѕР¦РµР»РµРІС‹С…РњРµСЃС‚ = @kolvaCel,
-		Р¦Рў = @CT
+UPDATE ПланПриема 
+	SET IDСпециальности = (SELECT IDСпециальность FROM Специальность WHERE Наименование = @spec),
+		IDФормаОбучения = (SELECT IDФормаОбучения FROM ФормаОбучения WHERE Наименование = @form AND Образование = @obr),
+		IDФинансирования = (SELECT IDФинансирования FROM Финансирование WHERE Наименование = @fin),
+		Количество = @kolva,
+		КоличествоЦелевыхМест = @kolvaCel,
+		ЦТ = @CT
 	WHERE
-		IDРџР»Р°РЅРџСЂРёРµРјР° = @id
+		IDПланПриема = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateSpeciality]    Script Date: 01.06.2022 8:08:50 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateSpeciality]    Script Date: 14.06.2022 9:39:37 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1297,12 +1219,12 @@ CREATE PROC [dbo].[UpdateSpeciality]
 @ID int
 AS
 BEGIN
-UPDATE РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ SET
-РќР°РёРјРµРЅРѕРІР°РЅРёРµ = @Title,
-РљСЂР°С‚РєРѕРµРќР°РёРјРµРЅРѕРІР°РЅРёРµ = @ShortTitle,
-Р‘СѓРєРІР° = @Letter,
-РљРѕРґ = @Code
-WHERE IDРЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ = @ID
+UPDATE Специальность SET
+Наименование = @Title,
+КраткоеНаименование = @ShortTitle,
+Буква = @Letter,
+Код = @Code
+WHERE IDСпециальность = @ID
 END
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -1376,7 +1298,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "РђР±РёС‚СѓСЂРёРµРЅС‚"
+         Begin Table = "Абитуриент"
             Begin Extent = 
                Top = 138
                Left = 38
@@ -1386,7 +1308,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "РђС‚РµСЃС‚Р°С‚"
+         Begin Table = "Атестат"
             Begin Extent = 
                Top = 6
                Left = 38
@@ -1425,8 +1347,4 @@ End
 ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'GetAbiturientData'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'GetAbiturientData'
-GO
-USE [master]
-GO
-ALTER DATABASE [РџСЂРёРµРјРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ] SET  READ_WRITE 
 GO

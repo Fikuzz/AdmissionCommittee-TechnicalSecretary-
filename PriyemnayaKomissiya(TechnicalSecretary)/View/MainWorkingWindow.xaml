@@ -8,7 +8,7 @@
         xmlns:control="clr-namespace:PriyemnayaKomissiya_TechnicalSecretary_.Controls"
         mc:Ignorable="d"
         Background="{StaticResource MainBackGround}"
-        Title="Приемная комиссия «Полоцкий государственный экономический колледж»"
+        Title="Приемная комиссия УО«Полоцкий государственный экономический колледж»"
         Height="878.5" Width="1302" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -98,7 +98,7 @@
                     </Grid>
                     <!--#endregion-->
                     <!--#region Таблица-->
-                    <Grid Visibility="Visible" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="{StaticResource MainBackGround}">
+                    <Grid Visibility="Hidden" x:Name="PlanPriemaTable" Grid.ColumnSpan="3" Grid.Row="2" Background="{StaticResource MainBackGround}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
                             <RowDefinition Height="76"/>
@@ -210,8 +210,8 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock x:Name="InfoFIO" Text="Andrey" Margin="15,10,15,0" FontSize="24" FontFamily="{StaticResource Montserrat-SemyBold}"  Foreground="White" VerticalAlignment="Top" Height="37"/>
-                                    <Border Background="#4CFFFFFF" Margin="10" CornerRadius="15" Width="120">
-                                        <TextBlock x:Name="InfoShow_Status" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Принято" Width="120" TextAlignment="Center" Foreground="White" FontSize="16" Height="18" Margin="0,6" />
+                                    <Border Background="#4CFFFFFF" Margin="10" CornerRadius="15" Width="auto">
+                                        <TextBlock x:Name="InfoShow_Status" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Документы выданы" Width="auto" TextAlignment="Center" Foreground="White" FontSize="16" Height="18" Margin="20,5" />
                                     </Border>
                                 </StackPanel>
                                 <Image Source="pack://application:,,,/Resources/Layer 2.png" Margin="25,0,103,0" Width="23" Grid.Column="1" MouseLeftButtonDown="Image_BackToAbiturients"/>

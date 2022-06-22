@@ -16,7 +16,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
     public partial class Autorization : Window
     {
         private readonly string connectionString;
-        private readonly string groupName = "grp_priem"; //Название группы имеющей доступ к программе
+        /// <summary>
+        /// Название группы имеющей доступ к программе
+        /// </summary>
+        private readonly string groupName = "grp_priem"; 
         /// <summary>
         /// Конструктор по умолчанию для формы авторизации
         /// </summary>
@@ -36,7 +39,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
 
                 if (tbPassword.Password == "priemadmin") //проверка входа под локальным пользователем
                 {
-                    string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}' AND IDроли = 4";
+                    string hasUser = $"SELECT IDПользователя FROM Пользователь WHERE Логин = '{tbLogin.Text}' AND IDроли = (SELECT IDРоли FROM Роль WHERE Наименование = 'admin')";
 
                     SqlCommand command = new SqlCommand(hasUser, connection);
                     connection.Open();
@@ -96,7 +99,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                                 };
                                 command.Parameters.AddWithValue("@login", tbLogin.Text);
                                 command.Parameters.AddWithValue("@fio", user.DisplayName);
-                                command.Parameters.AddWithValue("@role", "Test");
+                                command.Parameters.AddWithValue("@role", "user");
                                 reader = command.ExecuteReader();
                                 reader.Read();
                                 View.MainWorkingWindow mainWorkingWindow = new View.MainWorkingWindow(Convert.ToInt32(reader[0]), tbLogin.Text, user.DisplayName);

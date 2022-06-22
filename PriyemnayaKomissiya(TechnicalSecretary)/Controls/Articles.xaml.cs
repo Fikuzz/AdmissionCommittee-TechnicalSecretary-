@@ -22,9 +22,15 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
     /// </summary>
     public partial class Articles : UserControl
     {
-        public RoutedEventHandler BlockCheckBox; //команда бокирования льготы Сирота
+        /// <summary>
+        /// команда бокирования льготы Сирота
+        /// </summary>
+        public RoutedEventHandler BlockCheckBox; 
         private readonly string connectionString;
-        public List<CheckBox> checkBoxes = new List<CheckBox>(); //Список статей
+        /// <summary>
+        /// Список статей
+        /// </summary>
+        public List<CheckBox> checkBoxes = new List<CheckBox>(); 
         public Articles()
         {
             InitializeComponent();

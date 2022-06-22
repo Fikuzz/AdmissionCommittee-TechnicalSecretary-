@@ -25,13 +25,13 @@
             <ColumnDefinition Width="69*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Наименование" Grid.Column="1" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Grid.ColumnSpan="3"/>
-        <TextBox x:Name="tbTitle" FontSize="18" Grid.Column="1" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="1" Grid.ColumnSpan="3" MaxLength="50"/>
+        <TextBox x:Name="tbTitle" FontSize="18" Grid.Column="1" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="1" Grid.ColumnSpan="3" MaxLength="50" TextChanged="ClearError"/>
         <TextBlock Text="Буква" Grid.Column="5" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16"/>
         <TextBox x:Name="tbLetter" FontSize="18" Grid.Column="5" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="1" MaxLength="1" TextChanged="tbLetter_TextChanged"/>
         <TextBlock Text="Краткое наименование" Grid.Column="1" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Grid.Row="3"/>
-        <TextBox x:Name="tbShortTitle" FontSize="18" Grid.Column="1" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="4" MaxLength="20"/>
+        <TextBox x:Name="tbShortTitle" FontSize="18" Grid.Column="1" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="4" MaxLength="20" TextChanged="ClearError"/>
         <TextBlock Text="Код специальности" Grid.Column="3" Margin="22,0" FontFamily="{StaticResource Montserrat-Regular}" FontSize="16" Grid.Row="3" Grid.ColumnSpan="3"/>
-        <TextBox x:Name="tbCode" FontSize="18" Grid.Column="3" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="4" Grid.ColumnSpan="3" MaxLength="13"/>
+        <TextBox x:Name="tbCode" FontSize="18" Grid.Column="3" Style="{DynamicResource TextBox}" Width="Auto" Grid.Row="4" Grid.ColumnSpan="3" MaxLength="20" TextChanged="ClearError"/>
         <Button x:Name="btnClose" Visibility="Hidden" Content="Отмена" FontSize="18" Grid.Column="1" Margin="0,0,10,1" Grid.Row="6" Style="{DynamicResource ButtonStyleObshchiyRED}" Foreground="{StaticResource 94A1BB}" Background="#3376829B" Height="60" Width="250" HorizontalAlignment="Right" Click="CloseEdit"/>
         <Button x:Name="btnSave" Content="Добавить" FontSize="18" Style="{DynamicResource ButtonStyleObshchiyRED}" Grid.Column="3" Margin="10,1,0,0" Grid.Row="6" Grid.ColumnSpan="3" Height="60" HorizontalAlignment="Left" Width="250" Click="SaveButtonClick"/>
     </Grid>

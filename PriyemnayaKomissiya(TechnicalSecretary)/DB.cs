@@ -598,9 +598,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
                 if ((bool)reader[16])
                     abiturient.Status = "Зачислен";
                 else if ((bool)reader[17])
-                    abiturient.Status = "Отозвано";
+                    abiturient.Status = "Документы выданы";
                 else
-                    abiturient.Status = "Принято";
+                    abiturient.Status = "Документы приняты";
                 connection.Close();
             }
             catch (Exception ex)

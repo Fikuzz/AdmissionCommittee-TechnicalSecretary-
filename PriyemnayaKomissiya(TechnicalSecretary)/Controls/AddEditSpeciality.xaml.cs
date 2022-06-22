@@ -105,6 +105,12 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
         private void tbLetter_TextChanged(object sender, TextChangedEventArgs e)
         {
             (sender as TextBox).Text.ToUpper();
+            PLib.ClearError(sender);
+        }
+
+        private void ClearError(object sender, TextChangedEventArgs e)
+        {
+            PLib.ClearError(sender);
         }
     }
 }

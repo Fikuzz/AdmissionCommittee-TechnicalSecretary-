@@ -1044,17 +1044,17 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             }
         }
         /// <summary>
-        /// Установка гражданства на белорусское при активации checkBox
+        /// Установка гражданства на Республика Беларусь при активации checkBox
         /// </summary>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (((CheckBox)sender).IsChecked == true)
             {
-                AddFormGrajdanstvo.Text = "Белорусское";
+                AddFormGrajdanstvo.Text = "Республика Беларусь";
             }
         }
         /// <summary>
-        /// Активация CheckBox При вводе гражданства "Белорусское"
+        /// Активация CheckBox При вводе гражданства "Республика Беларусь"
         /// </summary>
         private void AddFormGrajdanstvo_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -1062,7 +1062,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
             {
                 ((TextBox)sender).Tag = "";
             }
-            if (((TextBox)sender).Text == "Белорусское")
+            if (((TextBox)sender).Text == "Республика Беларусь")
                 AddFormChekBoxGrajdanstvo.IsChecked = true;
             else
                 AddFormChekBoxGrajdanstvo.IsChecked = false;
@@ -2076,8 +2076,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
 
                     string status = "";
                     if (Convert.ToBoolean(reader[4]) == true) { status = "Зачислен"; }
-                    else if (Convert.ToBoolean(reader[22]) == true) { status = "Отозвано"; }
-                    else status = "Принято";
+                    else if (Convert.ToBoolean(reader[22]) == true) { status = "Документы выданы"; }
+                    else status = "Документы приняты";
 
                     int[] marks = new int[15];
                     for (int i = 0; i < 15; i++)

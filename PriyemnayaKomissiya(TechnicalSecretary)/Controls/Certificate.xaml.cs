@@ -23,7 +23,10 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.Controls
 	/// </summary>
 	public partial class Certificate : UserControl, IDataForm
 	{
-		public List<TextBox> Marks = new List<TextBox>(); //список полей для отметок
+		/// <summary>
+		/// список полей для отметок
+		/// </summary>
+		public List<TextBox> Marks = new List<TextBox>();
 		private readonly string connectionString;
 		/// <summary>
 		/// конструктор для формы аттетата
