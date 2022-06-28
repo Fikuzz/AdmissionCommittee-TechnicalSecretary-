@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Background="{StaticResource MainBackGround}"
         Title="Приемная комиссия УО«Полоцкий государственный экономический колледж»"
-        Height="878.5" Width="1302" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
+        Height="600" Width="800" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height ="80"/>
@@ -82,8 +82,8 @@
                     <!--#region Планы приема-->
                     <Grid Visibility="Visible" Grid.Column="2" Grid.Row="2">
                         <Label Name="lbPlanPriemaYear" Content="" HorizontalAlignment="Left" Margin="39,13,0,0" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat-Regular}" FontSize="14" Foreground="#FF76829B" Height="26" Width="382"/>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,39,0,0">
-                            <Grid  x:Name="grdAdmissionPlans" Grid.Column="2" RenderTransformOrigin="0.5,0.5">
+                        <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,44,0,0">
+                            <Grid x:Name="grdAdmissionPlans" Grid.Column="2" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="740">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="240" x:Name="rowButtonsize"/>

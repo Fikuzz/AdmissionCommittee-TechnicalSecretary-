@@ -197,7 +197,18 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
         {
             if (this.WindowState == WindowState.Maximized)
             {
-                ButtonPos(4);
+                if (System.Windows.SystemParameters.PrimaryScreenWidth < 1300)
+                {
+                    ButtonPos(2);
+                }
+                else if (System.Windows.SystemParameters.PrimaryScreenWidth < 1600)
+                {
+                    ButtonPos(3);
+                }
+                else
+                {
+                    ButtonPos(4);
+                }
             }
             else if (this.Width < 1300)
             {
@@ -1886,6 +1897,7 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                 }
                 row++;
             }
+            grdAdmissionPlans.Height = (row-1) * y;
             planPriemaColumn = col;
         }
         /// <summary>
