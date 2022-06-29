@@ -1927,7 +1927,8 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_.View
                         AdmissionPlanPayers = reader.GetInt32(3),
                         TotalToEntrant = reader.GetInt32(4),
                         EntrantDogovor = reader.GetInt32(5),
-                        EntrantOutOfCompetition = reader.GetInt32(6)
+                        EntrantOutOfCompetition = reader.GetInt32(6),
+                        AdmissionBased = reader.GetString(7)
                     };
 
                     list.Add(stat);

@@ -8,8 +8,8 @@
         xmlns:control="clr-namespace:PriyemnayaKomissiya_TechnicalSecretary_.Controls"
         mc:Ignorable="d"
         Background="{StaticResource MainBackGround}"
-        Title="Приемная комиссия УО«Полоцкий государственный экономический колледж»"
-        Height="600" Width="800" Loaded="Window_Loaded" MinHeight="600" MinWidth="800" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
+        Title="Приемная комиссия УО «Полоцкий государственный экономический колледж»"
+        Height="750" Width="1538.5" Loaded="Window_Loaded" MinHeight="750" MinWidth="1000" SizeChanged="MainWorkingWindowForm_SizeChanged" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height ="80"/>
@@ -759,6 +759,7 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80*"/>
+                                <ColumnDefinition Width="80*"/>
                                 <ColumnDefinition Width="150*"/>
                                 <ColumnDefinition Width="120*"/>
                                 <ColumnDefinition Width="80*"/>
@@ -772,27 +773,35 @@
                                 <ColumnDefinition Width="50*"/>
                                 <ColumnDefinition Width="50*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.ColumnSpan="3" Content="План приема" Style="{DynamicResource TextBlockGridStyle}"/>
-                            <Label Grid.ColumnSpan="10" Content="Подано заявлений от абитуриентов" Style="{DynamicResource TextBlockGridStyle}" Grid.Column="3"/>
-                            <Label Grid.ColumnSpan="2" Content="Всего за счет средств и (или) местных бюджетов" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.RowSpan="2"/>
-                            <Label Content="На условиях оплаты" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2"/>
-                            <Label Content="Всего" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3"/>
-                            <Label Content="В том числе" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="9"/>
-                            <Label Content="Имеют сумарное количество балов" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="7"/>
-                            <Label Content="На условиях целевой подготовки" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2"/>
-                            <Label Content="вне конкурса" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="2" Grid.Column="5" Grid.RowSpan="2"/>
-                            <Label Content="В том числе на условиях целевой подготовки" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Всего" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3"/>
-                            <Label Content="3,0-&#10;4,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="6"/>
-                            <Label Content="4,1-&#10;5,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="7"/>
-                            <Label Content="5,1-&#10;6,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="8"/>
-                            <Label Content="6,1-&#10;7,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="9"/>
-                            <Label Content="7,1-&#10;8,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="10"/>
-                            <Label Content="8,1-&#10;9,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="11"/>
-                            <Label Content="9,1-&#10;10" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="12"/>
+                            <Label Content="Прием на основе" Style="{DynamicResource TextBlockGridStyle}" Grid.RowSpan="4"/>
+                            <Label Grid.ColumnSpan="3" Content="План приема" Style="{DynamicResource TextBlockGridStyle}" Grid.Column="1"/>
+                            <Label Grid.ColumnSpan="10" Content="Подано заявлений от абитуриентов" Style="{DynamicResource TextBlockGridStyle}" Grid.Column="4"/>
+                            <Label Grid.ColumnSpan="3" Content="Всего за счет средств и (или) местных бюджетов" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,147.549,0"/>
+                            <Label Content="На условиях оплаты" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="3"/>
+                            <Label Content="Всего" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="4"/>
+                            <Label Content="В том числе" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="9"/>
+                            <Label Content="Имеют сумарное количество балов" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="2" Grid.Column="7" Grid.ColumnSpan="7"/>
+                            <Label Content="На условиях целевой подготовки" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="2" Grid.Column="5" Grid.RowSpan="2"/>
+                            <Label Content="вне конкурса" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="2" Grid.Column="6" Grid.RowSpan="2"/>
+                            <Label Content="В том числе на условиях целевой подготовки" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0.451,0,147.549,0"/>
+                            <Label Content="Всего" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3"  Grid.Column="1" />
+                            <Label Content="3,0-&#10;4,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="7"/>
+                            <Label Content="4,1-&#10;5,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="8"/>
+                            <Label Content="5,1-&#10;6,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="9"/>
+                            <Label Content="6,1-&#10;7,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="10"/>
+                            <Label Content="7,1-&#10;8,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="11"/>
+                            <Label Content="8,1-&#10;9,0" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="12"/>
+                            <Label Content="9,1-&#10;10" Style="{DynamicResource TextBlockGridStyle}" Grid.Row="3" Grid.Column="13"/>
                         </Grid>
                         <DataGrid FontSize="16" Name="DGStats" Style="{DynamicResource dgAbbiturients}" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="3" HeadersVisibility="None" PreviewMouseDoubleClick="DataGridStats_OpenPlanPriema">
                             <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding AdmissionBased}" Width="80*" FontSize="10">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding TotalToAdmissionPlan}" Width="80*" Header="Всего"/>
                                 <DataGridTextColumn Binding="{Binding AdmissionPlanDogovor}" Width="150*" Header="В том числе на&#10;условях целевой подготовки"/>
                                 <DataGridTextColumn Binding="{Binding AdmissionPlanPayers}" Width="120*" Header="На условиях оплаты"/>

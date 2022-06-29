@@ -49,5 +49,9 @@ namespace PriyemnayaKomissiya_TechnicalSecretary_
         {
             this.Marks = new int[markCount];
         }
+        /// <summary>
+        /// Реквизиты плана приема
+        /// </summary>
+        public string AdmissionBased { get; set; }
     }
 }
